@@ -8,12 +8,15 @@ import dao.ColaboradorDAO;
 import dao.ColaboradorDAOImp;
 import dao.MenuDAO;
 import dao.MenuDAOImp;
+import dao.PessoaDAO;
+import dao.PessoaDAOImp;
 import entidade.Colaborador;
 import entidade.Menus;
 import entidade.Pessoa;
 import entidade.Colaborador;
 import entidade.Endereco;
 import entidade.Funcao;
+import entidade.Perfil;
 import entidade.Usuario;
 import java.sql.Array;
 import java.util.ArrayList;
@@ -37,12 +40,47 @@ public class ColaboradorControle {
 
     private Colaborador colab;
     private ColaboradorDAO cdao;
+    private PessoaDAO pDAO;
     private Endereco end;
     private Funcao func;
     private Usuario usu;
+    private Perfil perfil;
+    private Pessoa pessoa;
     private List<Menus> menus;
     private MenuDAO mdao;
 
+    public PessoaDAO getpDAO() {        
+        return pDAO;
+    }
+
+    public void setpDAO(PessoaDAO pDAO) {
+        this.pDAO = pDAO;
+    }
+
+    public Pessoa getPessoa() {
+        if (pessoa == null) {
+            pessoa = new Pessoa();
+        } 
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
+    }
+
+    
+    public Perfil getPerfil() {
+        if (perfil == null) {
+            perfil = new Perfil();
+        }
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
+    }
+
+    
     public Funcao getFunc() {
         if (func == null) {
             func = new Funcao();
@@ -111,13 +149,27 @@ public class ColaboradorControle {
     
     public String salvar() {
         cdao = new ColaboradorDAOImp();
+        pDAO = new PessoaDAOImp();
         
         FacesContext context = FacesContext.getCurrentInstance();
-        if (colab.getId() == null) {            
-            cdao.salva(colab);
+        if (colab.getId() == null) {     
+                        
+            ArrayList<Endereco> enderecos = new ArrayList();
+            enderecos.add(end);
+            colab.setEnderecos(enderecos);
+            
+            usu.setPerfil(perfil);
+            ArrayList<Usuario> usuarios = new ArrayList();
+            usuarios.add(usu);
+            
+            colab.setUsuarios(usuarios);
+            colab.setEnderecos(enderecos);
+            colab.setFuncao(func);            
+            
+            pDAO.salva(colab);
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Colaborador Salvo Com Sucesso!", ""));
         } else {
-            cdao.altera(colab);
+            pDAO.altera(colab);
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Colaborador Alterado Com Sucesso!", ""));
         }
         limpar();

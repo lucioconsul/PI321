@@ -37,8 +37,9 @@ public class Colaborador extends Pessoa implements Serializable{
     @JoinColumn(name="idFuncao") // assim a tabela pessoa vai ter coluna com id Funcao. tabela mais forte, melhor
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Funcao funcao;
+   
     
-    @OneToMany(mappedBy = "colaborador", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "colaborador", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Usuario> usuarios;
 
     public List<Usuario> getUsuarios() {

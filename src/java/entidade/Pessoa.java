@@ -7,6 +7,7 @@ package entidade;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,7 +40,7 @@ public class Pessoa implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date nascimento;
     
-    @OneToMany(mappedBy = "pessoa")//essa é a variavel da outra classe. ta mapeando o relacionamento
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)//essa é a variavel da outra classe. ta mapeando o relacionamento
     //"fetch=FetchType.LAZY" é default aqui. nao traz logradouros na pesquisa pq tem muitos logradouros. lazy é pesquisa preguiçosa
     private List<Endereco> enderecos;
 
