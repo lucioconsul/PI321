@@ -1,0 +1,135 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package controle;
+
+import dao.ColaboradorDAO;
+import dao.ColaboradorDAOImp;
+import dao.MenuDAO;
+import dao.MenuDAOImp;
+import entidade.Colaborador;
+import entidade.Menus;
+import entidade.Pessoa;
+import entidade.Colaborador;
+import entidade.Endereco;
+import entidade.Funcao;
+import entidade.Usuario;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+
+
+/**
+ *
+ * @author Aluno
+ */
+@ManagedBean(name = "colabC")
+@SessionScoped
+public class ColaboradorControle {
+
+    private Colaborador colab;
+    private ColaboradorDAO cdao;
+    private Endereco end;
+    private Funcao func;
+    private Usuario usu;
+    private List<Menus> menus;
+    private MenuDAO mdao;
+
+    public Funcao getFunc() {
+        if (func == null) {
+            func = new Funcao();
+        }  
+        return func;
+    }
+
+    public void setFunc(Funcao func) {
+        this.func = func;
+    }
+
+    
+    public Usuario getUsu() {
+        if (usu == null) {
+            usu = new Usuario();
+        }        
+        return usu;
+    }
+
+    public void setUsu(Usuario usu) {
+        this.usu = usu;
+    }
+
+    public Endereco getEnd() {
+        if (end == null) {
+            end = new Endereco();
+        }  
+        return end;
+    }
+
+    public void setEnd(Endereco end) {              
+        this.end = end;
+    }
+
+    public Colaborador getColab(){
+        if (colab == null) {
+            colab = new Colaborador();
+        }
+        return colab;
+    }
+
+    public void setColab(Colaborador colab) {
+        this.colab = colab;
+    }
+    
+    
+    public ColaboradorDAO getCdao() {
+        return cdao;
+    }
+
+    public void setCdao(ColaboradorDAO cdao) {
+        this.cdao = cdao;
+    }
+
+    public List<Menus> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<Menus> menus) {
+        this.menus = menus;
+    }
+
+    
+   
+//##############################################################################        
+    
+    public String salvar() {
+        cdao = new ColaboradorDAOImp();
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (colab.getId() == null) {            
+            cdao.salva(colab);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Colaborador Salvo Com Sucesso!", ""));
+        } else {
+            cdao.altera(colab);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Colaborador Alterado Com Sucesso!", ""));
+        }
+        limpar();
+        return "admin.faces";
+    }
+    
+//##############################################################################        
+
+    private void limpar() {
+        colab = null;
+    
+    }
+   
+        
+}

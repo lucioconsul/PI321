@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Administração</title>
+         <link type="text/css" rel="stylesheet" href="jquery-ui-1.9.2.custom.css" />
+
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">
+
+            <p:layoutUnit position="north" size="100" >
+                <h:panelGrid columns="2" cellpadding="1" width="300" style=" padding-top: 3%">
+                    <h:outputText value="Olá #{usuC.usu.colaborador.nome}" /><br/>
+                    <h:outputText value="Perfil: #{usuC.usu.perfil.nome}"/>
+                    <p:commandLink value="Sair" action="#{usuC.sair()}" />
+                </h:panelGrid>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="90" >
+                <h:outputText value="South unit content." />
+            </p:layoutUnit>
+
+            <p:layoutUnit position="west" size="200" header="Menu" >
+                <h:form>
+
+
+            <p:panelMenu model="#{menuC.getmModel()}"/>
+                </h:form>
+            </p:layoutUnit>
+
+            <ui:insert name="center">
+                <p:layoutUnit position="center">
+                    <h:form>
+                        This fullPage layout consists of five different layoutUnits which are resizable and closable by default.
+
+                    </h:form>
+                </p:layoutUnit>
+            </ui:insert>
+
+        </p:layout>
+
+    </h:body>
+</html>
+

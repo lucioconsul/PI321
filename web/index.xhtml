@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xxmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:head>
+        <title>Principal</title>
+        <link type="text/css" rel="stylesheet" href="jquery-ui-1.9.2.custom.css" />
+        <style type="text/css">
+            #img-first{position: absolute; top: 0px; right: 0px;z-index: -1;}
+            #img-logo{margin:auto;padding-bottom: 10px;clear: both;}
+            #formulario_login{ padding-top: 25px; text-align: center;}
+        </style>
+    </h:head>
+    <h:body id="inicial_body">
+        <img src="images/img_fruta.png" width="979px" height="661px" id="img-first"></img>
+        <p:layout fullPage="true">
+
+            <ui:insert name="center">
+                <p:layoutUnit position="center" >
+
+                    <h:form id="formulario_login">
+                        <img src="images/logo.png" width="140px" height="145px" id="img-logo"></img>
+                        <p:messages id="mensagem" showSummary="true"/>
+                        <h:panelGrid columns="2" cellpadding="5" width="200" style="text-align: left;margin: auto; height: 100px; padding: 5%">
+
+                            <h:outputText for="login" value="Login:" style="font-weight:bold"/>
+                            <p:focus>
+                                <p:inputText id="login" value="#{usuC.usu.login}" required="true" requiredMessage="Campo login é obrigatorio! " />
+                            </p:focus>
+                            <h:outputText for="senha" value="Senha:" style="font-weight:bold"/>
+                            <p:password id="senha" value="#{usuC.usu.senha}" required="true" requiredMessage="Campo senha é obrigatorio! " />
+                            <p:commandButton value="Entrar" action="#{usuC.entrar}" ajax="false"/>
+                        </h:panelGrid>
+
+                    </h:form>
+                </p:layoutUnit>
+            </ui:insert>
+
+        </p:layout>
+    </h:body>
+</html>
+

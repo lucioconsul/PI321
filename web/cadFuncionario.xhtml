@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="./admin.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:define name="center">
+
+        <p:layoutUnit position="center" style="text-align: center" header="Funcionario">
+            <h:form id="form">
+                <h:messages id="mensagem" showDetail="true"/>
+                <h:panelGrid  columns="3">
+                    <h:outputText  value="Nome:" />
+                    <h:inputText id="nome" value="#{colabC.colab.nome}" required="true" requiredMessage="nome é obrigatório"/>
+                    <h:message for="nome" />
+                    
+                    <h:outputText  value="Telefone:" />
+                    <h:inputText id="telefone" value="#{colabC.colab.telefone}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:message for="telefone" />
+                    
+                    <h:outputText  value="Celular: " />
+                    <h:inputText id="celular" value="#{colabC.colab.celular}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:message for="celular" />
+                    
+                    <h:outputText  value="Nascimento: " />
+                    <p:calendar id="nascimento" value="#{colabC.colab.nascimento}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:message for="nascimento" />
+                    
+                    <h:outputText  value="CPF: " />
+                    <h:inputText id="cpf" value="#{colabC.colab.cpf}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:message for="cpf" />
+                    
+                    <h:outputText  value="RG: " />
+                    <h:inputText id="rg" value="#{colabC.colab.rg}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:message for="rg" />
+                    
+                    <h:outputText  value="PIS: " />
+                    <h:inputText id="pis" value="#{colabC.colab.pis}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:message for="pis" />
+                    
+                    <h:outputText  value="Salario: " />
+                    <h:inputText id="salario" value="#{colabC.colab.salario}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:message for="salario" />
+                    
+                    <h:outputText  value="Rua: " />
+                    <h:inputText id="rua" value="#{colabC.end.rua}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:message for="rua" />
+                    
+                    <h:outputText  value="Bairro: " />
+                    <h:inputText id="bairro" value="#{colabC.end.bairro}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:message for="bairro" />
+                    
+                    <h:outputText  value="Cidade: " />
+                    <h:inputText id="cidade" value="#{colabC.end.cidade}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:message for="cidade" />
+                    
+                    <h:outputText  value="CEP: " />
+                    <h:inputText id="cep" value="#{colabC.end.cep}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:message for="cep" />
+                    
+                    <h:outputText  value="Obs.: " />
+                    <h:inputTextarea id="obs" value="#{colabC.end.observacoes}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:message for="obs" />
+                    
+                    <h:outputText  value="Função: " />
+                    <h:inputText id="funcao" value="#{colabC.funcao.nome}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:message for="funcao" />
+                    
+                    <h:outputText  value="Login: " />
+                    <h:inputText id="login" value="#{colabC.usu.login}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:message for="login" />
+                    
+                    <h:outputText  value="Senha: " />
+                    <h:inputText id="senha" value="#{colabC.usu.senha}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:message for="senha" />
+                    
+                    <h:outputText  value="Perfil: " />
+                    <h:inputText id="perfil" value="#{colabC.usu.perfil.nome}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:message for="login" />
+                    
+                    <h:commandButton value="Salvar" action="#{colabC.salvar()}"/>
+                </h:panelGrid>
+
+            </h:form>
+
+
+        </p:layoutUnit>
+
+
+
+    </ui:define>
+
+</ui:composition>
