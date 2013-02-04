@@ -164,7 +164,10 @@ public class ColaboradorControle {
             
             colab.setUsuarios(usuarios);
             colab.setEnderecos(enderecos);
-            colab.setFuncao(func);            
+            colab.setFuncao(func);   
+            
+            end.setPessoa(colab);
+            usu.setColaborador(colab);
             
             pDAO.salva(colab);
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Colaborador Salvo Com Sucesso!", ""));

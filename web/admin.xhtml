@@ -7,7 +7,7 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Administração</title>
-         <link type="text/css" rel="stylesheet" href="jquery-ui-1.9.2.custom.css" />
+        <link type="text/css" rel="stylesheet" href="jquery-ui-1.9.2.custom.css" />
 
     </h:head>
     <h:body>
@@ -28,8 +28,8 @@
             <p:layoutUnit position="west" size="200" header="Menu" >
                 <h:form>
 
-
-            <p:panelMenu model="#{menuC.getmModel()}"/>
+                    <p:button outcome="admin.faces" value="Home" icon="ui-icon-home" style="width: 195px; padding-right: 112px"> </p:button> 
+                    <p:panelMenu model="#{menuC.getmModel()}"/>
                 </h:form>
             </p:layoutUnit>
 

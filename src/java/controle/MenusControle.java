@@ -29,7 +29,7 @@ public class MenusControle {
     private Usuario usu;
     private Menus menu;
     private PanelMenu pModel;
-    private MenuModel mModel;
+    private MenuModel mModel;    
 
 /*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
 /* metodo principal que cria os menus pais e chama os demais metodos que por   */
@@ -50,6 +50,7 @@ public class MenusControle {
             if (menu.getId_menu_pai() == null) {
                 Submenu menuPai = new Submenu();
                 menuPai.setLabel(menu.getLabel());
+                menuPai.setIcon(menu.getIcone());                    
                 //percorro uma lista de menus filhos dele
                 List<Menus> listaSubMenu = getMenusFilhos(menu);
                 for (Menus subMenuDaLista : listaSubMenu) {
@@ -59,6 +60,7 @@ public class MenusControle {
                         menuItem.setValue(subMenuDaLista.getLabel());
                         menuItem.setAjax(false);
                         menuItem.setUrl(subMenuDaLista.getUrl());
+                        menuItem.setIcon(subMenuDaLista.getIcone());
                         menuPai.getChildren().add(menuItem);
                         //se o menu filho TEM filhos (netos), monto eles:    
                     } else {
@@ -69,6 +71,7 @@ public class MenusControle {
                         menuPai.getChildren().add(menuFilhoDoMeio);
                     }
                 }
+        
                 mModel.addSubmenu(menuPai);
                 pModel.setModel(mModel);
             }
