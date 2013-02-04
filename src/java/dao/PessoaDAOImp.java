@@ -4,6 +4,7 @@
  */
 package dao;
 
+import entidade.Colaborador;
 import entidade.Pessoa;
 import entidade.Usuario;
 import java.util.List;
@@ -50,6 +51,8 @@ public class PessoaDAOImp extends Base_DAO_Imp<Pessoa, Long> implements PessoaDA
         query.setString("valor", "%" + pessoa + "%");
         List<Pessoa> pessoas = query.list();
         session.close();
+        Colaborador c=null;
+        Pessoa p=null;
         return pessoas;
     }
     

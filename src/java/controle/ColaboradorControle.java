@@ -26,6 +26,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 import javax.servlet.http.HttpSession;
 
 
@@ -48,7 +50,9 @@ public class ColaboradorControle {
     private Pessoa pessoa;
     private List<Menus> menus;
     private MenuDAO mdao;
+    private DataModel model;
 
+    
     public PessoaDAO getpDAO() {        
         return pDAO;
     }
@@ -143,6 +147,14 @@ public class ColaboradorControle {
         this.menus = menus;
     }
 
+    public DataModel getModel() {
+        return model;
+    }
+
+    public void setModel(DataModel model) {
+        this.model = model;
+    }
+
     
    
 //##############################################################################        
@@ -179,6 +191,13 @@ public class ColaboradorControle {
         return "admin.faces";
     }
     
+//##############################################################################            
+      public void pesquisaLikeNome() {
+        pDAO = new PessoaDAOImp();
+        List<Pessoa> pessoas = pDAO.pesquisaLikeNome(pessoa.getNome());
+        model = new ListDataModel(pessoas);
+    }
+    
 //##############################################################################        
 
     private void limpar() {
@@ -186,5 +205,16 @@ public class ColaboradorControle {
     
     }
    
-        
+//##############################################################################            
+    public String limpaPesquisa() {
+        colab = null;
+        model = null;
+        return "pesqFuncionario";
+    }
+//##############################################################################                    
+    public String novoColaborador() {
+        colab = new Colaborador();
+        //implementar a pesquisa de fornecedores
+        return "cadFuncionario";
+    }
 }
