@@ -72,7 +72,7 @@ public class UsuarioControle {
         usu = udao.pesquisaUsuario(usu.getLogin(), usu.getSenha());
         //usu = udao.pesquisaUsuario("lucioconsul", "senhateste");
         //seta os menus do usuario
-        usu.getPerfil().setMenus(mdao.pesquisaAcesso(usu.getPerfil()));
+        usu.getPerfil().setMenus(mdao.pesquisaAcesso(usu.getPerfil()));        
         //se login incorredo, dá aviso e volta pra index
         if (usu == null) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Login inexistente!"));

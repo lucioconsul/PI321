@@ -5,6 +5,7 @@
 package entidade;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,7 @@ public class Usuario implements Serializable {
     @Column(nullable = false)
     private String senha;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="idColaborador")
     private Colaborador colaborador;
     

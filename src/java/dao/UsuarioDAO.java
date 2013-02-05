@@ -5,7 +5,6 @@
 package dao;
 
 import entidade.Usuario;
-import java.util.List;
 
 /**
  *
@@ -14,6 +13,6 @@ import java.util.List;
 public interface UsuarioDAO extends Base_DAO<Usuario, Long>{
     Usuario pesquisaUsuario(String login, String senha);
     
-    List<Usuario> pesquisaLikeNome(String usuario);
+    Usuario pesquisaByIdColab(Long idColab);
     
 }

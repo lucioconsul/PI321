@@ -54,11 +54,17 @@
                             <h:outputText value="#{colabor.telefone}" />
                     </p:column>
                     <p:column>
+                            <f:facet name="header">Matricula</f:facet>
+                            <h:outputText value="#{colabor.matricula}" />
+                    </p:column>
+                    <p:column>
+                            <f:facet name="header">Função</f:facet>
+                            <h:outputText value="#{colabor.funcao.nome}" />
+                    </p:column>
+                    <p:column>
                             <f:facet name="header">Alterar/Excluir</f:facet>
-                            <p:commandLink  action="#{pc.alterar()}"
-                                            value="Alterar" ajax="false"/> -
-                            <p:commandLink  value="Excluir" ajax="false"
-                                 action="#{pc.excluir()}"/>
+                            <p:commandLink  action="#{colabC.alterar()}" value="Alterar" ajax="false"/> -
+                            <p:commandLink  value="Excluir" ajax="false" action="#{colabC.excluir()}"/>
                     </p:column>
                     
                 </p:dataTable>

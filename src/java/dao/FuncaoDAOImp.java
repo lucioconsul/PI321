@@ -37,7 +37,7 @@ public class FuncaoDAOImp extends Base_DAO_Imp<Funcao, Long> implements FuncaoDA
     @Override
     public List<Funcao> pesquisaLikeFuncao(String func) {
         session = (Session) Fabrica_Sessao.abreConexao().openSession();
-        Query query = session.createQuery("FROM Funcao f WHERE u.nome like :valor");
+        Query query = session.createQuery("FROM Funcao f WHERE f.nome like :valor");
         query.setString("valor", "%" + func + "%");
         List<Funcao> funcs = query.list();
         session.close();

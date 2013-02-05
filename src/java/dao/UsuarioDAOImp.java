@@ -4,7 +4,6 @@
  */
 package dao;
 
-import entidade.Colaborador;
 import entidade.Usuario;
 import java.util.List;
 import org.hibernate.Query;
@@ -45,13 +44,14 @@ public class UsuarioDAOImp extends Base_DAO_Imp<Usuario, Long> implements Usuari
     }
 
     @Override
-    public List<Usuario> pesquisaLikeNome(String usu) {
+    public Usuario pesquisaByIdColab(Long idColab) {
         session = (Session) Fabrica_Sessao.abreConexao().openSession();
-        Query query = session.createQuery("FROM Usuario u WHERE u.nome like :valor");
-        query.setString("valor", "%" + usu + "%");
-        List<Usuario> usus = query.list();
+        Query query = session.createQuery("SELECT u FROM Usuario u, Pessoa p WHERE u.colaborador = p.id AND p.id = :valor");
+        
+        query.setLong("valor" , idColab);
+        Usuario resultado = (Usuario) query.uniqueResult();
         session.close();
-        return usus;
+        return resultado;
     }
     
 }

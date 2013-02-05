@@ -6,10 +6,14 @@ package controle;
 
 import dao.ColaboradorDAO;
 import dao.ColaboradorDAOImp;
+import dao.EnderecoDAO;
+import dao.EnderecoDAOImp;
 import dao.MenuDAO;
 import dao.MenuDAOImp;
 import dao.PessoaDAO;
 import dao.PessoaDAOImp;
+import dao.UsuarioDAO;
+import dao.UsuarioDAOImp;
 import entidade.Colaborador;
 import entidade.Menus;
 import entidade.Pessoa;
@@ -202,6 +206,10 @@ public class ColaboradorControle {
 
     private void limpar() {
         colab = null;
+        end = null;
+        func = null;
+        perfil = null;
+        usu = null;
     
     }
    
@@ -213,8 +221,44 @@ public class ColaboradorControle {
     }
 //##############################################################################                    
     public String novoColaborador() {
+        limpar();
         colab = new Colaborador();
         //implementar a pesquisa de fornecedores
         return "cadFuncionario";
     }
+    
+//##############################################################################                        
+        public String alterar() {
+        colab = (Colaborador) model.getRowData();                
+        setColab(colab);        
+        func = colab.getFuncao();
+        
+        UsuarioDAO uDAO = new UsuarioDAOImp();
+        usu = uDAO.pesquisaByIdColab(colab.getId());
+        perfil = usu.getPerfil();       
+        
+        EnderecoDAO eDAO = new EnderecoDAOImp();
+        end = eDAO.pesquisaByIdColab(colab.getId());
+        
+        
+        return "cadFuncionario";
+    }
+    
+//##############################################################################                            
+    public String excluir() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        String nome = pessoa.getNome();
+        try {
+            pDAO = new PessoaDAOImp();
+            pessoa = (Pessoa) model.getRowData();            
+            pDAO.remove(pessoa);
+            model = new ListDataModel(pDAO.pesquisaLikeNome(nome));
+            context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,"Colaborador excluído com sucesso!", ""));
+        } catch (Exception e) {
+            context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR,"Não foi possivel exclusão!", ""));
+        }
+        limpar();
+        return "";
+    }
+    
 }
