@@ -4,7 +4,8 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="center">
 
@@ -75,8 +76,13 @@
                     <h:inputTextarea id="obs" value="#{colabC.end.observacoes}" required="true" requiredMessage="telefone é obrigatório"/>
                     <h:message for="obs" />
 
-                    <h:outputText  value="Função: " />
-                    <h:inputText id="funcao" value="#{colabC.func.nome}" required="true" requiredMessage="telefone é obrigatório"/>
+
+                    <h:outputText value="Função: " />  
+                    <p:selectOneMenu  id="funcao" value="#{colabC.func.id}" effect="fold" 
+                                      required="true" requiredMessage="função é obrigatório">  
+                        <f:selectItem itemLabel="Escolha a função" itemValue="" />  
+                        <f:selectItems value="#{colabC.comboFuncao}" />  
+                    </p:selectOneMenu>
                     <h:message for="funcao" />
 
                     <h:outputText  value="Login: " />
@@ -86,10 +92,14 @@
                     <h:outputText  value="Senha: " />
                     <h:inputText id="senha" value="#{colabC.usu.senha}" required="true" requiredMessage="telefone é obrigatório"/>
                     <h:message for="senha" />
-
-                    <h:outputText  value="Perfil: " />
-                    <h:inputText id="perfil" value="#{colabC.perfil.nome}" required="true" requiredMessage="telefone é obrigatório"/>
-                    <h:message for="login" />
+                    
+                    <h:outputText value="Perfil: " />  
+                    <p:selectOneMenu  id="perfil" value="#{colabC.perfil.id}" effect="fold" 
+                                      required="true" requiredMessage="perfil é obrigatório">  
+                        <f:selectItem itemLabel="Escolha o perfil" itemValue="" />  
+                        <f:selectItems value="#{colabC.comboPerfil}" />  
+                    </p:selectOneMenu>
+                    <h:message for="perfil" />
 
                     <h:commandButton value="Salvar" action="#{colabC.salvar()}"/>
                 </h:panelGrid>

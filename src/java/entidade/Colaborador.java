@@ -33,14 +33,14 @@ public class Colaborador extends Pessoa implements Serializable{
     @Column(nullable = false)
     private int matricula;
     
-    @OneToOne
-    @JoinColumn(name="idFuncao") // assim a tabela pessoa vai ter coluna com id Funcao. tabela mais forte, melhor
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Funcao funcao;
-   
+    @ManyToOne
+    @JoinColumn(name="idFuncao")
+    private Funcao funcao;   
     
     @OneToMany(mappedBy = "colaborador", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Usuario> usuarios;
+    
+//#####################################################################################################################################    
 
     public List<Usuario> getUsuarios() {
         return usuarios;
@@ -49,7 +49,6 @@ public class Colaborador extends Pessoa implements Serializable{
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
     }
-
     
     public String getCpf() {
         return cpf;
@@ -99,7 +98,5 @@ public class Colaborador extends Pessoa implements Serializable{
         this.funcao = funcao;
     }
 
-
-    
     
 }

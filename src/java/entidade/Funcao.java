@@ -5,11 +5,13 @@
 package entidade;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -24,7 +26,20 @@ public class Funcao implements Serializable {
     @Column(nullable = false)
     private String nome;
     private String descricao;
+    
+    @OneToMany(mappedBy = "funcao")
+    private List<Colaborador> colabs;
+    
+//#####################################################################################################################################    
 
+    public List<Colaborador> getColabs() {
+        return colabs;
+    }
+
+    public void setColabs(List<Colaborador> colabs) {
+        this.colabs = colabs;
+    }
+    
     public Long getId() {
         return id;
     }

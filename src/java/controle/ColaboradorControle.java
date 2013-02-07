@@ -8,8 +8,12 @@ import dao.ColaboradorDAO;
 import dao.ColaboradorDAOImp;
 import dao.EnderecoDAO;
 import dao.EnderecoDAOImp;
+import dao.FuncaoDAO;
+import dao.FuncaoDAOImp;
 import dao.MenuDAO;
 import dao.MenuDAOImp;
+import dao.PerfilDAO;
+import dao.PerfilDAOImp;
 import dao.PessoaDAO;
 import dao.PessoaDAOImp;
 import dao.UsuarioDAO;
@@ -32,10 +36,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
-
-
-
 /**
  *
  * @author Aluno
@@ -56,6 +58,7 @@ public class ColaboradorControle {
     private MenuDAO mdao;
     private DataModel model;
 
+//#####################################################################################################################################    
     
     public PessoaDAO getpDAO() {        
         return pDAO;
@@ -75,7 +78,6 @@ public class ColaboradorControle {
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
     }
-
     
     public Perfil getPerfil() {
         if (perfil == null) {
@@ -87,7 +89,6 @@ public class ColaboradorControle {
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
     }
-
     
     public Funcao getFunc() {
         if (func == null) {
@@ -99,7 +100,6 @@ public class ColaboradorControle {
     public void setFunc(Funcao func) {
         this.func = func;
     }
-
     
     public Usuario getUsu() {
         if (usu == null) {
@@ -133,8 +133,7 @@ public class ColaboradorControle {
     public void setColab(Colaborador colab) {
         this.colab = colab;
     }
-    
-    
+        
     public ColaboradorDAO getCdao() {
         return cdao;
     }
@@ -159,9 +158,8 @@ public class ColaboradorControle {
         this.model = model;
     }
 
-    
    
-//##############################################################################        
+//#####################################################################################################################################
     
     public String salvar() {
         cdao = new ColaboradorDAOImp();
@@ -180,7 +178,7 @@ public class ColaboradorControle {
             
             colab.setUsuarios(usuarios);
             colab.setEnderecos(enderecos);
-            colab.setFuncao(func);   
+            colab.setFuncao(func);              
             
             end.setPessoa(colab);
             usu.setColaborador(colab);
@@ -195,14 +193,15 @@ public class ColaboradorControle {
         return "admin.faces";
     }
     
-//##############################################################################            
+//#####################################################################################################################################
+    
       public void pesquisaLikeNome() {
         pDAO = new PessoaDAOImp();
         List<Pessoa> pessoas = pDAO.pesquisaLikeNome(pessoa.getNome());
         model = new ListDataModel(pessoas);
     }
     
-//##############################################################################        
+//#####################################################################################################################################
 
     private void limpar() {
         colab = null;
@@ -210,16 +209,18 @@ public class ColaboradorControle {
         func = null;
         perfil = null;
         usu = null;
-    
     }
    
-//##############################################################################            
+//#####################################################################################################################################
+    
     public String limpaPesquisa() {
         colab = null;
         model = null;
         return "pesqFuncionario";
     }
-//##############################################################################                    
+    
+//#####################################################################################################################################
+    
     public String novoColaborador() {
         limpar();
         colab = new Colaborador();
@@ -227,7 +228,8 @@ public class ColaboradorControle {
         return "cadFuncionario";
     }
     
-//##############################################################################                        
+//#####################################################################################################################################
+    
         public String alterar() {
         colab = (Colaborador) model.getRowData();                
         setColab(colab);        
@@ -240,11 +242,11 @@ public class ColaboradorControle {
         EnderecoDAO eDAO = new EnderecoDAOImp();
         end = eDAO.pesquisaByIdColab(colab.getId());
         
-        
         return "cadFuncionario";
     }
     
-//##############################################################################                            
+//#####################################################################################################################################
+        
     public String excluir() {
         FacesContext context = FacesContext.getCurrentInstance();
         String nome = pessoa.getNome();
@@ -260,5 +262,29 @@ public class ColaboradorControle {
         limpar();
         return "";
     }
+    
+//#####################################################################################################################################
+    
+    public List<SelectItem> getComboFuncao(){
+        FuncaoDAO fdao = new FuncaoDAOImp();
+        List<Funcao> funcoes = fdao.getTodos();
+        List<SelectItem> listaCombo = new ArrayList<SelectItem>();
+        for (Funcao func : funcoes) {
+            listaCombo.add(new SelectItem(func.getId(), func.getNome()));
+        }
+        return listaCombo;
+    }    
+    
+//#####################################################################################################################################
+    
+    public List<SelectItem> getComboPerfil(){
+        PerfilDAO pdao = new PerfilDAOImp();
+        List<Perfil> perfis = pdao.getTodos();
+        List<SelectItem> listaCombo = new ArrayList<SelectItem>();
+        for (Perfil perf : perfis) {
+            listaCombo.add(new SelectItem(perf.getId(), perf.getNome()));
+        }
+        return listaCombo;
+    }     
     
 }

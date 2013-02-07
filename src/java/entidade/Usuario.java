@@ -35,12 +35,12 @@ public class Usuario implements Serializable {
     @JoinColumn(name="idColaborador")
     private Colaborador colaborador;
     
-    @OneToOne
-    @JoinColumn(name="idPerfil") // assim a tabela pessoa vai ter coluna com id Funcao. tabela mais forte, melhor
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name="idPerfil")
     private Perfil perfil;
     
-
+//#####################################################################################################################################
+    
     public Long getId() {
         return id;
     }

@@ -29,12 +29,54 @@ public class MenusControle {
     private Usuario usu;
     private Menus menu;
     private PanelMenu pModel;
-    private MenuModel mModel;    
+    private MenuModel mModel;     
 
-/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
-/* metodo principal que cria os menus pais e chama os demais metodos que por   */
-/* sua vez criam os submenus                                                   */
-/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
+//#####################################################################################################################################    
+    
+    public Usuario getUsu() {
+        return usu;
+    }
+
+    public void setUsu(Usuario usu) {
+        this.usu = usu;
+    }
+
+    public Menus getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menus menu) {
+        this.menu = menu;
+    }
+
+    public PanelMenu getpModel() {
+        return pModel;
+    }
+
+    public void setpModel(PanelMenu pModel) {
+        this.pModel = pModel;
+    }
+
+    public MenuModel getmModel() {
+        return mModel;
+    }
+
+    public void setmModel(MenuModel mModel) {
+        this.mModel = mModel;
+    }    
+    
+    
+//#####################################################################################################################################
+/*CONSTRUTOR chama o geraMenu                                                                                                        */
+//#####################################################################################################################################
+    public MenusControle() {
+        geraMenu();
+    }      
+
+//#####################################################################################################################################
+/* metodo principal que cria os menus pais e chama os demais metodos que por                                                         */
+/* sua vez criam os submenus                                                                                                         */
+//#####################################################################################################################################
     public void geraMenu() {
         pModel = new PanelMenu();
         mModel = new DefaultMenuModel();
@@ -78,10 +120,10 @@ public class MenusControle {
         }
     }
 
-/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
-/* metodo recursivo. ele chama ele mesmo até terminar de montar a arvore       */
-/* passando por todas as gerações                                              */
-/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
+//#####################################################################################################################################
+/* metodo recursivo. ele chama ele mesmo até terminar de montar a arvore                                                             */
+/* passando por todas as gerações                                                                                                    */
+//#####################################################################################################################################
     public Submenu geraSubMenu(Menus menuProcuraFilho) {
         Submenu submenu = new Submenu();
         submenu.setLabel(menuProcuraFilho.getLabel());
@@ -101,9 +143,9 @@ public class MenusControle {
         return submenu;
     }
 
-/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
-/*metodo que pega os menus filhos                                              */
-/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
+//#####################################################################################################################################
+/*metodo que pega os menus filhos                                                                                                   */
+//#####################################################################################################################################
     public List<Menus> getMenusFilhos(Menus mf) {
         List<Menus> menusFilhos = new ArrayList();
         //pego sessão
@@ -122,9 +164,9 @@ public class MenusControle {
         return menusFilhos;
     }
 
-/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
-/*verifica se tem submenus                                                     */
-/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
+//#####################################################################################################################################
+/*verifica se tem submenus                                                                                                           */
+//#####################################################################################################################################
     public boolean verificaSub(Menus mu) {
         boolean flag = false;
         //pego sessão
@@ -141,86 +183,6 @@ public class MenusControle {
             }
         }
         return flag;
-    }
-
-    public Usuario getUsu() {
-        return usu;
-    }
-
-    public void setUsu(Usuario usu) {
-        this.usu = usu;
-    }
-
-    public Menus getMenu() {
-        return menu;
-    }
-
-    public void setMenu(Menus menu) {
-        this.menu = menu;
-    }
-
-    public PanelMenu getpModel() {
-        return pModel;
-    }
-
-    public void setpModel(PanelMenu pModel) {
-        this.pModel = pModel;
-    }
-
-    public MenuModel getmModel() {
-        return mModel;
-    }
-
-    public void setmModel(MenuModel mModel) {
-        this.mModel = mModel;
-    }
-
-    
-/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
-/*CONSTRUTOR chama o geraMenu                                                  */
-/*¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬*/
-    public MenusControle() {
-        geraMenu();
     }    
+
 }
-//    public void geraMenu() {
-//        menuModel = new DefaultMenuModel();
-//        List<Menu> listaMenu = menuDAO.listaTodos(); // Substituir o listaTodos() pelos menus permitidos
-//        for (Menu menu : listaMenu) {
-//            if (menu.getMenu().getId() == 0) {
-//                Submenu submenu = new Submenu();
-//                submenu.setLabel(menu.getDescricao());
-//                for (Menu m : menuDAO.buscaPorMenu(menu)) {
-//                    if (!menuDAO.verificaSubMenu(m)) {
-//                        MenuItem mi = new MenuItem();
-//                        mi.setValue(m.getDescricao());
-//                        mi.setIcon("imagens/" + m.getIcone());
-//                        submenu.getChildren().add(mi);
-//                    } else {
-//                        Submenu sm = new Submenu();
-//                        sm.setLabel(m.getDescricao());
-//                        sm = geraSubmenu(m);
-//                        submenu.getChildren().add(sm);
-//                    }
-//                }
-//                menuModel.addSubmenu(submenu);
-//            }
-//        }
-//    }
-//
-//    public Submenu geraSubmenu(Menus menu) {
-//        Submenu submenu = new Submenu();
-//        submenu.setLabel(menu.getDescricao());
-//        for (Menu m : menuDAO.buscaPorMenu(menu)) {
-//            if (!menuDAO.verificaSubMenu(m)) {
-//                MenuItem mi = new MenuItem();
-//                mi.setValue(m.getDescricao());
-//                mi.setStyle("width:100px");
-//                submenu.getChildren().add(mi);
-//            } else {
-//                submenu.getChildren().add(geraSubmenu(m));
-//            }
-//        }
-//        return submenu;
-//    }
-//}    

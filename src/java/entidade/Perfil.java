@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.Fetch;
@@ -52,12 +53,20 @@ public class Perfil implements Serializable {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Acessos> acessos;
     
-    
-
-
-
+    @OneToMany(mappedBy = "perfil")
+    private List<Usuario> usus;
     
     
+//#####################################################################################################################################
+    
+    public List<Usuario> getUsus() {
+        return usus;
+    }
+
+    public void setUsus(List<Usuario> usus) {
+        this.usus = usus;
+    }
+
     public Long getId() {
         return id;
     }
@@ -90,8 +99,6 @@ public class Perfil implements Serializable {
         this.acessos = acessos;
     }
 
-
-
-    
+   
 
 }

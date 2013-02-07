@@ -36,7 +36,8 @@ public class FuncaoControle {
         this.funcao = funcao;
     }
     
-//##############################################################################            
+//#####################################################################################################################################
+    
     public String salvar(){
         fDAO = new FuncaoDAOImp();
         FacesContext context = FacesContext.getCurrentInstance();
@@ -46,15 +47,16 @@ public class FuncaoControle {
             fDAO.altera(funcao);
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Funcao Alterado Com Sucesso!", ""));
         }
-        return "admin.faces";
-        
+        return "admin.faces";        
     }
     
-//##############################################################################            
+//#####################################################################################################################################
+    
     private void limpar() {
-        funcao = null;
-    
+        funcao = null;    
     }
+    
+//#####################################################################################################################################
     
 public String limpaPesquisa() {
         funcao = null;
@@ -62,4 +64,4 @@ public String limpaPesquisa() {
         return "pesqFuncao";
     }    
 }
-//##############################################################################            
+
