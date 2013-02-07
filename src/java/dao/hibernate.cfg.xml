@@ -4,7 +4,7 @@
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/pi_final?zeroDateTimeBehavior=convertToNull</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/pi_final_teste?zeroDateTimeBehavior=convertToNull</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">root</property>
         <property name="hibernate.connection.pool_size">10</property>
@@ -18,5 +18,9 @@
         <mapping class="entidade.Perfil"/>
         <mapping class="entidade.Acessos"/>
         <mapping class="entidade.Menus"/>
+        <mapping class="entidade.Pizza"/>
+        <mapping class="entidade.Borda"/>
+        <mapping class="entidade.Sabor"/>
+        <mapping class="entidade.Tamanho"/>
     </session-factory>
 </hibernate-configuration>

@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./admin.xhtml"
+                 xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                
+                >
+
+    <ui:define name="center">
+          <p:layoutUnit position="center" style="text-align: center" header="Borda">
+            <h:form id="form">
+                <p:toolbar>
+                    <p:toolbarGroup align="left" style="height: 25px">
+                        <p:commandButton value="Pesquisar" image="ui-icon-search"
+                                         action="#{borC.limpaPesquisa()}" ajax="false" immediate="true"/>
+
+                        <p:commandButton value="Novo" image="ui-icon-folder-open"
+                                         action="#" ajax="false" disabled="true"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <h:messages id="mensagem" showDetail="true"/>
+                <h:panelGrid  columns="3">
+                    <h:outputText  value="Nome:" />
+                    <h:inputText id="nome" value="#{borC.borda.nome}" required="true" requiredMessage="nome é obrigatório"/>
+                    <h:message for="nome" />
+                    
+                    <h:outputText  value="Descrição: " />
+                    <h:inputTextarea id="descricao" value="#{borC.borda.descricao}" required="true" requiredMessage="descricao é obrigatório"/>
+                    <h:message for="descricao" />
+                    
+                      <h:outputText  value="Valor: " />
+                      <h:inputText id="valor" value="#{borC.borda.valor}" required="true" requiredMessage="valor é obrigatório"/>
+                    <h:message for="valor" />
+                    
+                    <h:commandButton value="Salvar" action="#{borC.salvar()}"/>
+                </h:panelGrid>
+
+            </h:form>
+
+
+        </p:layoutUnit>
+    </ui:define>
+
+</ui:composition>

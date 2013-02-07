@@ -14,7 +14,7 @@ import javax.persistence.Persistence;
  */
 public class gerador {
     public static void main(String[] args) {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("PIFinalPU");//nome da unidade persistencia
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("PIFinalTestePU");//nome da unidade persistencia
         EntityManager manager = factory.createEntityManager();
     }
 }

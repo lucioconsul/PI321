@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./admin.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="center">
+          <p:layoutUnit position="center" style="text-align: center" header="Sabor">
+            <h:form id="form">
+                <p:toolbar>
+                    <p:toolbarGroup align="left" style="height: 25px">
+                        <p:commandButton value="Pesquisar" image="ui-icon-search"
+                                         action="#{sabC.limpaPesquisa()}" ajax="false" immediate="true"/>
+
+                        <p:commandButton value="Novo" image="ui-icon-folder-open"
+                                         action="#" ajax="false" disabled="true"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <h:messages id="mensagem" showDetail="true"/>
+                <h:panelGrid  columns="3">
+                    <h:outputText  value="Nome:" />
+                    <h:inputText id="nome" value="#{sabC.sabor.nome}" required="true" requiredMessage="nome é obrigatório"/>
+                    <h:message for="nome" />
+                    
+                    <h:outputText  value="Descrição: " />
+                    <h:inputTextarea id="descricao" value="#{sabC.sabor.descricao}" required="true" requiredMessage="descrição é obrigatório"/>
+                    <h:message for="descricao" />
+                    
+                     <h:outputText  value="Valor pequena " />
+                     <h:inputText id="valorp" value="#{sabC.sabor.valorP}" required="true" requiredMessage="Valor da pizza P é obrigatório"/>
+                    <h:message for="valorp" />
+                    
+                     <h:outputText  value="Valor média " />
+                     <h:inputText id="valorm" value="#{sabC.sabor.valorM}" required="true" requiredMessage="Valor da pizza M é obrigatório"/>
+                    <h:message for="valorm" />
+                    
+                     <h:outputText  value="Valor grande " />
+                     <h:inputText id="valorg" value="#{sabC.sabor.valorG}" required="true" requiredMessage="Valor da pizza G é obrigatório"/>
+                    <h:message for="valorg" />
+                    
+                    <h:commandButton value="Salvar" action="#{sabC.salvar()}"/>
+                </h:panelGrid>
+
+            </h:form>
+
+
+        </p:layoutUnit>
+
+
+
+    </ui:define>
+
+</ui:composition>

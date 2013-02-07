@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-    <persistence-unit name="PI123PU" transaction-type="JTA">
+    <persistence-unit name="PIFinalTestePU" transaction-type="JTA">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <class>entidade.Pessoa</class>
         <class>entidade.Endereco</class>
@@ -10,11 +10,15 @@
         <class>entidade.Perfil</class>
         <class>entidade.Acessos</class>
         <class>entidade.Menus</class>
+        <class>entidade.Pizza</class>
+        <class>entidade.Sabor</class>
+        <class>entidade.Tamanho</class>
+        <class>entidade.Borda</class>
         <properties>
             <property name="hibernate.connection.username" value="root"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-            <property name="hibernate.connection.password" value=""/>
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/pi_final"/>
+            <property name="hibernate.connection.password" value="root"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/pi_final_teste"/>
             <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>            
         </properties>
