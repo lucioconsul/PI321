@@ -4,9 +4,13 @@
  */
 package controle;
 
-import dao.BordaDAO;
 import dao.BordaDAOImp;
+import dao.BebidaDAOImp;
+import dao.BebidaDAO;
+import dao.BebidaDAOImp;
 import entidade.Borda;
+
+import entidade.Bebida;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -19,16 +23,27 @@ import javax.faces.model.ListDataModel;
  *
  * @author Lucio
  */
-@ManagedBean(name = "bordC")
+@ManagedBean(name = "bebC")
 @SessionScoped
-public class BordaControle {
+public class BebidaControle {
     
-    private Borda borda;
-    private BordaDAO bDAO;
+    private Bebida bebida;
+    private BebidaDAO bDAO;
     private DataModel model;
-
+    
 //#####################################################################################################################################
     
+    public Bebida getBebida() {
+        if(bebida == null){
+            bebida = new Bebida();
+        }
+        return bebida;
+    }
+
+    public void setBebida(Bebida Bebida) {
+        this.bebida = Bebida;
+    }
+
     public DataModel getModel() {
         return model;
     }
@@ -37,27 +52,16 @@ public class BordaControle {
         this.model = model;
     }
     
-    public Borda getBorda() {
-        if(borda == null){
-            borda = new Borda();
-        }
-        return borda;
-    }
-
-    public void setBorda(Borda Borda) {
-        this.borda = Borda;
-    }
-    
 //#####################################################################################################################################
     
     public String salvar(){
-        bDAO = new BordaDAOImp();
+        bDAO = new BebidaDAOImp();
         FacesContext context = FacesContext.getCurrentInstance();
-        if (borda.getId() == null) {
-            bDAO.salva(borda);
+        if (bebida.getId() == null) {
+            bDAO.salva(bebida);
         }else {
-            bDAO.altera(borda);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Borda alterada com Sucesso!", ""));
+            bDAO.altera(bebida);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Bebida alterada com Sucesso!", ""));
         }
         return "admin.faces";        
     }
@@ -65,57 +69,57 @@ public class BordaControle {
 //#####################################################################################################################################
     
         public String alterar() {
-        borda = (Borda) model.getRowData();                
-        setBorda(borda);        
+        bebida = (Bebida) model.getRowData();                
+        setBebida(bebida);        
         
-        return "borda_cad";
-    }
-    
+        return "cad_bebida";
+    }  
+        
 //#####################################################################################################################################
         
     public String excluir() {
         FacesContext context = FacesContext.getCurrentInstance();
-        String nome = borda.getNome();
+        String nome = bebida.getNome();
         try {
-            bDAO = new BordaDAOImp();
-            borda = (Borda) model.getRowData();            
-            bDAO.remove(borda);
-            model = new ListDataModel(bDAO.pesquisaLikeBorda(nome));
-            context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,"Borda excluída com sucesso!", ""));
+            bDAO = new BebidaDAOImp();
+            bebida = (Bebida) model.getRowData();            
+            bDAO.remove(bebida);
+            model = new ListDataModel(bDAO.pesquisaLikeBebida(nome));
+            context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,"Bebida excluída com sucesso!", ""));
         } catch (Exception e) {
             context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR,"Não foi possivel exclusão!", ""));
         }
         limpar();
         return "";
-    }    
+    }        
     
 //#####################################################################################################################################
     
     private void limpar() {
-        borda = null;    
+        bebida = null;    
     }
     
 //#####################################################################################################################################
     
 public String limpaPesquisa() {
-        borda = null;        
-        return "pesqBorda";
+        bebida = null;        
+        return "pesqBebida";
     }    
 
 //#####################################################################################################################################
     
-      public void pesquisaLikeNome() {
-        bDAO = new BordaDAOImp();
-        List<Borda> bordas = bDAO.pesquisaLikeBorda(borda.getNome());
-        model = new ListDataModel(bordas);
-    }
-      
+    public String novaBebida() {
+        limpar();
+        bebida = new Bebida();
+        return "cadBebida";
+    } 
+    
 //#####################################################################################################################################
     
-    public String novaBorda() {
-        limpar();
-        borda = new Borda();
-        return "borda_cad";
-    }      
+      public void pesquisaLikeNome() {
+        bDAO = new BebidaDAOImp();
+        List<Bebida> bebidas = bDAO.pesquisaLikeBebida(bebida.getNome());
+        model = new ListDataModel(bebidas);
+    }       
 }
 

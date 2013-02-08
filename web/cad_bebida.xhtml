@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./admin.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="center">
+          <p:layoutUnit position="center" style="text-align: center" header="Bebida">
+            <h:form id="form">
+                <p:toolbar>
+                    <p:toolbarGroup align="left" style="height: 25px">
+                        <p:commandButton value="Pesquisar" image="ui-icon-search"
+                                         action="#{bebC.limpaPesquisa()}" ajax="false" immediate="true"/>
+
+                        <p:commandButton value="Novo" image="ui-icon-folder-open"
+                                         action="#" ajax="false" disabled="true"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <h:messages id="mensagem" showDetail="true"/>
+                <h:panelGrid  columns="3">
+                    <h:outputText  value="Nome:" />
+                    <h:inputText id="nome" value="#{bebC.bebida.nome}" required="true" requiredMessage="nome é obrigatório"/>
+                    <h:message for="nome" />
+                    
+                    <h:outputText  value="Volume (ml): " />
+                    <h:inputText id="descricao" value="#{bebC.bebida.volume}" required="true" requiredMessage="descrição é obrigatório"/>
+                    <h:message for="descricao" />
+                    
+                     <h:outputText  value="Marca: " />
+                     <h:inputText id="valorp" value="#{bebC.bebida.marca}" required="true" requiredMessage="Valor da pizza P é obrigatório"/>
+                    <h:message for="valorp" />
+                    
+                     <h:outputText  value="Preço Venda " />
+                     <h:inputText id="valorm" value="#{bebC.bebida.precoVenda}" required="true" requiredMessage="Valor da pizza M é obrigatório"/>
+                    <h:message for="valorm" />
+                                        
+                    <h:commandButton value="Salvar" action="#{bebC.salvar()}"/>
+                </h:panelGrid>
+
+            </h:form>
+
+
+        </p:layoutUnit>
+
+
+
+    </ui:define>
+
+</ui:composition>

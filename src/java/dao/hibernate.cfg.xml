@@ -22,5 +22,6 @@
         <mapping class="entidade.Borda"/>
         <mapping class="entidade.Sabor"/>
         <mapping class="entidade.Tamanho"/>
+        <mapping class="entidade.Bebida"/>
     </session-factory>
 </hibernate-configuration>

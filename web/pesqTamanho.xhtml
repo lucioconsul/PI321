@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="./admin.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="center">
+
+        <p:layoutUnit position="center" style="text-align: center" header="Tamanho">
+            <h:form id="form_produto">
+                <p:toolbar>
+                    <p:toolbarGroup align="left" style="height: 25px">
+                        <p:commandButton value="Pesquisar" image="ui-icon-search"
+                                         action="#{tamC.limpaPesquisa()}" ajax="false"/>
+                            
+                        <p:commandButton value="Novo" image="ui-icon-folder-open"
+                                         action="#{tamC.novoTamanho()}" 
+                                         ajax="false"/>
+                   </p:toolbarGroup>
+                </p:toolbar>
+                
+                <p:separator style="width: 100%; height: 0px; margin-top: 10px;"/>
+                <p:messages id="mensagens" showSummary="true" />
+                    <p:fieldset toggleable="true" style="width: 400px;">
+                        <h:panelGrid columns="3" >
+                            <h:outputText value="Nome:" />
+                            <p:inputText id="nome" value="#{tamC.tamanho.nome}" >
+                                <p:focus for="nome"/>
+                            </p:inputText>                           
+                            
+                            <p:commandButton value="Pesquisar" image="ui-icon-search"
+                                       action="#{tamC.pesquisaLikeNome()}"  
+                                       update="tabelaColab"/>
+                        </h:panelGrid>
+                    </p:fieldset>
+                
+                <p:separator style="width: 100%; height: 0px; margin-top: 10px;"/> 
+                
+                <p:dataTable id="tabelaColab" value="#{tamC.model}"
+                        var="bord" paginator="true" rows="4" 
+                                 emptyMessage="Nenhum valor encontrado">
+                    <f:facet name="header">
+                            <h:outputText value="Listando Colaborador(s)"/>
+                    </f:facet>
+                    <p:column>
+                            <f:facet name="header">Nome</f:facet>
+                            <h:outputText value="#{bord.nome}" />
+                    </p:column>
+                    <p:column>
+                            <f:facet name="header">Diametro</f:facet>
+                            <h:outputText value="#{bord.diametro}" />
+                    </p:column>
+                   
+                    <p:column>
+                            <f:facet name="header">Alterar/Excluir</f:facet>
+                            <p:commandLink  action="#{tamC.alterar()}" value="Alterar" ajax="false"/> -
+                            <p:commandLink  value="Excluir" ajax="false" action="#{tamC.excluir()}"/>
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                
+            </h:form>   
+            
+
+        </p:layoutUnit>
+
+
+
+    </ui:define>
+
+</ui:composition>
