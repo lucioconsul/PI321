@@ -11,14 +11,14 @@ import dao.EnderecoDAOImp;
 import dao.FuncaoDAO;
 import dao.FuncaoDAOImp;
 import dao.MenuDAO;
-import dao.MenuDAOImp;
+
 import dao.PerfilDAO;
 import dao.PerfilDAOImp;
 import dao.PessoaDAO;
 import dao.PessoaDAOImp;
 import dao.UsuarioDAO;
 import dao.UsuarioDAOImp;
-import entidade.Colaborador;
+
 import entidade.Menus;
 import entidade.Pessoa;
 import entidade.Colaborador;
@@ -26,10 +26,10 @@ import entidade.Endereco;
 import entidade.Funcao;
 import entidade.Perfil;
 import entidade.Usuario;
-import java.sql.Array;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -37,7 +37,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpSession;
+
 /**
  *
  * @author Aluno
@@ -224,7 +224,6 @@ public class ColaboradorControle {
     public String novoColaborador() {
         limpar();
         colab = new Colaborador();
-        //implementar a pesquisa de fornecedores
         return "cadFuncionario";
     }
     

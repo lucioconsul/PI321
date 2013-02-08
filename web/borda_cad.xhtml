@@ -14,7 +14,7 @@
                 <p:toolbar>
                     <p:toolbarGroup align="left" style="height: 25px">
                         <p:commandButton value="Pesquisar" image="ui-icon-search"
-                                         action="#{borC.limpaPesquisa()}" ajax="false" immediate="true"/>
+                                         action="#{bordC.limpaPesquisa()}" ajax="false" immediate="true"/>
 
                         <p:commandButton value="Novo" image="ui-icon-folder-open"
                                          action="#" ajax="false" disabled="true"/>
@@ -23,18 +23,18 @@
                 <h:messages id="mensagem" showDetail="true"/>
                 <h:panelGrid  columns="3">
                     <h:outputText  value="Nome:" />
-                    <h:inputText id="nome" value="#{borC.borda.nome}" required="true" requiredMessage="nome é obrigatório"/>
+                    <h:inputText id="nome" value="#{bordC.borda.nome}" required="true" requiredMessage="nome é obrigatório"/>
                     <h:message for="nome" />
                     
                     <h:outputText  value="Descrição: " />
-                    <h:inputTextarea id="descricao" value="#{borC.borda.descricao}" required="true" requiredMessage="descricao é obrigatório"/>
+                    <h:inputTextarea id="descricao" value="#{bordC.borda.descricao}" required="true" requiredMessage="descricao é obrigatório"/>
                     <h:message for="descricao" />
                     
                       <h:outputText  value="Valor: " />
-                      <h:inputText id="valor" value="#{borC.borda.valor}" required="true" requiredMessage="valor é obrigatório"/>
+                      <h:inputText id="valor" value="#{bordC.borda.valor}" required="true" requiredMessage="valor é obrigatório"/>
                     <h:message for="valor" />
                     
-                    <h:commandButton value="Salvar" action="#{borC.salvar()}"/>
+                    <h:commandButton value="Salvar" action="#{bordC.salvar()}"/>
                 </h:panelGrid>
 
             </h:form>
