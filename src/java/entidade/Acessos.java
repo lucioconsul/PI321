@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.IndexColumn;
 
 /**
  *
@@ -35,6 +36,7 @@ public class Acessos implements Serializable {
     @JoinTable(name="acesso_perfil",
                 joinColumns=@JoinColumn(name="id_acesso"),
                 inverseJoinColumns=@JoinColumn(name="id_perfil"))
+    @IndexColumn(name="id")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Perfil> perfis;
 

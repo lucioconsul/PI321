@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.IndexColumn;
 
 /**
  *
@@ -31,7 +32,12 @@ public class Pizza implements Serializable {
     @JoinColumn(name = "idTamanho")
     private Tamanho tamanho;
 
-    @OneToMany(mappedBy = "pizza")
+    @ManyToMany
+    @JoinTable(name="sabor_pizza",
+                joinColumns=@JoinColumn(name="id_pizza"),
+                inverseJoinColumns=@JoinColumn(name="id_sabor"))
+    @IndexColumn(name="id")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Sabor> sabores;
 
     
