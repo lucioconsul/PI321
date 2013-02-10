@@ -13,6 +13,7 @@
         <mapping class="entidade.Pessoa"/>
         <mapping class="entidade.Endereco"/>
         <mapping class="entidade.Colaborador"/>
+        <mapping class="entidade.Cliente"/>
         <mapping class="entidade.Funcao"/>
         <mapping class="entidade.Usuario"/>
         <mapping class="entidade.Perfil"/>
@@ -23,5 +24,6 @@
         <mapping class="entidade.Sabor"/>
         <mapping class="entidade.Tamanho"/>
         <mapping class="entidade.Bebida"/>
+        
     </session-factory>
 </hibernate-configuration>

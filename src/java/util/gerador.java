@@ -10,7 +10,7 @@ import javax.persistence.Persistence;
 
 /**
  *
- * @author Cursos Livres
+ * @author Lucio
  */
 public class gerador {
     public static void main(String[] args) {

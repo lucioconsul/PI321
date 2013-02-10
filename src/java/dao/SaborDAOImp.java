@@ -14,7 +14,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Cursos Livres
+ * @author Lucio
  */
 public class SaborDAOImp extends Base_DAO_Imp<Sabor, Long> implements SaborDAO{
 

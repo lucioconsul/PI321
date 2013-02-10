@@ -11,7 +11,7 @@ import org.hibernate.annotations.Cascade;
 
 /**
  *
- * @author Cursos Livres
+ * @author Lucio
  */
 
 

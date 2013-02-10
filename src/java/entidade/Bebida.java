@@ -34,22 +34,22 @@ public class Bebida implements Serializable {
     private String marca;
     private float precoVenda;
     
-    /*@ManyToMany
-    @JoinTable(name="sabor_pizza",
-                joinColumns=@JoinColumn(name="id_sabor"),
-                inverseJoinColumns=@JoinColumn(name="id_pizza"))
+    @ManyToMany
+    @JoinTable(name="bebida_pedido",
+                joinColumns=@JoinColumn(name="id_bebida"),
+                inverseJoinColumns=@JoinColumn(name="id_pedido"))
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<Pizza> pizzas;
+    private List<Pedido> pedidos;
 
-    public List<Pizza> getPizzas() {
-        return pizzas;
+//#####################################################################################################################################        
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
     }
 
-    public void setPizzas(List<Pizza> pizzas) {
-        this.pizzas = pizzas;
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
-      
-      */
 
     public String getVolume() {
         return volume;

@@ -13,7 +13,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Cursos Livres
+ * @author Lucio
  */
 public class PessoaDAOImp extends Base_DAO_Imp<Pessoa, Long> implements PessoaDAO{
 

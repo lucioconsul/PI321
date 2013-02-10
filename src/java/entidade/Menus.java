@@ -29,7 +29,6 @@ public class Menus implements Serializable {
     private Long id;
     @Column(nullable = false)
     private String label;
-    @Column(nullable = false)
     private String url;
     private String icone;
     private String id_menu_pai;

@@ -12,7 +12,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Cursos Livres
+ * @author Lucio
  */
 public class PerfilDAOImp extends Base_DAO_Imp<Perfil, Long> implements PerfilDAO{
 

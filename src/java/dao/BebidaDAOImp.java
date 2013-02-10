@@ -13,7 +13,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Cursos Livres
+ * @author Lucio
  */
 public class BebidaDAOImp extends Base_DAO_Imp<Bebida, Long> implements BebidaDAO{
 

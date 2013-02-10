@@ -31,6 +31,10 @@ public class Pizza implements Serializable {
     @OneToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "idTamanho")
     private Tamanho tamanho;
+    
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="idPedido")
+    private Pedido pedido;
 
     @ManyToMany
     @JoinTable(name="sabor_pizza",
@@ -40,8 +44,16 @@ public class Pizza implements Serializable {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Sabor> sabores;
 
+//#####################################################################################################################################    
     
-    
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
     public List<Sabor> getSabores() {
         return sabores;
     }

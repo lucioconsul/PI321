@@ -14,7 +14,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Cursos Livres
+ * @author Lucio
  */
 public class BordaDAOImp extends Base_DAO_Imp<Borda, Long> implements BordaDAO{
 

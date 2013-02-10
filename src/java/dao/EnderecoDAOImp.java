@@ -13,7 +13,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Cursos Livres
+ * @author Lucio
  */
 public class EnderecoDAOImp extends Base_DAO_Imp<Endereco, Long> implements EnderecoDAO{
 

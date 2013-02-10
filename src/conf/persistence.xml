@@ -5,6 +5,7 @@
         <class>entidade.Pessoa</class>
         <class>entidade.Endereco</class>
         <class>entidade.Colaborador</class>
+        <class>entidade.Cliente</class>
         <class>entidade.Funcao</class>
         <class>entidade.Usuario</class>
         <class>entidade.Perfil</class>

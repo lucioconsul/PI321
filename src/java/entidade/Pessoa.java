@@ -45,6 +45,8 @@ public class Pessoa implements Serializable {
     //"fetch=FetchType.LAZY" é default aqui. nao traz logradouros na pesquisa pq tem muitos logradouros. lazy é pesquisa preguiçosa
     private List<Endereco> enderecos;
 
+//#####################################################################################################################################        
+    
     public Long getId() {
         return id;
     }

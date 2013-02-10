@@ -36,6 +36,8 @@ public class Endereco implements Serializable {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="idPessoa")
     private Pessoa pessoa;
+    
+//#####################################################################################################################################        
 
     public Long getId() {
         return id;

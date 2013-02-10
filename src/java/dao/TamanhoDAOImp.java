@@ -13,7 +13,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Cursos Livres
+ * @author Lucio
  */
 public class TamanhoDAOImp extends Base_DAO_Imp<Tamanho, Long> implements TamanhoDAO{
 
