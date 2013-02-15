@@ -19,6 +19,9 @@
                         <p:commandButton value="Novo" image="ui-icon-folder-open"
                                          action="#{bebC.novaBebida()}" 
                                          ajax="false"/>
+                        <p:commandButton value="Estoque" image="ui-icon-folder-open"
+                                         action="#{bebC.estoque()}" 
+                                         ajax="false"/>
                    </p:toolbarGroup>
                 </p:toolbar>
                 
@@ -43,7 +46,7 @@
                         var="bebida" paginator="true" rows="4" 
                                  emptyMessage="Nenhum valor encontrado">
                     <f:facet name="header">
-                            <h:outputText value="Listando Colaborador(s)"/>
+                            <h:outputText value="Listando Bebida(s)"/>
                     </f:facet>
                     <p:column>
                             <f:facet name="header">Nome</f:facet>
@@ -65,7 +68,8 @@
                     <p:column>
                             <f:facet name="header">Alterar/Excluir</f:facet>
                             <p:commandLink  action="#{bebC.alterar()}" value="Alterar" ajax="false"/> -
-                            <p:commandLink  value="Excluir" ajax="false" action="#{bebC.excluir()}"/>
+                            <p:commandLink  value="Excluir" ajax="false" action="#{bebC.excluir()}"/> -
+                            <p:commandLink  value="Estoque" ajax="false" action="#{bebC.estoque()}"/>
                     </p:column>
                     
                 </p:dataTable>

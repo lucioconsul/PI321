@@ -16,6 +16,8 @@
         <class>entidade.Tamanho</class>
         <class>entidade.Borda</class>
         <class>entidade.Bebida</class>
+        <class>entidade.EstoqueBebida</class>
+        <class>entidade.Pedido</class>
         <properties>
             <property name="hibernate.connection.username" value="root"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>

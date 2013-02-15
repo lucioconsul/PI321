@@ -68,7 +68,7 @@ public class Pedido implements Serializable {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Bebida> bebidas;
     
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pedido")
     private List<Pizza> pizzas;
 
 //#####################################################################################################################################    

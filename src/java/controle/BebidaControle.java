@@ -4,13 +4,13 @@
  */
 package controle;
 
-import dao.BordaDAOImp;
-import dao.BebidaDAOImp;
+
 import dao.BebidaDAO;
 import dao.BebidaDAOImp;
-import entidade.Borda;
-
+import dao.EstoqueBebidaDAOImp;
+import dao.EstoqueDAO;
 import entidade.Bebida;
+import entidade.EstoqueBebida;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -29,7 +29,10 @@ public class BebidaControle {
     
     private Bebida bebida;
     private BebidaDAO bDAO;
+    private EstoqueBebida estoq;
     private DataModel model;
+    private String combo;
+    private String atuali;
     
 //#####################################################################################################################################
     
@@ -51,6 +54,44 @@ public class BebidaControle {
     public void setModel(DataModel model) {
         this.model = model;
     }
+
+    public EstoqueBebida getEstoq() {
+        if(estoq == null){
+            estoq = new EstoqueBebida();
+        }
+        return estoq;
+    }
+
+    public void setEstoq(EstoqueBebida estoq) {
+        this.estoq = estoq;
+    }
+
+    public String getCombo() {
+        if(combo == null){
+            combo = "1";
+        }
+        return combo;
+    }
+
+    public void setCombo(String combo) {
+        this.combo = combo;
+    }
+
+    public String getAtuali() {
+        if(atuali == null){
+            atuali = "0";
+        }
+        return atuali;
+    }
+
+    public void setAtuali(String atuali) {
+        this.atuali = atuali;
+    }
+
+
+
+ 
+    
     
 //#####################################################################################################################################
     
@@ -111,7 +152,7 @@ public String limpaPesquisa() {
     public String novaBebida() {
         limpar();
         bebida = new Bebida();
-        return "cadBebida";
+        return "cad_bebida";
     } 
     
 //#####################################################################################################################################
@@ -121,5 +162,35 @@ public String limpaPesquisa() {
         List<Bebida> bebidas = bDAO.pesquisaLikeBebida(bebida.getNome());
         model = new ListDataModel(bebidas);
     }       
+      
+//#####################################################################################################################################
+    
+      public String estoque() {
+        bebida = (Bebida) model.getRowData();                
+        setBebida(bebida);    
+        EstoqueDAO eDAO = new EstoqueBebidaDAOImp();
+        estoq = eDAO.pesquisaByBebida(bebida);
+        
+        return "bebida_estoque";
+    }      
+      
+//#####################################################################################################################################
+    
+      public String atualizaEstoque() {
+        int n =  0;
+        setEstoq(estoq);    
+        setCombo(combo);
+        setAtuali(atuali);
+        if(combo.equals("1")){
+            n = estoq.getQtd() +  Integer.parseInt(atuali);
+        }else{
+            n = estoq.getQtd() -  Integer.parseInt(atuali);
+        }
+        estoq.setQtd(n);
+        EstoqueDAO eDAO = new EstoqueBebidaDAOImp();
+        eDAO.altera(estoq);
+        
+        return "bebida_estoque";
+    }        
 }
 

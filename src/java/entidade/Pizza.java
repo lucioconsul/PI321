@@ -32,7 +32,7 @@ public class Pizza implements Serializable {
     @JoinColumn(name = "idTamanho")
     private Tamanho tamanho;
     
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name="idPedido")
     private Pedido pedido;
 

@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./admin.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="center">
+        <p:layoutUnit position="center" style="text-align: center" header="Bebida">
+            <h:form id="form">
+                <p:toolbar>
+                    <p:toolbarGroup align="left" style="height: 25px">
+                        <p:commandButton value="Pesquisar" image="ui-icon-search"
+                                         action="#{bebC.limpaPesquisa()}" ajax="false" immediate="true"/>
+
+                        <p:commandButton value="Novo" image="ui-icon-folder-open"
+                                         action="#" ajax="false" disabled="true"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                
+                <h:panelGrid  columns="2">
+                    <h:outputText  value="Nome:" />
+                    <h:inputText id="nome" value="#{bebC.bebida.nome}" readonly="true"/>
+                    
+                    <h:outputText  value="Volume (ml): " />
+                    <h:inputText id="volume" value="#{bebC.bebida.volume}"  readonly="true"/>
+                    
+                    <h:outputText  value="Marca: " />
+                    <h:inputText id="marca" value="#{bebC.bebida.marca}" readonly="true"/>
+                   
+                    <h:outputText  value="Preço Venda " />
+                    <h:inputText id="preco" value="#{bebC.bebida.precoVenda}" readonly="true"/>
+                    
+                    <h:outputText  value="Quantidade: " />
+                    <h:inputText id="qtd" value="#{bebC.estoq.qtd}" required="true" readonly="true"/>
+                    <p:commandButton id="modalDialogButton" value="Atualizar Qtd" onclick="dlg2.show();" type="button"/> 
+
+                    
+                    <h:commandButton value="Salvar" action="#{bebC.salvar()}"/>
+                    
+                    <p:dialog id="modalDialog" header="Entrada ou Saída." widgetVar="dlg2" height="100" appendToBody="false">  
+                        <h:panelGrid  columns="2">
+                            <h:outputText  value="Quantidade: " />
+                            <p:inputMask id="novaqtd" value="#{bebC.atuali}" mask="999999999" />
+                            <p:selectOneMenu value="#{bebC.combo}" style="width: 100px">
+                                <f:selectItem itemLabel="Entrada" itemValue="1" />
+                                <f:selectItem itemLabel="Saída" itemValue="2" />
+                            </p:selectOneMenu>
+                            <p:commandButton id="salvanq" value="Atualizar" oncomplete="dlg2.hide()" 
+                                             type="submit" actionListener="#{bebC.atualizaEstoque()}" process="@this"/> 
+                        </h:panelGrid>
+                    </p:dialog> 
+                    
+                </h:panelGrid>
+
+            </h:form>
+
+
+        </p:layoutUnit>
+
+
+
+    </ui:define>
+
+</ui:composition>
