@@ -163,7 +163,7 @@ public class PedidoControle {
     }    
 
 //#####################################################################################################################################
-    public String escolherSabor() {
+    public void escolherSabor() {
         sabor = (Sabor) modelSaborTodos.getRowData();
         setSabor(sabor);
         if(sabores == null){
@@ -172,12 +172,10 @@ public class PedidoControle {
         sabores.add(sabor);
         modelSabor = new ListDataModel(sabores);
 
-        return "";
-
     }
     
 //#####################################################################################################################################
-    public String escolherBebida() {
+    public void escolherBebida() {
         bebida = (Bebida) modelBebidaTodas.getRowData();
         setBebida(bebida);
         if(bebidas == null){
@@ -185,8 +183,6 @@ public class PedidoControle {
         }
         bebidas.add(bebida);
         modelBebida = new ListDataModel(bebidas);
-
-        return "";
 
     }    
 
@@ -230,10 +226,9 @@ public class PedidoControle {
     }     
 
 //#####################################################################################################################################    
-    public String escolherEndereco() {
+    public void escolherEndereco() {
         endereco = (Endereco) modelEnderecos.getRowData();
         setEndereco(endereco);
-        return "";
     }      
     
     

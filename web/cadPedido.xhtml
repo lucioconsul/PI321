@@ -34,7 +34,6 @@
                     <h:panelGrid  columns="3">
                         <h:outputText  value="Telefone:" />
                         <p:inputText id="telefone" value="#{pedC.telefone}">
-                            <p:focus for="telefone"/>
                         </p:inputText>
                         
                         <p:commandButton value="Pesquisar" image="ui-icon-search"
@@ -48,9 +47,9 @@
                 <!--DETALHES DO PEDIDO-->
                 <!--COMBOS-->
 
-                <h:panelGrid  columns="4" >
+                <h:panelGrid  columns="4" id="panel0">
 
-                    <p:panel header="detalhes do pedido" style="width: 600px">
+                    <p:panel header="detalhes do pedido" style="width: 600px" id="panel1">
                         <h:panelGrid  columns="2" >
                             <h:outputText value="Tamanho: " />  
                             <p:selectOneMenu  id="tamanho" value="#{pedC.tamanho}" style="width: 200px">  
@@ -70,9 +69,9 @@
                         <!--DETALHES DO PEDIDO-->
                         <!--ADD SABOR-->
 
-                        <h:panelGrid  columns="1" width="200px">
+                        <h:panelGrid  columns="1" width="200px" id="panel11">
                             <br/>     
-                            <p:commandButton  onclick="dlg1.show();" value="Add Sabor" style="float: left"/>
+                            <p:commandButton  onclick="dialogSabor.show();" value="Add Sabor" style="float: left"/>
 
 
                             <p:dataTable id="tabelasabores" value="#{pedC.modelSabor}" var="sab" emptyMessage="Nenhum valor encontrado" style="width: 580px">
@@ -99,9 +98,9 @@
                         <!--DETALHES DO PEDIDO-->
                         <!--ADD BEBIDA-->
 
-                        <h:panelGrid  columns="1" >
+                        <h:panelGrid  columns="1" id="panel12">
                             <br/>     
-                            <p:commandButton  onclick="dlg2.show();" value="Add Bebida" style="float: left"/>
+                            <p:commandButton  onclick="dialogBebida.show();" value="Add Bebida" style="float: left"/>
 
                             <p:dataTable id="tabelaBebidas" value="#{pedC.modelBebida}" var="beb" emptyMessage="Nenhum valor encontrado" style="width: 580px">
                                 <f:facet name="header">
@@ -135,7 +134,7 @@
                             <h:outputText  value="Telefone:" />
                             <h:inputText id="dfgh" value="#{pedC.pessoa.telefone}" />
                             
-                            <p:commandButton  onclick="dlg3.show();" value="Endereços" style="float: left"/>
+                            <p:commandButton  onclick="dialogEndereco.show();" value="Endereços" style="float: left"/>
                             <h:outputText  value=" " />
                             
                             <h:outputText  value="Rua:" />
@@ -164,7 +163,7 @@
                 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
                 <!--DIALOG SABOR-->
 
-                <p:dialog id="DialogSabor" header="Escolha um sabor" widgetVar="dlg1"> 
+                <p:dialog id="DialogSabor" header="Escolha um sabor" widgetVar="dialogSabor"> 
                     <h:form id="formu">
                         <p:dataTable id="sabores" var="sab" value="#{pedC.modelSaborTodos}" paginator="false">
                             <f:facet name="header">
@@ -186,7 +185,7 @@
                                 #{sab.valorG}
                             </p:column>
                             <p:column headerText="OK" >
-                                <p:commandButton  action="#{pedC.escolherSabor()}" icon="ui-icon-pencil" ajax="false"/> 
+                                <p:commandButton  action="#{pedC.escolherSabor()}" icon="ui-icon-pencil" update=":form:panel11"/> 
                             </p:column>  
                         </p:dataTable>
                     </h:form>
@@ -195,7 +194,7 @@
                 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
                 <!--DIALOG BEBIDA-->
 
-                <p:dialog id="DialogBebida" header="Escolha um sabor" widgetVar="dlg2"> 
+                <p:dialog id="DialogBebida" header="Escolha um sabor" widgetVar="dialogBebida"> 
                     <h:form id="formdb">
                         <p:dataTable id="sabores" var="beb" value="#{pedC.modelBebidaTodas}" paginator="false">
                             <f:facet name="header">
@@ -214,7 +213,7 @@
                                 #{beb.precoVenda}
                             </p:column>
                             <p:column headerText="OK" >
-                                <p:commandButton  action="#{pedC.escolherBebida()}" icon="ui-icon-pencil" ajax="false"/> 
+                                <p:commandButton  action="#{pedC.escolherBebida()}" icon="ui-icon-pencil" update=":form:panel12"/> 
                             </p:column>  
                         </p:dataTable>
                     </h:form>
@@ -224,7 +223,7 @@
                 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
                 <!--DIALOG ENDEREÇO-->
 
-                <p:dialog id="DialogEndereco" header="Escolha um Endereço" widgetVar="dlg3"> 
+                <p:dialog id="DialogEndereco" header="Escolha um Endereço" widgetVar="dialogEndereco"> 
                     <h:form id="formee">
                         <p:dataTable id="enderecos" var="end" value="#{pedC.modelEnderecos}" paginator="false">
                             <f:facet name="header">
