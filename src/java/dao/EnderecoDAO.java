@@ -17,4 +17,6 @@ public interface EnderecoDAO extends Base_DAO<Endereco, Long>{
     
     Endereco pesquisaByIdColab(Long idColab);
     
+    List<Endereco> pesquisaByIdPessoa(Long idPessoa);
+    
 }

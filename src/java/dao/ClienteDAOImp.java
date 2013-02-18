@@ -13,7 +13,7 @@ import org.hibernate.Session;
  *
  * @author Lucio
  */
-public class ClienteDAOImp extends Base_DAO_Imp<Cliente, Long> implements ClienteDAO{
+public class ClienteDAOImp extends Base_DAO_Imp<Cliente, Long> implements ClienteDAO {
 
     @Override
     public Cliente pesquisa_Por_Id(Long id) {
@@ -36,7 +36,7 @@ public class ClienteDAOImp extends Base_DAO_Imp<Cliente, Long> implements Client
     public Cliente pesquisaCliente(Long id) {
         session = (Session) Fabrica_Sessao.abreConexao().openSession();
         Query query = session.createQuery("FROM Cliente c WHERE c.cpf = :valor");
-        query.setLong("valor", id);        
+        query.setLong("valor", id);
         Cliente resultado = (Cliente) query.uniqueResult();
         session.close();
         return resultado;
@@ -51,5 +51,6 @@ public class ClienteDAOImp extends Base_DAO_Imp<Cliente, Long> implements Client
         session.close();
         return clientes;
     }
-    
+
+
 }

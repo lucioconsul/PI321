@@ -1,0 +1,268 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="./admin.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="center">
+
+        <p:layoutUnit position="center" style="text-align: center" header="PEDIDO">
+
+            <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+            <!--TOLLBAR-->
+
+            <h:form id="form">
+                <p:toolbar>
+                    <p:toolbarGroup align="left" style="height: 25px">
+                        <p:commandButton value="Pesquisar" image="ui-icon-search"
+                                         action="#{pedC.limpaPesquisa()}" ajax="false" immediate="true"/>
+
+                        <p:commandButton value="Novo" image="ui-icon-folder-open"
+                                         action="#" ajax="false" disabled="true"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+                <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                <!--LOCALIZA CLIENTE-->
+
+                <h:messages id="mensagem" showDetail="true"/>
+                <br/>
+                <p:panel header="Localiza cliente" style="width: 350px">
+                    <h:panelGrid  columns="3">
+                        <h:outputText  value="Telefone:" />
+                        <p:inputText id="telefone" value="#{pedC.telefone}">
+                            <p:focus for="telefone"/>
+                        </p:inputText>
+                        
+                        <p:commandButton value="Pesquisar" image="ui-icon-search"
+                                         action="#{pedC.encontraCliente()}"
+                                         update="dadosCliente"/>
+                    </h:panelGrid>
+                </p:panel>
+                <br/>
+                
+                <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                <!--DETALHES DO PEDIDO-->
+                <!--COMBOS-->
+
+                <h:panelGrid  columns="4" >
+
+                    <p:panel header="detalhes do pedido" style="width: 600px">
+                        <h:panelGrid  columns="2" >
+                            <h:outputText value="Tamanho: " />  
+                            <p:selectOneMenu  id="tamanho" value="#{pedC.tamanho}" style="width: 200px">  
+                                <f:selectItem itemLabel="Escolha..." itemValue="" />  
+                                <f:selectItems value="#{pedC.comboTamanho}" />  
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Borda: " />  
+                            <p:selectOneMenu  id="borda" value="#{pedC.borda}" style="width: 200px">  
+                                <f:selectItem itemLabel="Escolha..." itemValue="" />  
+                                <f:selectItems value="#{pedC.comboBorda}" />  
+                            </p:selectOneMenu>
+
+                        </h:panelGrid>
+
+                        <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                        <!--DETALHES DO PEDIDO-->
+                        <!--ADD SABOR-->
+
+                        <h:panelGrid  columns="1" width="200px">
+                            <br/>     
+                            <p:commandButton  onclick="dlg1.show();" value="Add Sabor" style="float: left"/>
+
+
+                            <p:dataTable id="tabelasabores" value="#{pedC.modelSabor}" var="sab" emptyMessage="Nenhum valor encontrado" style="width: 580px">
+                                <f:facet name="header">
+                                    <h:outputText value="Sabores escolhidos"/>
+                                </f:facet>
+                                <p:column>
+                                    <f:facet name="header">Nome</f:facet>
+                                    <h:outputText value="#{sab.nome}" />
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Descricao</f:facet>
+                                    <h:outputText value="#{sab.descricao}" />
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Excluir</f:facet>
+                                    <p:commandButton  action="#{pedC.excluiSabor()}" icon="ui-icon-trash" ajax="false"/>
+                                </p:column>
+
+                            </p:dataTable>
+                        </h:panelGrid>
+
+                        <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                        <!--DETALHES DO PEDIDO-->
+                        <!--ADD BEBIDA-->
+
+                        <h:panelGrid  columns="1" >
+                            <br/>     
+                            <p:commandButton  onclick="dlg2.show();" value="Add Bebida" style="float: left"/>
+
+                            <p:dataTable id="tabelaBebidas" value="#{pedC.modelBebida}" var="beb" emptyMessage="Nenhum valor encontrado" style="width: 580px">
+                                <f:facet name="header">
+                                    <h:outputText value="Sabores escolhidos"/>
+                                </f:facet>
+                                <p:column>
+                                    <f:facet name="header">Nome</f:facet>
+                                    <h:outputText value="#{beb.nome}" />
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Volume</f:facet>
+                                    <h:outputText value="#{beb.volume}" />
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Excluir</f:facet>
+                                    <p:commandButton  action="#{pedC.excluiBebida()}" icon="ui-icon-trash" ajax="false"/>
+                                </p:column>
+
+                            </p:dataTable>
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                    <!--DADOS DO CLIENTE-->
+                    
+                    <p:panel header="dados do cliente" style="width: 500px">
+                        <h:panelGrid  columns="2" id="dadosCliente">
+                            <h:outputText  value="Nome:" />
+                            <h:inputText id="asdf" value="#{pedC.pessoa.nome}" />
+
+                            <h:outputText  value="Telefone:" />
+                            <h:inputText id="dfgh" value="#{pedC.pessoa.telefone}" />
+                            
+                            <p:commandButton  onclick="dlg3.show();" value="Endereços" style="float: left"/>
+                            <h:outputText  value=" " />
+                            
+                            <h:outputText  value="Rua:" />
+                            <h:inputText id="rua" value="#{pedC.endereco.rua}" />
+                            
+                            <h:outputText  value="Rua:" />
+                            <h:inputText id="bairro" value="#{pedC.endereco.bairro}" />
+                            
+                            <h:outputText  value="Cidade:" />
+                            <h:inputText id="cidade" value="#{pedC.endereco.cidade}" />
+                            
+                            <h:outputText  value="Cep:" />
+                            <h:inputText id="cep" value="#{pedC.endereco.cep}" />
+                            
+                            <h:outputText  value="Obs.:" />
+                            <h:inputText id="obs" value="#{pedC.endereco.observacoes}" />
+
+                            <p:commandButton value="Salvar" action="#{pedC.salvar()}"/>
+
+                        </h:panelGrid>
+
+                    </p:panel>
+
+                </h:panelGrid>
+
+                <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                <!--DIALOG SABOR-->
+
+                <p:dialog id="DialogSabor" header="Escolha um sabor" widgetVar="dlg1"> 
+                    <h:form id="formu">
+                        <p:dataTable id="sabores" var="sab" value="#{pedC.modelSaborTodos}" paginator="false">
+                            <f:facet name="header">
+                                Selecione um sabor
+                            </f:facet>
+                            <p:column headerText="Nome">
+                                #{sab.nome}
+                            </p:column>
+                            <p:column headerText="Descrição">
+                                #{sab.descricao}
+                            </p:column>
+                            <p:column headerText="Pequena" >
+                                #{sab.valorP}
+                            </p:column>
+                            <p:column headerText="Media" >
+                                #{sab.valorM}
+                            </p:column>
+                            <p:column headerText="Grande" >
+                                #{sab.valorG}
+                            </p:column>
+                            <p:column headerText="OK" >
+                                <p:commandButton  action="#{pedC.escolherSabor()}" icon="ui-icon-pencil" ajax="false"/> 
+                            </p:column>  
+                        </p:dataTable>
+                    </h:form>
+                </p:dialog> 
+
+                <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                <!--DIALOG BEBIDA-->
+
+                <p:dialog id="DialogBebida" header="Escolha um sabor" widgetVar="dlg2"> 
+                    <h:form id="formdb">
+                        <p:dataTable id="sabores" var="beb" value="#{pedC.modelBebidaTodas}" paginator="false">
+                            <f:facet name="header">
+                                Selecione uma Bebida
+                            </f:facet>
+                            <p:column headerText="Nome">
+                                #{beb.nome}
+                            </p:column>
+                            <p:column headerText="Volume">
+                                #{beb.volume}
+                            </p:column>
+                            <p:column headerText="Marca" >
+                                #{beb.marca}
+                            </p:column>
+                            <p:column headerText="preço" >
+                                #{beb.precoVenda}
+                            </p:column>
+                            <p:column headerText="OK" >
+                                <p:commandButton  action="#{pedC.escolherBebida()}" icon="ui-icon-pencil" ajax="false"/> 
+                            </p:column>  
+                        </p:dataTable>
+                    </h:form>
+                </p:dialog> 
+                
+                
+                <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                <!--DIALOG ENDEREÇO-->
+
+                <p:dialog id="DialogEndereco" header="Escolha um Endereço" widgetVar="dlg3"> 
+                    <h:form id="formee">
+                        <p:dataTable id="enderecos" var="end" value="#{pedC.modelEnderecos}" paginator="false">
+                            <f:facet name="header">
+                                Selecione uma Bebida
+                            </f:facet>
+                            <p:column headerText="Rua">
+                                #{end.rua}
+                            </p:column>
+                            <p:column headerText="Bairro">
+                                #{end.bairro}
+                            </p:column>
+                            <p:column headerText="Cidade" >
+                                #{end.cidade}
+                            </p:column>
+                            <p:column headerText="CEP" >
+                                #{end.cep}
+                            </p:column>
+                            <p:column headerText="Obs.:" >
+                                #{end.observacoes}
+                            </p:column>
+                            <p:column headerText="OK" >
+                                <p:commandButton  image="ui-icon-search"
+                                                  action="#{pedC.escolherEndereco()}" 
+                                                  update="dadosCliente"/> 
+                            </p:column>  
+                        </p:dataTable>
+                    </h:form>
+                </p:dialog> 
+
+                <!--####################################################################################################################-->     
+
+            </h:form>
+
+
+        </p:layoutUnit>
+
+
+
+    </ui:define>
+
+</ui:composition>

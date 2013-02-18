@@ -4,6 +4,7 @@
  */
 package dao;
 
+import entidade.Cliente;
 import entidade.Colaborador;
 import entidade.Pessoa;
 import entidade.Usuario;
@@ -15,7 +16,7 @@ import org.hibernate.Session;
  *
  * @author Lucio
  */
-public class PessoaDAOImp extends Base_DAO_Imp<Pessoa, Long> implements PessoaDAO{
+public class PessoaDAOImp extends Base_DAO_Imp<Pessoa, Long> implements PessoaDAO {
 
     @Override
     public Pessoa pesquisa_Por_Id(Long id) {
@@ -38,7 +39,7 @@ public class PessoaDAOImp extends Base_DAO_Imp<Pessoa, Long> implements PessoaDA
     public Pessoa pesquisaPessoa(Long id) {
         session = (Session) Fabrica_Sessao.abreConexao().openSession();
         Query query = session.createQuery("FROM Pessoa p WHERE p.cpf = :valor");
-        query.setLong("valor", id);        
+        query.setLong("valor", id);
         Pessoa resultado = (Pessoa) query.uniqueResult();
         session.close();
         return resultado;
@@ -53,5 +54,14 @@ public class PessoaDAOImp extends Base_DAO_Imp<Pessoa, Long> implements PessoaDA
         session.close();
         return pessoas;
     }
-    
+
+    @Override
+    public Pessoa getByTelefone(String telefone) {
+        session = (Session) Fabrica_Sessao.abreConexao().openSession();
+        Query query = session.createQuery("FROM Pessoa p WHERE p.telefone = :valor");
+        query.setString("valor", telefone);
+        Pessoa resultado = (Pessoa) query.uniqueResult();
+        session.close();
+        return resultado;
+    }
 }

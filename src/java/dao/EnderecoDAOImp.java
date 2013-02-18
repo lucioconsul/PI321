@@ -54,4 +54,14 @@ public class EnderecoDAOImp extends Base_DAO_Imp<Endereco, Long> implements Ende
         return resultado;
     }
     
+    @Override
+    public List<Endereco> pesquisaByIdPessoa(Long idPessoa){
+        session = (Session) Fabrica_Sessao.abreConexao().openSession();
+        Query query = session.createQuery("SELECT e FROM Endereco e, Pessoa p WHERE e.pessoa = p.id AND p.id = :valor");
+        query.setLong("valor" , idPessoa);
+        List<Endereco> ends = query.list();
+        session.close();
+        return ends;
+    }
+    
 }

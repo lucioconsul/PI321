@@ -67,9 +67,6 @@ public class BebidaControle {
     }
 
     public String getCombo() {
-        if(combo == null){
-            combo = "1";
-        }
         return combo;
     }
 
@@ -78,9 +75,6 @@ public class BebidaControle {
     }
 
     public String getAtuali() {
-        if(atuali == null){
-            atuali = "0";
-        }
         return atuali;
     }
 
@@ -177,20 +171,13 @@ public String limpaPesquisa() {
 //#####################################################################################################################################
     
       public String atualizaEstoque() {
-        int n =  0;
-        setEstoq(estoq);    
-        setCombo(combo);
-        setAtuali(atuali);
-        if(combo.equals("1")){
-            n = estoq.getQtd() +  Integer.parseInt(atuali);
-        }else{
-            n = estoq.getQtd() -  Integer.parseInt(atuali);
-        }
+        int n =  estoq.getQtd() +  Integer.parseInt(atuali);
+        
         estoq.setQtd(n);
         EstoqueDAO eDAO = new EstoqueBebidaDAOImp();
         eDAO.altera(estoq);
         
-        return "bebida_estoque";
+        return "admin.faces";
     }        
 }
 

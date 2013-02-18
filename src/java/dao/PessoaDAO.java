@@ -16,4 +16,6 @@ public interface PessoaDAO extends Base_DAO<Pessoa, Long>{
     
     List<Pessoa> pesquisaLikeNome(String pessoa);
     
+    Pessoa getByTelefone(String telefone);
+    
 }

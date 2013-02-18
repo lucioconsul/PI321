@@ -36,7 +36,8 @@
                      <h:inputText id="valorm" value="#{bebC.bebida.precoVenda}" required="true" requiredMessage="Valor da pizza M é obrigatório"/>
                     <h:message for="valorm" />
                                         
-                    <h:commandButton value="Salvar" action="#{bebC.salvar()}"/>
+                    <h:commandButton id="salvar" value="Salvar" action="#{bebC.salvar()}" />
+                    
                 </h:panelGrid>
 
             </h:form>
