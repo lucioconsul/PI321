@@ -44,4 +44,15 @@ public class TamanhoDAOImp extends Base_DAO_Imp<Tamanho, Long> implements Tamanh
         return tams;
     }
 
+
+    @Override
+    public Tamanho pesquisaNome(String nome) {
+        session = (Session) Fabrica_Sessao.abreConexao().openSession();
+        Query query = session.createQuery("FROM Tamanho t WHERE t.nome like :valor");
+        query.setString("valor", "%" + nome + "%");
+        Tamanho tamanho = (Tamanho) query.uniqueResult();
+        session.close();
+        return tamanho;
+    }
+
 }

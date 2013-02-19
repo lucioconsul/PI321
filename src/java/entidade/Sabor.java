@@ -35,20 +35,7 @@ public class Sabor implements Serializable {
     private float valorP;
     private float valorG;
     
-    @ManyToMany
-    @JoinTable(name="sabor_pizza",
-                joinColumns=@JoinColumn(name="id_sabor"),
-                inverseJoinColumns=@JoinColumn(name="id_pizza"))
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<Pizza> pizzas;
 
-    public List<Pizza> getPizzas() {
-        return pizzas;
-    }
-
-    public void setPizzas(List<Pizza> pizzas) {
-        this.pizzas = pizzas;
-    }
       
     public String getDescricao() {
         return descricao;

@@ -36,13 +36,14 @@ public class Pizza implements Serializable {
     @JoinColumn(name="idPedido")
     private Pedido pedido;
 
-    @ManyToMany
-    @JoinTable(name="sabor_pizza",
-                joinColumns=@JoinColumn(name="id_pizza"),
-                inverseJoinColumns=@JoinColumn(name="id_sabor"))
-    @IndexColumn(name="id")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<Sabor> sabores;
+    @OneToOne
+    private Sabor sabor1;
+    
+    @OneToOne
+    private Sabor sabor2;
+    
+    @OneToOne
+    private Sabor sabor3;
 
 //#####################################################################################################################################    
     
@@ -52,14 +53,6 @@ public class Pizza implements Serializable {
 
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
-    }
-
-    public List<Sabor> getSabores() {
-        return sabores;
-    }
-
-    public void setSabores(List<Sabor> sabores) {
-        this.sabores = sabores;
     }
     
     public Borda getBorda() {
@@ -92,5 +85,29 @@ public class Pizza implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Sabor getSabor1() {
+        return sabor1;
+    }
+
+    public void setSabor1(Sabor sabor1) {
+        this.sabor1 = sabor1;
+    }
+
+    public Sabor getSabor2() {
+        return sabor2;
+    }
+
+    public void setSabor2(Sabor sabor2) {
+        this.sabor2 = sabor2;
+    }
+
+    public Sabor getSabor3() {
+        return sabor3;
+    }
+
+    public void setSabor3(Sabor sabor3) {
+        this.sabor3 = sabor3;
     }
 }

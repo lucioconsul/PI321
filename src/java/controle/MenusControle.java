@@ -67,16 +67,15 @@ public class MenusControle {
     
     
 //#####################################################################################################################################
-/*CONSTRUTOR chama o geraMenu                                                                                                        */
-//#####################################################################################################################################
+//CONSTRUTOR chama o geraMenu
+    
     public MenusControle() {
         geraMenu();
     }      
 
 //#####################################################################################################################################
-/* metodo principal que cria os menus pais e chama os demais metodos que por                                                         */
-/* sua vez criam os submenus                                                                                                         */
-//#####################################################################################################################################
+//metodo principal que cria os menus pais e chama os demais metodos que por sua vez criam os submenus
+    
     public void geraMenu() {
         pModel = new PanelMenu();
         mModel = new DefaultMenuModel();
@@ -121,9 +120,8 @@ public class MenusControle {
     }
 
 //#####################################################################################################################################
-/* metodo recursivo. ele chama ele mesmo até terminar de montar a arvore                                                             */
-/* passando por todas as gerações                                                                                                    */
-//#####################################################################################################################################
+//metodo recursivo. ele chama ele mesmo até terminar de montar a arvore passando por todas as gerações
+
     public Submenu geraSubMenu(Menus menuProcuraFilho) {
         Submenu submenu = new Submenu();
         submenu.setLabel(menuProcuraFilho.getLabel());
@@ -144,8 +142,8 @@ public class MenusControle {
     }
 
 //#####################################################################################################################################
-/*metodo que pega os menus filhos                                                                                                   */
-//#####################################################################################################################################
+//metodo que pega os menus filhos
+
     public List<Menus> getMenusFilhos(Menus mf) {
         List<Menus> menusFilhos = new ArrayList();
         //pego sessão
@@ -165,8 +163,8 @@ public class MenusControle {
     }
 
 //#####################################################################################################################################
-/*verifica se tem submenus                                                                                                           */
-//#####################################################################################################################################
+//verifica se tem submenus
+
     public boolean verificaSub(Menus mu) {
         boolean flag = false;
         //pego sessão

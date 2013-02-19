@@ -45,6 +45,16 @@ public class BordaDAOImp extends Base_DAO_Imp<Borda, Long> implements BordaDAO{
         return bord;
     }
 
+    @Override
+    public Borda pesquisaBorda(String borda) {
+        session = (Session) Fabrica_Sessao.abreConexao().openSession();
+        Query query = session.createQuery("FROM Borda b WHERE b.nome like :valor");
+        query.setString("valor", "%" + borda + "%");
+        Borda bo = (Borda) query.uniqueResult();
+        session.close();
+        return bo;
+    }
+
   
 
 }

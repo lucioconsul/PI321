@@ -60,6 +60,9 @@ public class Pedido implements Serializable {
     @OneToOne
     private Cliente cliente;
     
+    @OneToOne
+    private Endereco endereco;
+    
     @ManyToMany
     @JoinTable(name="bebida_pedido",
                 joinColumns=@JoinColumn(name="id_pedido"),
@@ -151,6 +154,14 @@ public class Pedido implements Serializable {
 
     public void setEntregador(Colaborador entregador) {
         this.entregador = entregador;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
 

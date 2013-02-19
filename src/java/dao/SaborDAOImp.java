@@ -6,8 +6,10 @@ package dao;
 
 import entidade.Colaborador;
 import entidade.Funcao;
+import entidade.Pizza;
 import entidade.Sabor;
 import entidade.Tamanho;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -32,6 +34,7 @@ public class SaborDAOImp extends Base_DAO_Imp<Sabor, Long> implements SaborDAO{
         Query query = session.createQuery("FROM Sabor s");
         List<Sabor> sabores = query.list();
         session.close();
+       
         return sabores;
     }
 

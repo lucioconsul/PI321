@@ -16,4 +16,6 @@ public interface BordaDAO extends Base_DAO<Borda, Long>{
        
     List<Borda> pesquisaLikeBorda(String borda);
     
+    Borda pesquisaBorda(String borda);
+    
 }

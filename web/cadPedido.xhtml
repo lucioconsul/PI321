@@ -14,6 +14,9 @@
             <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
             <!--TOLLBAR-->
 
+            <p:growl id="growl" showDetail="true" sticky="true" />  
+
+
             <h:form id="form">
                 <p:toolbar>
                     <p:toolbarGroup align="left" style="height: 25px">
@@ -25,140 +28,197 @@
                     </p:toolbarGroup>
                 </p:toolbar>
 
+
                 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
                 <!--LOCALIZA CLIENTE-->
 
-                <h:messages id="mensagem" showDetail="true"/>
+
                 <br/>
                 <p:panel header="Localiza cliente" style="width: 350px">
                     <h:panelGrid  columns="3">
                         <h:outputText  value="Telefone:" />
                         <p:inputText id="telefone" value="#{pedC.telefone}">
                         </p:inputText>
-                        
+
                         <p:commandButton value="Pesquisar" image="ui-icon-search"
                                          action="#{pedC.encontraCliente()}"
-                                         update="dadosCliente"/>
+                                         update="@form" ajax="false"/>
                     </h:panelGrid>
                 </p:panel>
                 <br/>
-                
+
                 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
                 <!--DETALHES DO PEDIDO-->
                 <!--COMBOS-->
 
-                <h:panelGrid  columns="4" id="panel0">
+                <h:panelGrid  columns="3" id="panel0">
+                    <h:panelGrid  columns="1" id="panel01" style="margin-right: 50px">
 
-                    <p:panel header="detalhes do pedido" style="width: 600px" id="panel1">
-                        <h:panelGrid  columns="2" >
-                            <h:outputText value="Tamanho: " />  
-                            <p:selectOneMenu  id="tamanho" value="#{pedC.tamanho}" style="width: 200px">  
-                                <f:selectItem itemLabel="Escolha..." itemValue="" />  
-                                <f:selectItems value="#{pedC.comboTamanho}" />  
-                            </p:selectOneMenu>
+                        <p:panel header="Monte as pizzas e adicione ao pedido" style="width: 600px; height: 100%; margin-top: 0px;" id="panel1">
 
-                            <h:outputText value="Borda: " />  
-                            <p:selectOneMenu  id="borda" value="#{pedC.borda}" style="width: 200px">  
-                                <f:selectItem itemLabel="Escolha..." itemValue="" />  
-                                <f:selectItems value="#{pedC.comboBorda}" />  
-                            </p:selectOneMenu>
+                            <h:panelGrid  columns="2" >
+                                <h:outputText value="Tamanho: " />  
+                                <p:selectOneMenu  id="tamanho" value="#{pedC.tamanho}" style="width: 200px"  converter="comboConverter">  
+                                    <f:selectItem itemLabel="Escolha..." itemValue="" />  
+                                    <f:selectItems value="#{pedC.tamanhos}" var="tam" itemLabel="#{tam.nome}" itemValue="#{tam.nome}"/>  
+                                </p:selectOneMenu>
 
-                        </h:panelGrid>
+                                <h:outputText value="Borda: " />  
+                                <p:selectOneMenu  id="borda" value="#{pedC.borda}" style="width: 200px"  converter="comboConverter">  
+                                    <f:selectItem itemLabel="Escolha..." itemValue="" />  
+                                    <f:selectItems value="#{pedC.comboBorda}" var="bor" itemLabel="#{bor.nome}" itemValue="#{bor.nome}"/>  
+                                </p:selectOneMenu>
+                            </h:panelGrid>
 
-                        <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
-                        <!--DETALHES DO PEDIDO-->
-                        <!--ADD SABOR-->
 
-                        <h:panelGrid  columns="1" width="200px" id="panel11">
-                            <br/>     
+                            <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                            <!--DETALHES DO PEDIDO-->
+                            <!--ADD SABOR-->
+
                             <p:commandButton  onclick="dialogSabor.show();" value="Add Sabor" style="float: left"/>
 
+                            <h:panelGrid  columns="1" width="200px" id="panel11">
+                                <p:dataTable id="tabelasabores" value="#{pedC.modelSabor}" var="sab" emptyMessage="Nenhum valor encontrado" style="width: 580px">
+                                    <f:facet name="header">
+                                        <h:outputText value="Sabores escolhidos"/>
+                                    </f:facet>
+                                    <p:column>
+                                        <f:facet name="header">Nome</f:facet>
+                                        <h:outputText value="#{sab.nome}" />
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">Descricao</f:facet>
+                                        <h:outputText value="#{sab.descricao}" />
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">Excluir</f:facet>
+                                        <p:commandLink  action="#{pedC.excluiSabor()}" value="EXCLUIR" ajax="false"/>
+                                    </p:column>
 
-                            <p:dataTable id="tabelasabores" value="#{pedC.modelSabor}" var="sab" emptyMessage="Nenhum valor encontrado" style="width: 580px">
-                                <f:facet name="header">
-                                    <h:outputText value="Sabores escolhidos"/>
-                                </f:facet>
-                                <p:column>
-                                    <f:facet name="header">Nome</f:facet>
-                                    <h:outputText value="#{sab.nome}" />
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">Descricao</f:facet>
-                                    <h:outputText value="#{sab.descricao}" />
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">Excluir</f:facet>
-                                    <p:commandButton  action="#{pedC.excluiSabor()}" icon="ui-icon-trash" ajax="false"/>
-                                </p:column>
+                                </p:dataTable>
+                                <p:commandButton   value="Pizza Ok" action="#{pedC.adicionaPizza()}" update=":form:panel13" style="float: left" ajax="false"/>
+                            </h:panelGrid>
+                        </p:panel>
 
-                            </p:dataTable>
-                        </h:panelGrid>
 
                         <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
-                        <!--DETALHES DO PEDIDO-->
-                        <!--ADD BEBIDA-->
+                        <!--PEDIDO-->
+                        <!--BEBIDA-->
 
-                        <h:panelGrid  columns="1" id="panel12">
-                            <br/>     
+                        <br/><br/><br/>
+                        <p:panel header="##PEDIDO" style="width: 600px; height: 100%;">
+
                             <p:commandButton  onclick="dialogBebida.show();" value="Add Bebida" style="float: left"/>
 
-                            <p:dataTable id="tabelaBebidas" value="#{pedC.modelBebida}" var="beb" emptyMessage="Nenhum valor encontrado" style="width: 580px">
+                            <h:panelGrid  columns="1" id="panel12">
+
+                                <p:dataTable id="tabelaBebida" value="#{pedC.modelBebida}" var="beb" emptyMessage="Nenhum valor encontrado" style="width: 580px">
+                                    <f:facet name="header">
+                                        <h:outputText value="Bebidas escolhidas"/>
+                                    </f:facet>
+                                    <p:column>
+                                        <f:facet name="header">Nome</f:facet>
+                                        <h:outputText value="#{beb.nome}" />
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">Volume</f:facet>
+                                        <h:outputText value="#{beb.volume}" />
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">Excluir</f:facet>
+                                        <p:commandLink  action="#{pedC.excluiBebida()}" value="EXCLUIR" ajax="false"/>
+                                    </p:column>
+
+                                </p:dataTable>
+                            </h:panelGrid>
+
+                            <br/><br/>
+
+                            <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                            <!--PIZZAS-->
+
+                            <h:panelGrid  columns="1" width="200px" id="panel13">
+                            <p:dataTable id="tabelaPizza" value="#{pedC.modelPizza}" var="pizz" emptyMessage="Nenhum valor encontrado" style="width: 580px">
                                 <f:facet name="header">
-                                    <h:outputText value="Sabores escolhidos"/>
+                                    <h:outputText value="Bebidas escolhidas"/>
                                 </f:facet>
                                 <p:column>
-                                    <f:facet name="header">Nome</f:facet>
-                                    <h:outputText value="#{beb.nome}" />
+                                    <f:facet name="header">Tamanho</f:facet>
+                                    <h:outputText value="#{pizz.tamanho.nome}" />
                                 </p:column>
                                 <p:column>
-                                    <f:facet name="header">Volume</f:facet>
-                                    <h:outputText value="#{beb.volume}" />
+                                    <f:facet name="header">Sabor 1</f:facet>
+                                    <h:outputText value="#{pizz.sabor1.nome}" />
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Sabor 2</f:facet>
+                                    <h:outputText value="#{pizz.sabor2.nome}" />
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Sabor 3</f:facet>
+                                    <h:outputText value="#{pizz.sabor3.nome}" />
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Borda</f:facet>
+                                    <h:outputText value="#{pizz.borda.nome}" />
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">Excluir</f:facet>
-                                    <p:commandButton  action="#{pedC.excluiBebida()}" icon="ui-icon-trash" ajax="false"/>
+                                    <p:commandLink  action="#{pedC.excluiBebida()}" value="EXCLUIR" ajax="false"/>
                                 </p:column>
 
                             </p:dataTable>
-                        </h:panelGrid>
+                                <p:commandButton action="#{pedC.salvar()}" value="Salvar Pedido" ajax="false" style="float: left"/>
+                    </h:panelGrid>
+
                     </p:panel>
 
-                    <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
-                    <!--DADOS DO CLIENTE-->
-                    
-                    <p:panel header="dados do cliente" style="width: 500px">
+                </h:panelGrid>
+
+
+
+                <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                <!--DADOS DO CLIENTE-->
+
+                <h:panelGrid  columns="2" id="panel02">
+                    <p:panel header="Dados do cliente" style="width: 500px; height: 318px; margin-top: 0px;">
                         <h:panelGrid  columns="2" id="dadosCliente">
                             <h:outputText  value="Nome:" />
                             <h:inputText id="asdf" value="#{pedC.pessoa.nome}" />
 
                             <h:outputText  value="Telefone:" />
                             <h:inputText id="dfgh" value="#{pedC.pessoa.telefone}" />
-                            
-                            <p:commandButton  onclick="dialogEndereco.show();" value="Endereços" style="float: left"/>
+
+                            <p:commandButton  onclick="dialogEndereco.show();" value="Endereços" style="float: left" />
                             <h:outputText  value=" " />
-                            
+
                             <h:outputText  value="Rua:" />
                             <h:inputText id="rua" value="#{pedC.endereco.rua}" />
-                            
+
                             <h:outputText  value="Rua:" />
                             <h:inputText id="bairro" value="#{pedC.endereco.bairro}" />
-                            
+
                             <h:outputText  value="Cidade:" />
                             <h:inputText id="cidade" value="#{pedC.endereco.cidade}" />
-                            
+
                             <h:outputText  value="Cep:" />
                             <h:inputText id="cep" value="#{pedC.endereco.cep}" />
-                            
+
                             <h:outputText  value="Obs.:" />
                             <h:inputText id="obs" value="#{pedC.endereco.observacoes}" />
 
                             <p:commandButton value="Salvar" action="#{pedC.salvar()}"/>
 
                         </h:panelGrid>
-
                     </p:panel>
+                </h:panelGrid>
+
+
 
                 </h:panelGrid>
+
+
+
 
                 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
                 <!--DIALOG SABOR-->
@@ -185,7 +245,7 @@
                                 #{sab.valorG}
                             </p:column>
                             <p:column headerText="OK" >
-                                <p:commandButton  action="#{pedC.escolherSabor()}" icon="ui-icon-pencil" update=":form:panel11"/> 
+                                <p:commandButton  action="#{pedC.escolherSabor()}" icon="ui-icon-pencil" update=":form:panel11,:growl" process="@this" oncomplete="dialogSabor.hide()"/> 
                             </p:column>  
                         </p:dataTable>
                     </h:form>
@@ -213,45 +273,14 @@
                                 #{beb.precoVenda}
                             </p:column>
                             <p:column headerText="OK" >
-                                <p:commandButton  action="#{pedC.escolherBebida()}" icon="ui-icon-pencil" update=":form:panel12"/> 
+                                <p:commandButton  action="#{pedC.escolherBebida()}" icon="ui-icon-pencil" update=":form:panel12" process="@this" oncomplete="dialogBebida.hide()"/> 
                             </p:column>  
                         </p:dataTable>
                     </h:form>
                 </p:dialog> 
-                
-                
-                <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
-                <!--DIALOG ENDEREÇO-->
 
-                <p:dialog id="DialogEndereco" header="Escolha um Endereço" widgetVar="dialogEndereco"> 
-                    <h:form id="formee">
-                        <p:dataTable id="enderecos" var="end" value="#{pedC.modelEnderecos}" paginator="false">
-                            <f:facet name="header">
-                                Selecione uma Bebida
-                            </f:facet>
-                            <p:column headerText="Rua">
-                                #{end.rua}
-                            </p:column>
-                            <p:column headerText="Bairro">
-                                #{end.bairro}
-                            </p:column>
-                            <p:column headerText="Cidade" >
-                                #{end.cidade}
-                            </p:column>
-                            <p:column headerText="CEP" >
-                                #{end.cep}
-                            </p:column>
-                            <p:column headerText="Obs.:" >
-                                #{end.observacoes}
-                            </p:column>
-                            <p:column headerText="OK" >
-                                <p:commandButton  image="ui-icon-search"
-                                                  action="#{pedC.escolherEndereco()}" 
-                                                  update="dadosCliente"/> 
-                            </p:column>  
-                        </p:dataTable>
-                    </h:form>
-                </p:dialog> 
+
+
 
                 <!--####################################################################################################################-->     
 
@@ -259,6 +288,41 @@
 
 
         </p:layoutUnit>
+        <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+        <!--DIALOG ENDEREÇO-->
+
+        <p:dialog id="DialogEndereco" header="Escolha um Endereço" widgetVar="dialogEndereco" modal="true" draggable="false" 
+                  dynamic="true" appendToBody="true" closable="true"> 
+            <h:form id="formee">
+                <p:dataTable id="enderecos" var="end" value="#{pedC.modelEnderecos}" paginator="false">
+                    <f:facet name="header">
+                        Selecione uma Bebida
+                    </f:facet>
+                    <p:column headerText="Rua">
+                        #{end.rua}
+                    </p:column>
+                    <p:column headerText="Bairro">
+                        #{end.bairro}
+                    </p:column>
+                    <p:column headerText="Cidade" >
+                        #{end.cidade}
+                    </p:column>
+                    <p:column headerText="CEP" >
+                        #{end.cep}
+                    </p:column>
+                    <p:column headerText="Obs.:" >
+                        #{end.observacoes}
+                    </p:column>
+                    <p:column headerText="OK" >
+                        <p:commandButton  image="ui-icon-search"
+                                          action="#{pedC.escolherEndereco()}" 
+                                          process="@this"
+                                          update=":form"
+                                          oncomplete="dialogEndereco.hide()"/> 
+                    </p:column>  
+                </p:dataTable>
+            </h:form>
+        </p:dialog> 
 
 
 

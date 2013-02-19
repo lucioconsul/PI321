@@ -7,6 +7,9 @@ package dao;
 import entidade.Acessos;
 import entidade.Perfil;
 import entidade.Usuario;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -15,9 +18,7 @@ import org.hibernate.Session;
  *
  * @author Lucio
  */
-public class AcessosDAOImp extends Base_DAO_Imp<Acessos, Long> implements AcessosDAO{
-
-    
+public class AcessosDAOImp extends Base_DAO_Imp<Acessos, Long> implements AcessosDAO {
 
     @Override
     public List<Usuario> pesquisaLikeNome(String usu) {
@@ -51,6 +52,6 @@ public class AcessosDAOImp extends Base_DAO_Imp<Acessos, Long> implements Acesso
 //        session.close();
 //        return resultado;
     }
-
     
+
 }

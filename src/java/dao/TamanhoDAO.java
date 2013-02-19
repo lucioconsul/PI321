@@ -15,4 +15,6 @@ public interface TamanhoDAO extends Base_DAO<Tamanho, Long>{
        
     List<Tamanho> pesquisaLikeTamanho(String tamanho);
     
+    Tamanho pesquisaNome(String nome);
+    
 }

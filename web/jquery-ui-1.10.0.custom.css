@@ -18,7 +18,7 @@ body a:hover{text-shadow: none !important}
 .ui-widget-content{background-color: none;}
 /*#inicial_body{background:url("images/fundo.jpg") repeat-y top center !important;width: 100%;height: 100%}*/
 /*#pg_inicial > .ui-layout-unit-content,#pg_inicial > .ui-widget-content{background:url("images/fundo.jpg") repeat-y top center !important;width: 100%;height: 100%}*/
-#formulario_login{ width: auto; margin: auto;height:671px;padding-top:150px;background:url("images/fundo2.jpg") right top no-repeat  }
+
 #topo{background:url("images/logo2.png")center top no-repeat ,url("images/fundo3.jpg")right top no-repeat; }
 /* Interaction Cues
 ----------------------------------*/
