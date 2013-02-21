@@ -52,5 +52,16 @@ public class ClienteDAOImp extends Base_DAO_Imp<Cliente, Long> implements Client
         return clientes;
     }
 
+    @Override
+    public Cliente getByTelefone(String telefone) {
+        session = (Session) Fabrica_Sessao.abreConexao().openSession();
+        Query query = session.createQuery("SELECT c FROM Cliente c, Pessoa p WHERE p.id = c.id AND p.telefone = :valor");
+        query.setString("valor", telefone);
+        Cliente resultado = (Cliente) query.uniqueResult();
+        session.close();
+        return resultado;
+    }
+    
+
 
 }

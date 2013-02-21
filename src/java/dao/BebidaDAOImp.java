@@ -44,5 +44,15 @@ public class BebidaDAOImp extends Base_DAO_Imp<Bebida, Long> implements BebidaDA
         return bebidas;
     }
 
+    @Override
+    public List<Bebida> pesquisaPorEstoque() {
+        session = (Session) Fabrica_Sessao.abreConexao().openSession();
+        Query query = session.createQuery("SELECT b FROM Bebida b, EstoqueBebida e WHERE e.bebida = b.id AND e.qtd > 0");
+        List<Bebida> bebidas = query.list();
+        session.close();
+        return bebidas;
+    }
+
+
   
 }

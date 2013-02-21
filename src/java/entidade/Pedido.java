@@ -5,6 +5,8 @@
 package entidade;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -22,6 +24,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.IndexColumn;
 
@@ -48,8 +51,7 @@ public class Pedido implements Serializable {
     private Date dia;
     
     @Column(nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date hora;
+    private Timestamp hora;
     
     @OneToOne
     private Colaborador atendente;
@@ -116,14 +118,13 @@ public class Pedido implements Serializable {
         this.dia = dia;
     }
 
-    public Date getHora() {
+    public Timestamp getHora() {
         return hora;
     }
 
-    public void setHora(Date hora) {
+    public void setHora(Timestamp hora) {
         this.hora = hora;
     }
-
     public List<Bebida> getBebidas() {
         return bebidas;
     }

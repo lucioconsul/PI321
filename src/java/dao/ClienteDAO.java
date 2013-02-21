@@ -16,4 +16,6 @@ public interface ClienteDAO extends Base_DAO<Cliente, Long>{
     
     List<Cliente> pesquisaLikeNome(String cliente);
     
+    Cliente getByTelefone(String telefone);
+    
 }

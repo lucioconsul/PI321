@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface BebidaDAO extends Base_DAO<Bebida, Long>{
        
-    List<Bebida> pesquisaLikeBebida(String sabor);
+    List<Bebida> pesquisaLikeBebida(String bebida);
+    
+    List<Bebida> pesquisaPorEstoque();
     
 }

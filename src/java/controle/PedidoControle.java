@@ -12,10 +12,14 @@ import dao.ClienteDAO;
 import dao.ClienteDAOImp;
 import dao.EnderecoDAO;
 import dao.EnderecoDAOImp;
+import dao.EstoqueBebidaDAOImp;
+import dao.EstoqueDAO;
 import dao.PedidoDAO;
 import dao.PedidoDAOImp;
 import dao.PessoaDAO;
 import dao.PessoaDAOImp;
+import dao.PizzaDAO;
+import dao.PizzaDAOImp;
 import dao.SaborDAO;
 import dao.SaborDAOImp;
 import dao.TamanhoDAO;
@@ -23,13 +27,17 @@ import dao.TamanhoDAOImp;
 import entidade.Bebida;
 import entidade.Borda;
 import entidade.Cliente;
+import entidade.Colaborador;
 import entidade.Endereco;
+import entidade.EstoqueBebida;
 import entidade.Pedido;
 import entidade.Pessoa;
 import entidade.Pizza;
 import entidade.Sabor;
 import entidade.Tamanho;
 import entidade.Usuario;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -62,6 +70,7 @@ public class PedidoControle {
     private String telefone;
     private Pessoa pessoa;
     private Endereco endereco;
+    private EstoqueBebida estoque;
     private ArrayList<Bebida> bebidas;
     private ArrayList<Sabor> sabores;
     private ArrayList<Pizza> pizzas = new ArrayList();
@@ -72,49 +81,101 @@ public class PedidoControle {
     private ClienteDAO cDAO;
     private PessoaDAO peDAO;
     private TamanhoDAO tDAO;
+    private BordaDAO bDAO;
+    private PizzaDAO piDAO;
+    private ClienteDAO cliDAO;
+    private EstoqueDAO estDAO;
     private DataModel modelSabor;
     private DataModel modelSaborTodos;
     private DataModel modelBebida;
     private DataModel modelBebidaTodas;
     private DataModel modelEnderecos;
     private DataModel modelPizza;
+    private boolean clienteNovo = false;
 
 //#####################################################################################################################################
     public String salvar() {
 
+        FacesContext context = FacesContext.getCurrentInstance();
+        //verifico se montou alguma pizza
+        if(pizzas == null || pizzas.isEmpty()){
+            context.addMessage(null, new FacesMessage("Sapore", "O pedido não foi salvo porque não contém pizzas"));
+            return "";
+        }
         pedido.setPizzas(pizzas);
+        
+        //verifico se pegou algum cliente
+        if(cliente == null || cliente.getNome().equals("") || cliente.getTelefone().equals("")){
+            context.addMessage(null, new FacesMessage("Sapore", "O pedido não foi salvo. Necessário vincular a um cliente"));
+            return "";
+            
+        //se for cliente novo faço o cadastro:
+        }else if(clienteNovo){
+            //verifico campos obrigatorios
+            if(cliente.getNome().equals("") || cliente.getTelefone().equals("") || endereco.getRua().equals("") || endereco.getBairro().equals("")){
+                context.addMessage(null, new FacesMessage("Sapore", "O pedido não foi salvo. Cadastro de cliente incompleto"));
+                return "";
+            }else{
+                cliDAO = new ClienteDAOImp();
+                eDAO = new EnderecoDAOImp();
+                endereco.setPessoa(cliente);
+                ends = new ArrayList();
+                ends.add(endereco);
+                cliente.setEnderecos(ends);
+                cliDAO.salva(cliente);
+                eDAO.altera(endereco);
+                context.addMessage(null, new FacesMessage("Sapore", "Cadastro de cliente salvo com sucesso!"));
+            }
+        }
+
+        pedido.setCliente(cliente);
+        
+        //verifico se pegou um endereco
+        if(endereco == null || endereco.getRua().equals("") || endereco.getBairro().equals("")){
+            context.addMessage(null, new FacesMessage("Sapore", "O pedido não foi salvo. Necessário selecionar um endereço para entrega"));
+            return "";
+        }
+        pedido.setEndereco(endereco);
+        pedido.setDelivery(Boolean.TRUE);
+        pedido.setDia(new Date());
+        pedido.setHora(new Timestamp(System.currentTimeMillis()));
+        pedido.setMesa("0");
+        
         pedido.setBebidas(bebidas);
         //diminuir bebida do estoque
+        if (bebidas != null) {
+            estDAO = new EstoqueBebidaDAOImp();
+            for (Bebida bebida1 : bebidas) {
+                estoque = estDAO.pesquisaByBebida(bebida1);
+                estoque.setQtd(estoque.getQtd() - 1);
+                estDAO.altera(estoque);
+            }
+        }
 
         //pego sessão e seto o colaborador como atendente desde pedido
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         Usuario usu = (Usuario) session.getAttribute("autenticado");
         pedido.setAtendente(usu.getColaborador());
-        pedido.setCliente(cliente);
-
-        pedido.setDelivery(Boolean.TRUE);
-        pedido.setDia(new Date());
-
-        /*Date date = new Date();
-         int minutos = date.getMinutes();
-         int hora = date.getHours();
-         int dia = date.getDate();
-         int mes = date.getMonth()+1;
-         int ano = date.getYear()-100;
-         */
 
 
-
-
-
+        //salvo o pedido
         pDAO = new PedidoDAOImp();
-        FacesContext context = FacesContext.getCurrentInstance();
         if (pedido.getId() == null) {
             pDAO.salva(pedido);
+            context.addMessage(null, new FacesMessage("Sapore", "Pedido salvo com Sucesso!"));
         } else {
             pDAO.altera(pedido);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Pedido alterado com Sucesso!", ""));
+            context.addMessage(null, new FacesMessage("Sapore", "Pedido alterado com Sucesso!"));
         }
+
+        //salvo as pizzas
+        piDAO = new PizzaDAOImp();
+        for (Pizza pizza1 : pizzas) {
+            pizza1.setPedido(pedido);
+            piDAO.salva(pizza1);
+        }
+
+        limpar();
         return "admin.faces";
     }
 
@@ -146,6 +207,26 @@ public class PedidoControle {
 //#####################################################################################################################################
     private void limpar() {
         pedido = null;
+        endereco = null;
+        ends = null;
+        pizza = null;
+        pizzas = null;
+        sabor = null;
+        sabores = null;
+        borda = null;
+        tamanho = null;
+        tamanhos = null;
+        bebida = null;
+        bebidas = null;
+        cliente = null;
+        pessoa = null;
+        modelSabor = null;
+        modelSaborTodos = null;
+        modelBebida = null;
+        modelBebidaTodas = null;
+        modelEnderecos = null;
+        modelPizza = null;
+
     }
 
 //#####################################################################################################################################
@@ -177,14 +258,14 @@ public class PedidoControle {
     }
 
 //#####################################################################################################################################
-    public List<Tamanho> getComboTamanho() {
+    public List<SelectItem> getComboTamanho() {
         TamanhoDAO tdao = new TamanhoDAOImp();
         tamanhos = tdao.getTodos();
-        /*List<SelectItem> listaCombo = new ArrayList<SelectItem>();
-         for (Tamanho tam : tamanhos) {
-         listaCombo.add(new SelectItem(tam.getId(), tam.getNome()));
-         }*/
-        return tamanhos;
+        List<SelectItem> listaCombo = new ArrayList<SelectItem>();
+        for (Tamanho tam : tamanhos) {
+            listaCombo.add(new SelectItem(tam.getId(), tam.getNome()));
+        }
+        return listaCombo;
     }
 
 //#####################################################################################################################################
@@ -208,7 +289,7 @@ public class PedidoControle {
 //#####################################################################################################################################
     public void getTodasBebidas() {
         BebidaDAO bdao = new BebidaDAOImp();
-        List<Bebida> bebidasl = bdao.getTodos();
+        List<Bebida> bebidasl = bdao.pesquisaPorEstoque();
         modelBebidaTodas = new ListDataModel(bebidasl);
     }
 
@@ -268,17 +349,46 @@ public class PedidoControle {
         return "";
     }
 
+    //#####################################################################################################################################
+    public String excluiPizza() {
+        pizza = (Pizza) modelPizza.getRowData();
+        setPizza(pizza);
+        int x = 0;
+        for (Pizza pi : pizzas) {
+            if (pi.getId() == pizza.getId()) {
+                x = bebidas.indexOf(pi);
+            }
+        }
+        pizzas.remove(x);
+        return "";
+    }
+
 //#####################################################################################################################################
     public String encontraCliente() {
-        peDAO = new PessoaDAOImp();
+        cDAO = new ClienteDAOImp();
         eDAO = new EnderecoDAOImp();
-        pessoa = peDAO.getByTelefone(telefone);
-        ends = eDAO.pesquisaByIdPessoa(pessoa.getId());
-        pessoa.setEnderecos(ends);
-        modelEnderecos = new ListDataModel(ends);
-        setModelEnderecos(modelEnderecos);
+        clienteNovo = false;
+        if (!"".equals(telefone)){
+            cliente = cDAO.getByTelefone(telefone);
+            if (cliente == null) {
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, new FacesMessage("Sapore", "Cliente não cadastrado. Fazer cadastro"));
+                clienteNovo = true;
+                cliente = new Cliente();
+                endereco = new Endereco();
+                cliente.setTelefone(telefone);
+                return "";
+            }
+            ends = eDAO.pesquisaByIdPessoa(cliente.getId());
+            cliente.setEnderecos(ends);
+            modelEnderecos = new ListDataModel(ends);
+            setModelEnderecos(modelEnderecos);
+        } else {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Sapore", "Digite o telefone do cliente."));
+            return "";
+        }
         telefone = "";
-
         return "";
     }
 
@@ -292,8 +402,10 @@ public class PedidoControle {
 //#####################################################################################################################################    
     public void adicionaPizza() {
 
-        pizza = new Pizza();
-
+        setPizza(pizza);
+        if (pizza == null) {
+            pizza = new Pizza();
+        }
         if (tamanho == null) {
             tamanho = new Tamanho();
         } else {
@@ -303,6 +415,9 @@ public class PedidoControle {
         pizza.setTamanho(tamanho);
         if (borda == null) {
             borda = new Borda();
+        } else {
+            bDAO = new BordaDAOImp();
+            borda = bDAO.pesquisa_Por_Id(borda.getId());
         }
         pizza.setBorda(borda);
         if (pedido == null) {
@@ -319,26 +434,7 @@ public class PedidoControle {
             }
         }
 
-
-
-        pizza.setExcecoes("");
-
         pizzas.add(pizza);
-        /*
-         ArrayList pi = new ArrayList();
-         ArrayList sabs = new ArrayList();
-         for (Pizza p : pizzas) {
-         pi.add(p.getSabores().get(0));
-         pi.add(p.getSabores().get(1));
-         pi.add(p.getSabores().get(2));
-            
-         }
-         for (Object s : pi) {
-         Sabor sab = (Sabor) s;
-         sabs.add(sab.getNome());
-         }*/
-
-
 
         modelPizza = new ListDataModel(pizzas);
 
@@ -547,5 +643,13 @@ public class PedidoControle {
 
     public void setTamanhos(List<Tamanho> tamanhos) {
         this.tamanhos = tamanhos;
+    }
+
+    public EstoqueBebida getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(EstoqueBebida estoque) {
+        this.estoque = estoque;
     }
 }

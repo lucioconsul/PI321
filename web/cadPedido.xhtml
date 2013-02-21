@@ -34,7 +34,7 @@
 
 
                 <br/>
-                <p:panel header="Localiza cliente" style="width: 350px">
+                <p:panel header="Localiza cliente" style="max-width: 40%; min-width: 40%;">
                     <h:panelGrid  columns="3">
                         <h:outputText  value="Telefone:" />
                         <p:inputText id="telefone" value="#{pedC.telefone}">
@@ -45,177 +45,178 @@
                                          update="@form" ajax="false"/>
                     </h:panelGrid>
                 </p:panel>
-                <br/>
+                <p:separator style="max-width: 40%; min-width: 40%; height: 5px; margin-left:1px;"/><br/>
 
-                <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
-                <!--DETALHES DO PEDIDO-->
-                <!--COMBOS-->
-
-                <h:panelGrid  columns="3" id="panel0">
-                    <h:panelGrid  columns="1" id="panel01" style="margin-right: 50px">
-
-                        <p:panel header="Monte as pizzas e adicione ao pedido" style="width: 600px; height: 100%; margin-top: 0px;" id="panel1">
-
-                            <h:panelGrid  columns="2" >
-                                <h:outputText value="Tamanho: " />  
-                                <p:selectOneMenu  id="tamanho" value="#{pedC.tamanho}" style="width: 200px"  converter="comboConverter">  
-                                    <f:selectItem itemLabel="Escolha..." itemValue="" />  
-                                    <f:selectItems value="#{pedC.tamanhos}" var="tam" itemLabel="#{tam.nome}" itemValue="#{tam.nome}"/>  
-                                </p:selectOneMenu>
-
-                                <h:outputText value="Borda: " />  
-                                <p:selectOneMenu  id="borda" value="#{pedC.borda}" style="width: 200px"  converter="comboConverter">  
-                                    <f:selectItem itemLabel="Escolha..." itemValue="" />  
-                                    <f:selectItems value="#{pedC.comboBorda}" var="bor" itemLabel="#{bor.nome}" itemValue="#{bor.nome}"/>  
-                                </p:selectOneMenu>
-                            </h:panelGrid>
-
-
-                            <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
-                            <!--DETALHES DO PEDIDO-->
-                            <!--ADD SABOR-->
-
-                            <p:commandButton  onclick="dialogSabor.show();" value="Add Sabor" style="float: left"/>
-
-                            <h:panelGrid  columns="1" width="200px" id="panel11">
-                                <p:dataTable id="tabelasabores" value="#{pedC.modelSabor}" var="sab" emptyMessage="Nenhum valor encontrado" style="width: 580px">
-                                    <f:facet name="header">
-                                        <h:outputText value="Sabores escolhidos"/>
-                                    </f:facet>
-                                    <p:column>
-                                        <f:facet name="header">Nome</f:facet>
-                                        <h:outputText value="#{sab.nome}" />
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">Descricao</f:facet>
-                                        <h:outputText value="#{sab.descricao}" />
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">Excluir</f:facet>
-                                        <p:commandLink  action="#{pedC.excluiSabor()}" value="EXCLUIR" ajax="false"/>
-                                    </p:column>
-
-                                </p:dataTable>
-                                <p:commandButton   value="Pizza Ok" action="#{pedC.adicionaPizza()}" update=":form:panel13" style="float: left" ajax="false"/>
-                            </h:panelGrid>
-                        </p:panel>
-
-
-                        <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
-                        <!--PEDIDO-->
-                        <!--BEBIDA-->
-
-                        <br/><br/><br/>
-                        <p:panel header="##PEDIDO" style="width: 600px; height: 100%;">
-
-                            <p:commandButton  onclick="dialogBebida.show();" value="Add Bebida" style="float: left"/>
-
-                            <h:panelGrid  columns="1" id="panel12">
-
-                                <p:dataTable id="tabelaBebida" value="#{pedC.modelBebida}" var="beb" emptyMessage="Nenhum valor encontrado" style="width: 580px">
-                                    <f:facet name="header">
-                                        <h:outputText value="Bebidas escolhidas"/>
-                                    </f:facet>
-                                    <p:column>
-                                        <f:facet name="header">Nome</f:facet>
-                                        <h:outputText value="#{beb.nome}" />
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">Volume</f:facet>
-                                        <h:outputText value="#{beb.volume}" />
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">Excluir</f:facet>
-                                        <p:commandLink  action="#{pedC.excluiBebida()}" value="EXCLUIR" ajax="false"/>
-                                    </p:column>
-
-                                </p:dataTable>
-                            </h:panelGrid>
-
-                            <br/><br/>
-
-                            <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
-                            <!--PIZZAS-->
-
-                            <h:panelGrid  columns="1" width="200px" id="panel13">
-                            <p:dataTable id="tabelaPizza" value="#{pedC.modelPizza}" var="pizz" emptyMessage="Nenhum valor encontrado" style="width: 580px">
-                                <f:facet name="header">
-                                    <h:outputText value="Bebidas escolhidas"/>
-                                </f:facet>
-                                <p:column>
-                                    <f:facet name="header">Tamanho</f:facet>
-                                    <h:outputText value="#{pizz.tamanho.nome}" />
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">Sabor 1</f:facet>
-                                    <h:outputText value="#{pizz.sabor1.nome}" />
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">Sabor 2</f:facet>
-                                    <h:outputText value="#{pizz.sabor2.nome}" />
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">Sabor 3</f:facet>
-                                    <h:outputText value="#{pizz.sabor3.nome}" />
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">Borda</f:facet>
-                                    <h:outputText value="#{pizz.borda.nome}" />
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">Excluir</f:facet>
-                                    <p:commandLink  action="#{pedC.excluiBebida()}" value="EXCLUIR" ajax="false"/>
-                                </p:column>
-
-                            </p:dataTable>
-                                <p:commandButton action="#{pedC.salvar()}" value="Salvar Pedido" ajax="false" style="float: left"/>
-                    </h:panelGrid>
-
-                    </p:panel>
-
-                </h:panelGrid>
 
 
 
                 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
                 <!--DADOS DO CLIENTE-->
 
-                <h:panelGrid  columns="2" id="panel02">
-                    <p:panel header="Dados do cliente" style="width: 500px; height: 318px; margin-top: 0px;">
-                        <h:panelGrid  columns="2" id="dadosCliente">
-                            <h:outputText  value="Nome:" />
-                            <h:inputText id="asdf" value="#{pedC.pessoa.nome}" />
+                <p:panel header="Dados do cliente" style="max-width: 40%; min-width: 40%;">
+                    <h:panelGrid  columns="2" id="dadosCliente">
+                        <h:outputText  value="Nome:" />
+                        <h:inputText id="asdf" value="#{pedC.cliente.nome}" />
 
-                            <h:outputText  value="Telefone:" />
-                            <h:inputText id="dfgh" value="#{pedC.pessoa.telefone}" />
+                        <h:outputText  value="Telefone:" />
+                        <h:inputText id="dfgh" value="#{pedC.cliente.telefone}" />
 
-                            <p:commandButton  onclick="dialogEndereco.show();" value="Endereços" style="float: left" />
-                            <h:outputText  value=" " />
+                        <p:commandButton  onclick="dialogEndereco.show();" value="Endereços" style="float: left" />
+                        <h:outputText  value=" " />
 
-                            <h:outputText  value="Rua:" />
-                            <h:inputText id="rua" value="#{pedC.endereco.rua}" />
+                        <h:outputText  value="Rua:" />
+                        <h:inputText id="rua" value="#{pedC.endereco.rua}" />
 
-                            <h:outputText  value="Rua:" />
-                            <h:inputText id="bairro" value="#{pedC.endereco.bairro}" />
+                        <h:outputText  value="Bairro:" />
+                        <h:inputText id="bairro" value="#{pedC.endereco.bairro}" />
 
-                            <h:outputText  value="Cidade:" />
-                            <h:inputText id="cidade" value="#{pedC.endereco.cidade}" />
+                        <h:outputText  value="Cidade:" />
+                        <h:inputText id="cidade" value="#{pedC.endereco.cidade}" />
 
-                            <h:outputText  value="Cep:" />
-                            <h:inputText id="cep" value="#{pedC.endereco.cep}" />
+                        <h:outputText  value="Cep:" />
+                        <h:inputText id="cep" value="#{pedC.endereco.cep}" />
 
-                            <h:outputText  value="Obs.:" />
-                            <h:inputText id="obs" value="#{pedC.endereco.observacoes}" />
+                        <h:outputText  value="Obs.:" />
+                        <h:inputText id="obs" value="#{pedC.endereco.observacoes}" />
 
-                            <p:commandButton value="Salvar" action="#{pedC.salvar()}"/>
+                    </h:panelGrid>
+                </p:panel>
+                <p:separator style="max-width: 40%; min-width: 40%; height: 5px; margin-left:1px;"/><br/>
 
+                <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                <!--DETALHES DO PEDIDO-->
+                <!--COMBOS-->
+
+                <p:panel header="MONTANDO A PIZZA" style="max-width: 90%; min-width: 70%; margin-left:auto; margin-right:auto;" id="panel1">
+
+                    <h:panelGrid  columns="2" >
+                        <h:outputText value="Tamanho: " />  
+                        <p:selectOneMenu  id="tamanho" value="#{pedC.tamanho.id}" style="width: 200px"  >  
+                            <f:selectItems value="#{pedC.comboTamanho}" />  
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Borda: " />  
+                        <p:selectOneMenu  id="borda" value="#{pedC.borda.id}" style="width: 200px" >  
+                            <f:selectItem itemLabel="Sem borda" itemValue="0"/>
+                            <f:selectItems value="#{pedC.comboBorda}" />  
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <br/>
+
+
+                    <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                    <!--DETALHES DO PEDIDO-->
+                    <!--ADD SABOR-->
+
+
+                    <h:panelGrid  columns="1"  id="panel11" style="min-width: 90%;  margin-left:auto; margin-right:auto;">
+                        <p:dataTable id="tabelasabores" value="#{pedC.modelSabor}" var="sab" emptyMessage="Nenhum valor encontrado">
+                            <f:facet name="header">
+                                <h:outputText value="Sabores escolhidos"/>
+                            </f:facet>
+                            <p:column>
+                                <f:facet name="header">Nome</f:facet>
+                                <h:outputText value="#{sab.nome}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Descricao</f:facet>
+                                <h:outputText value="#{sab.descricao}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Excluir</f:facet>
+                                <p:commandLink  action="#{pedC.excluiSabor()}" value="EXCLUIR" ajax="false"/>
+                            </p:column>
+                        </p:dataTable>
+                        <h:outputText value=" " />
+                        <h:panelGrid  columns="2" >
+                            <p:commandButton  onclick="dialogSabor.show();" value="Add Sabor" style="float: left;"/>
+                            <h:outputText value=" "/>
+                            <h:outputText value="Exceções:" style="float: left"/>
+                            <h:outputText value=" "/>
+                            <p:inputTextarea rows="6" cols="50" value="#{pedC.pizza.excecoes}" style="float: left"/>
+                            <h:outputText value=" "/>
+                            <p:commandButton   value="Pizza Ok" action="#{pedC.adicionaPizza()}" update=":form:panel13" style="float: left" ajax="false"/>
                         </h:panelGrid>
-                    </p:panel>
-                </h:panelGrid>
+                    </h:panelGrid>
+                </p:panel>
+
+                <br/><p:separator style="height: 5px; max-width: 90%;  margin-left:auto; margin-right:auto;"/><br/>
 
 
+                <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                <!--PEDIDO-->
+                <!--BEBIDA-->
 
-                </h:panelGrid>
+
+                <p:panel header="MONTANDO O PEDIDO" style="max-width: 90%; min-width: 70%; margin-left:auto; margin-right:auto;">
+
+                    <h:panelGrid  columns="1" id="panel12" style="min-width: 90%;  margin-left:auto; margin-right:auto;">
+
+                        <p:dataTable id="tabelaBebida" value="#{pedC.modelBebida}" var="beb" emptyMessage="Nenhum valor encontrado" >
+                            <f:facet name="header">
+                                <h:outputText value="Bebidas escolhidas"/>
+                            </f:facet>
+                            <p:column>
+                                <f:facet name="header">Nome</f:facet>
+                                <h:outputText value="#{beb.nome}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Volume</f:facet>
+                                <h:outputText value="#{beb.volume}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Excluir</f:facet>
+                                <p:commandLink  action="#{pedC.excluiBebida()}" value="EXCLUIR" ajax="false"/>
+                            </p:column>
+
+                        </p:dataTable>
+                        <p:commandButton  onclick="dialogBebida.show();" value="Add Bebida" style="float: left"/>
+                    </h:panelGrid>
+
+
+                    <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                    <!--PIZZAS-->
+
+                    <h:panelGrid  columns="1" width="200px" id="panel13" style="min-width: 90%;  margin-left:auto; margin-right:auto;">
+                        <br/><br/>
+                        <p:dataTable id="tabelaPizza" value="#{pedC.modelPizza}" var="pizz" emptyMessage="Nenhum valor encontrado" >
+                            <f:facet name="header">
+                                <h:outputText value="Pizzas escolhidas"/>
+                            </f:facet>
+                            <p:column>
+                                <f:facet name="header">Tamanho</f:facet>
+                                <h:outputText value="#{pizz.tamanho.nome}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Sabor 1</f:facet>
+                                <h:outputText value="#{pizz.sabor1.nome}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Sabor 2</f:facet>
+                                <h:outputText value="#{pizz.sabor2.nome}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Sabor 3</f:facet>
+                                <h:outputText value="#{pizz.sabor3.nome}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Borda</f:facet>
+                                <h:outputText value="#{pizz.borda.nome}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Excluir</f:facet>
+                                <p:commandLink  action="#{pedC.excluiPizza()}" value="EXCLUIR" ajax="false"/>
+                            </p:column>
+
+                        </p:dataTable>
+                        <p:commandButton action="#{pedC.salvar()}" value="Salvar Pedido" ajax="false" style="float: left"/>
+                    </h:panelGrid>
+
+                </p:panel>
+
+
+                <br/><p:separator style="height: 5px; max-width: 90%;  margin-left:auto; margin-right:auto;"/><br/>
+
 
 
 

@@ -35,9 +35,7 @@ public class Pessoa implements Serializable {
     private String nome;
     @Column(nullable = false)
     private String telefone;
-    @Column(nullable = false)
     private String celular;
-    @Column(nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date nascimento;
     
