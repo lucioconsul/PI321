@@ -70,6 +70,7 @@ public class UsuarioControle {
         FacesContext context = FacesContext.getCurrentInstance();
         
         //pega o usuario qu está logando
+        //criptografar senha e setar pra ele de volta
         usu = udao.pesquisaUsuario(usu.getLogin(), usu.getSenha());
         //se login incorredo, dá aviso e volta pra index
         if (usu == null) {
@@ -108,6 +109,9 @@ public class UsuarioControle {
     public String salvar() {
         udao = new UsuarioDAOImp();
 
+        String senha = usu.getSenha();
+        //criptografar
+        usu.setSenha(senha); //setar senha criptografada
         FacesContext context = FacesContext.getCurrentInstance();
         if (usu.getId() == null) {
             udao.salva(usu);
