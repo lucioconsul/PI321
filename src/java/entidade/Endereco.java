@@ -28,7 +28,6 @@ public class Endereco implements Serializable {
     private String rua;
     @Column(nullable = false)
     private String bairro;
-    @Column(nullable = false)
     private String cidade;
     private String cep;
     private String observacoes;

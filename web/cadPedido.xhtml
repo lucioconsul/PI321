@@ -87,9 +87,12 @@
                 <!--DETALHES DO PEDIDO-->
                 <!--COMBOS-->
 
-                <p:panel header="MONTANDO A PIZZA" style="max-width: 90%; min-width: 70%; margin-left:auto; margin-right:auto;" id="panel1">
+                <p:fieldset legend="MONTANDO A PIZZA" style="max-width: 90%; min-width: 70%; margin-left:auto; margin-right:auto;" id="panel1">
+                    <!--<p:panel header="MONTANDO A PIZZA" style="max-width: 90%; min-width: 70%; margin-left:auto; margin-right:auto;" id="panel1">-->
 
                     <h:panelGrid  columns="2" >
+                        <h:panelGrid  columns="2" >
+                        
                         <h:outputText value="Tamanho: " />  
                         <p:selectOneMenu  id="tamanho" value="#{pedC.tamanho.id}" style="width: 200px"  >  
                             <f:selectItems value="#{pedC.comboTamanho}" />  
@@ -100,6 +103,16 @@
                             <f:selectItem itemLabel="Sem borda" itemValue="0"/>
                             <f:selectItems value="#{pedC.comboBorda}" />  
                         </p:selectOneMenu>
+                        </h:panelGrid>
+                        
+                        <h:panelGrid  columns="2" style="margin-left: 20%">
+                        
+                        <h:outputText value=" "/>
+                            <h:outputText value="Exceções:" style="float: left"/>
+                            <h:outputText value=" "/>
+                            <p:inputTextarea rows="3" cols="60" value="#{pedC.pizza.excecoes}" style="float: left"/>
+                            <h:outputText value=" "/>
+                            </h:panelGrid>
                     </h:panelGrid>
                     <br/>
 
@@ -130,15 +143,12 @@
                         <h:outputText value=" " />
                         <h:panelGrid  columns="2" >
                             <p:commandButton  onclick="dialogSabor.show();" value="Add Sabor" style="float: left;"/>
-                            <h:outputText value=" "/>
-                            <h:outputText value="Exceções:" style="float: left"/>
-                            <h:outputText value=" "/>
-                            <p:inputTextarea rows="6" cols="50" value="#{pedC.pizza.excecoes}" style="float: left"/>
-                            <h:outputText value=" "/>
+                            
                             <p:commandButton   value="Pizza Ok" action="#{pedC.adicionaPizza()}" update=":form:panel13" style="float: left" ajax="false"/>
                         </h:panelGrid>
                     </h:panelGrid>
-                </p:panel>
+                    <!--</p:panel>-->
+                </p:fieldset>
 
                 <br/><p:separator style="height: 5px; max-width: 90%;  margin-left:auto; margin-right:auto;"/><br/>
 
@@ -148,7 +158,8 @@
                 <!--BEBIDA-->
 
 
-                <p:panel header="MONTANDO O PEDIDO" style="max-width: 90%; min-width: 70%; margin-left:auto; margin-right:auto;">
+                <p:fieldset legend="MONTANDO O PEDIDO" style="max-width: 90%; min-width: 70%; margin-left:auto; margin-right:auto;">
+                    <!--<p:panel header="MONTANDO O PEDIDO" style="max-width: 90%; min-width: 70%; margin-left:auto; margin-right:auto;">-->
 
                     <h:panelGrid  columns="1" id="panel12" style="min-width: 90%;  margin-left:auto; margin-right:auto;">
 
@@ -209,13 +220,21 @@
                             </p:column>
 
                         </p:dataTable>
+                        
+                        <p:fieldset legend="Total" style="max-width: 40%; min-width: 40%;">
+                            <h:outputText value="#{pedC.pedido.precoFinal}" />
+                        </p:fieldset>
+
                         <p:commandButton action="#{pedC.salvar()}" value="Salvar Pedido" ajax="false" style="float: left"/>
                     </h:panelGrid>
 
-                </p:panel>
+                    <!--</p:panel>-->
+                </p:fieldset>
 
 
                 <br/><p:separator style="height: 5px; max-width: 90%;  margin-left:auto; margin-right:auto;"/><br/>
+
+
 
 
 

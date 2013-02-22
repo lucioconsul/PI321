@@ -53,6 +53,9 @@ public class Pedido implements Serializable {
     @Column(nullable = false)
     private Timestamp hora;
     
+    @Column(nullable = false)
+    private float precoFinal;
+    
     @OneToOne
     private Colaborador atendente;
     
@@ -163,6 +166,14 @@ public class Pedido implements Serializable {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public float getPrecoFinal() {
+        return precoFinal;
+    }
+
+    public void setPrecoFinal(float precoFinal) {
+        this.precoFinal = precoFinal;
     }
 
 
