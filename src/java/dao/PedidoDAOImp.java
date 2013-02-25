@@ -82,34 +82,25 @@ public class PedidoDAOImp extends Base_DAO_Imp<Pedido, Long> implements PedidoDA
                 pedido.setHora(new Timestamp(System.currentTimeMillis()));
                 pedido.setId(rs.getLong("a.id"));
                 pedido.setStatus(rs.getString("a.status"));
-                                
-                Double teste = rs.getDouble("a.idMesa");
-                pedido.setMesa(teste.toString());
+                
+                pedido.setMesa(Integer.toString(rs.getInt("a.idMesa")));
                 pedido.setStatus(rs.getString("a.status"));
                 
-                List<Bebida> bebidas = null;
+                ArrayList<Bebida> bebidas = new ArrayList();
                 Bebida bebida1 = new Bebida();
-                Double teste2 = rs.getDouble("a.idBebida1");
-                String teste3 = teste2.toString();
-                bebida1.setId(Long.parseLong(teste3));
+                bebida1.setId(Long.parseLong(Integer.toString(rs.getInt("a.idBebida1"))));
                 Bebida bebida2 = new Bebida();
-                teste2 = rs.getDouble("a.idBebida2");
-                teste3 = teste2.toString();
-                bebida2.setId(Long.parseLong(teste3));
+                bebida2.setId(Long.parseLong(Integer.toString(rs.getInt("a.idBebida2"))));
                 bebidas.add(bebida1);
                 bebidas.add(bebida2);
                 pedido.setBebidas(bebidas); 
                 
                 Borda borda = new Borda();
-                teste2 = rs.getDouble("a.idBorda");
-                teste3 = teste2.toString();
-                borda.setId(Long.parseLong(teste3));
+                borda.setId(Long.parseLong(Integer.toString(rs.getInt("a.idBorda"))));
                 
                 
                 Tamanho tamanho = new Tamanho();
-                teste2 = rs.getDouble("a.idTamanho");
-                teste3 = teste2.toString();
-                tamanho.setId(Long.parseLong(teste3));
+                tamanho.setId(Long.parseLong(Integer.toString(rs.getInt("a.idTamanho"))));
                 
                 Pizza pizza = new Pizza();
                 pizza.setBorda(borda);
@@ -125,7 +116,7 @@ public class PedidoDAOImp extends Base_DAO_Imp<Pedido, Long> implements PedidoDA
                 pizza.setSabor2(sabor2);
                 pizza.setSabor3(sabor3);
                 pizza.setExcecoes(rs.getString("a.obs"));
-                List<Pizza> pizzas = null;
+                ArrayList<Pizza> pizzas = new ArrayList();
                 pizzas.add(pizza);
                 
                 pedido.setPizzas(pizzas);

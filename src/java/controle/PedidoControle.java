@@ -631,11 +631,28 @@ public class PedidoControle {
             pDAO = new PedidoDAOImp();
             beDAO = new BebidaDAOImp();
             piDAO = new PizzaDAOImp();
+            tDAO = new TamanhoDAOImp();
+            bDAO = new BordaDAOImp();
+            beDAO = new BebidaDAOImp();
+            //trago pedidos pendentes
             List<Pedido> pedidos = pDAO.pesquisaPendentes();
+            //se houver pedidos, percorro a lista
             if (pedidos != null || !pedidos.isEmpty()) {
                 for (int i = 0; i < pedidos.size(); i++) {
-                    pedidos.get(i).setPizzas(piDAO.listaByPedido(pedidos.get(i).getId()));
-                    pedidos.get(i).setBebidas(beDAO.pesquisaPorPedido(pedidos.get(i).getId()));
+                    //se for delivery, busco pizzas e bebidas de cada um pq o hibernate nao deixa transitar listar complexas
+                    if (pedidos.get(i).getMesa().equals("0")) {
+                        pedidos.get(i).setPizzas(piDAO.listaByPedido(pedidos.get(i).getId()));
+                        pedidos.get(i).setBebidas(beDAO.pesquisaPorPedido(pedidos.get(i).getId()));
+                        pedidos.get(i).setMesa("");
+                    } else {
+                        //se for pedido local via android, busco tamanho e borda pq só vem o id. cada pedido só tem uma pizza
+                        pedidos.get(i).getPizzas().get(0).setTamanho(tDAO.pesquisa_Por_Id(pedidos.get(i).getPizzas().get(0).getTamanho().getId()));
+                        pedidos.get(i).getPizzas().get(0).setBorda(bDAO.pesquisa_Por_Id(pedidos.get(i).getPizzas().get(0).getBorda().getId()));
+                        //seto bebidas, tenho que buscar pq só vem o id tbm
+                        for (int j = 0; j < pedidos.get(i).getBebidas().size(); j++) {
+                            pedidos.get(i).getBebidas().set(j, beDAO.pesquisa_Por_Id(pedidos.get(i).getBebidas().get(j).getId()));
+                        }
+                    }
                 }
             }
 
@@ -660,8 +677,8 @@ public class PedidoControle {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sapore", "Erro ao pesquisar."));
         }
     }
-    
-   //#####################################################################################################################################
+
+    //#####################################################################################################################################
     public String cancela() {
         FacesContext context = FacesContext.getCurrentInstance();
         pedido = (Pedido) modelPedido.getRowData();
@@ -669,14 +686,15 @@ public class PedidoControle {
         pDAO = new PedidoDAOImp();
         try {
             pDAO.altera(pedido);
+            context.addMessage(null, new FacesMessage("Sapore", "Pedido cancelado com sucesso!"));
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sapore", "Erro ao cancelar."));
         }
         pesquisaPendentes();
-        return"";
+        return "";
     }
-    
-   //#####################################################################################################################################
+
+    //#####################################################################################################################################
     public String entrega() {
         FacesContext context = FacesContext.getCurrentInstance();
         pedido = (Pedido) modelPedido.getRowData();
@@ -684,12 +702,13 @@ public class PedidoControle {
         pDAO = new PedidoDAOImp();
         try {
             pDAO.altera(pedido);
+            context.addMessage(null, new FacesMessage("Sapore", "Pedido entregue com sucesso!"));
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sapore", "Erro ao entregar pedido."));
         }
         pesquisaPendentes();
-        return"";
-    }    
+        return "";
+    }
 
 //#####################################################################################################################################            
     public DataModel getModelSabor() {

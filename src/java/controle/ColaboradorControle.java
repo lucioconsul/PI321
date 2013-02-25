@@ -120,9 +120,9 @@ public class ColaboradorControle {
     }
 
     public Colaborador getColab() {
-        if (colab == null) {
+        
             colab = new Colaborador();
-        }
+        
         return colab;
     }
 

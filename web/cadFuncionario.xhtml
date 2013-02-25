@@ -22,7 +22,7 @@
                     </p:toolbarGroup>
                 </p:toolbar>
 
-                <h:messages id="mensagem" showDetail="true"/>
+                
                 <h:panelGrid  columns="6">
                     <h:outputText  value="Nome:" />
                     <h:inputText id="nome" value="#{colabC.colab.nome}" required="true" requiredMessage="nome é obrigatório"/>
@@ -33,47 +33,47 @@
                     <h:message for="telefone" />
 
                     <h:outputText  value="Celular: " />
-                    <h:inputText id="celular" value="#{colabC.colab.celular}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:inputText id="celular" value="#{colabC.colab.celular}" />
                     <h:message for="celular" />
 
                     <h:outputText  value="Nascimento: " />
-                    <p:calendar id="nascimento" value="#{colabC.colab.nascimento}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <p:calendar id="nascimento" value="#{colabC.colab.nascimento}" required="true" requiredMessage="nascimento é obrigatório"/>
                     <h:message for="nascimento" />
 
                     <h:outputText  value="CPF: " />
-                    <h:inputText id="cpf" value="#{colabC.colab.cpf}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:inputText id="cpf" value="#{colabC.colab.cpf}" required="true" requiredMessage="cpf é obrigatório"/>
                     <h:message for="cpf" />
 
                     <h:outputText  value="RG: " />
-                    <h:inputText id="rg" value="#{colabC.colab.rg}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:inputText id="rg" value="#{colabC.colab.rg}" required="true" requiredMessage="rg é obrigatório"/>
                     <h:message for="rg" />
 
                     <h:outputText  value="PIS: " />
-                    <h:inputText id="pis" value="#{colabC.colab.pis}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:inputText id="pis" value="#{colabC.colab.pis}" required="true" requiredMessage="pis é obrigatório"/>
                     <h:message for="pis" />
 
                     <h:outputText  value="Salario: " />
-                    <h:inputText id="salario" value="#{colabC.colab.salario}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:inputText id="salario" value="#{colabC.colab.salario}" required="true" requiredMessage="salario é obrigatório"/>
                     <h:message for="salario" />
 
                     <h:outputText  value="Rua: " />
-                    <h:inputText id="rua" value="#{colabC.end.rua}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:inputText id="rua" value="#{colabC.end.rua}" required="true" requiredMessage="rua é obrigatório"/>
                     <h:message for="rua" />
 
                     <h:outputText  value="Bairro: " />
-                    <h:inputText id="bairro" value="#{colabC.end.bairro}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:inputText id="bairro" value="#{colabC.end.bairro}" required="true" requiredMessage="bairro é obrigatório"/>
                     <h:message for="bairro" />
 
                     <h:outputText  value="Cidade: " />
-                    <h:inputText id="cidade" value="#{colabC.end.cidade}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:inputText id="cidade" value="#{colabC.end.cidade}" required="true" requiredMessage="cidade é obrigatório"/>
                     <h:message for="cidade" />
 
                     <h:outputText  value="CEP: " />
-                    <h:inputText id="cep" value="#{colabC.end.cep}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:inputText id="cep" value="#{colabC.end.cep}" />
                     <h:message for="cep" />
 
                     <h:outputText  value="Obs.: " />
-                    <h:inputTextarea id="obs" value="#{colabC.end.observacoes}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:inputTextarea id="obs" value="#{colabC.end.observacoes}" />
                     <h:message for="obs" />
 
 
@@ -90,7 +90,7 @@
                     <h:message for="login" />
 
                     <h:outputText  value="Senha: " />
-                    <h:inputText id="senha" value="#{colabC.usu.senha}" required="true" requiredMessage="telefone é obrigatório"/>
+                    <h:inputSecret id="senha" value="#{colabC.usu.senha}" required="true" requiredMessage="Senha é obrigatório"/>
                     <h:message for="senha" />
                     
                     <h:outputText value="Perfil: " />  

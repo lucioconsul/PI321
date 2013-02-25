@@ -8,6 +8,7 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="center">
+        
         <p:layoutUnit position="center" style="text-align: center" header="Bebida">
             <h:form id="formu">
                 <p:toolbar>
@@ -50,11 +51,12 @@
                     <h:message for="acr" />
 
 
-                    <p:commandButton id="atualizar" value="Atualizar Qtd" action="#{bebC.atualizaEstoque()}"/> 
+                    <p:commandButton id="atualizar" value="Atualizar Qtd" action="#{bebC.atualizaEstoque()}" update="formu"/> 
 
                 </h:panelGrid>
-
+<p:growl id="growlEstoque" showDetail="true" sticky="true" />  
             </h:form>
+            
 
 
         </p:layoutUnit>

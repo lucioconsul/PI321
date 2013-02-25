@@ -9,9 +9,9 @@
 
     <ui:define name="center">
 
-        <p:layoutUnit position="center" style="text-align: center" header="Borda">
+        <p:layoutUnit position="center" header="Borda">
             <h:form id="form_pesq_pedido">
-                <p:toolbar>
+<!--                <p:toolbar>
                     <p:toolbarGroup align="left" style="height: 25px">
                         <p:commandButton value="Pesquisar" image="ui-icon-search"
                                          action="#{pedC.limpaPesquisa()}" ajax="false"/>
@@ -20,11 +20,10 @@
                                          action="#{pedC.novoPedido()}" 
                                          ajax="false"/>
                     </p:toolbarGroup>
-                </p:toolbar>
+                </p:toolbar>-->
 
                 <p:dataTable id="tabelaPedido" value="#{pedC.modelPedido}"
-                             var="ped" paginator="true" 
-                             emptyMessage="Nenhum valor encontrado">
+                             var="ped" emptyMessage="Nenhum valor encontrado">
                     <f:facet name="header">
                         <h:outputText value="Listando Pedido(s)"/>
                     </f:facet>
@@ -33,49 +32,41 @@
                         <h:outputText value="#{ped.id}" />
                     </p:column>
                     <p:column>
-                        <f:facet name="header">Cliente</f:facet>
-                        <h:outputText value="#{ped.cliente.nome}" />
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">Mesa</f:facet>
-                        <h:outputText value="#{ped.mesa}" />
+                        <f:facet name="header">Cliente/Mesa</f:facet>
+                        <h:outputText value="#{ped.cliente.nome} #{ped.mesa}" />
                     </p:column>
                     <p:column>
                         <f:facet name="header">Pizzas</f:facet>
-                        <p:dataList id="tabelaPedidoPizzas" value="#{ped.pizzas}"
-                                    var="piz" style="float: left; margin-left: 0px;">
-                            <p:column >
-                                <h:panelGrid columns="2">
-                                    <h:outputText value ="Tamanho: "/>
-                                    <h:outputText value="#{piz.tamanho.nome}"/>
-                                    <h:outputText value ="Sabores: "/>
-                                    <h:outputText value="#{piz.sabor1.nome}" />
-                                    <h:outputText value =" "/>
-                                    <h:outputText value="#{piz.sabor2.nome}" />
-                                    <h:outputText value =" "/>
-                                    <h:outputText value="#{piz.sabor3.nome}" />
-                                    <h:outputText value ="Borda: "/>
-                                    <h:outputText value="Borda: #{piz.borda.nome}" />
-                                    <h:outputText value ="Exceções: "/>
-                                    <h:outputText value="Exceções: #{piz.excecoes}" />
-                                    </h:panelGrid>
-                                <p:separator/>
-                            </p:column>
+                        <p:dataList id="tabelaPedidoPizzas" value="#{ped.pizzas}" type="definition" var="piz">
+
+                            <div id="esquerda" style="float: left; width: 15%">
+                                <strong><h:outputText value ="Tamanho: " style="text-align: left; padding-left: 5px;"/></strong><br/>
+                                <strong><h:outputText value ="Sabores: " style="text-align: left; padding-left: 5px;"/></strong><br/>
+                                <strong><h:outputText value ="Borda " style="text-align: left; padding-left: 5px;"/></strong><br/>
+                                <strong><h:outputText value ="Exceções: " style="text-align: left; padding-left: 5px;"/></strong><br/>
+                            </div>
+                            <div id="direita" style="float: left; width: 85%">
+                                <h:outputText value ="#{piz.tamanho.nome}" style="padding-left: 15%;"/><br/>
+                                <h:outputText value ="#{piz.sabor1.nome}/ #{piz.sabor2.nome}/ #{piz.sabor3.nome}" style="padding-left: 15%;"/><br/>
+                                <h:outputText value ="#{piz.borda.nome}" style="padding-left: 15%;"/><br/>
+                                <h:outputText value ="#{piz.excecoes}" style="padding-left: 15%;"/><br/>
+                            </div>
+                            <p:separator/>
+
                         </p:dataList>
                     </p:column>
                     <p:column>
                         <f:facet name="header">Bebidas</f:facet>
-                        <p:dataList id="tabelaPedidoBebidas" value="#{ped.bebidas}"
-                                    var="bebi" >
+                        <p:dataList id="tabelaPedidoBebidas" value="#{ped.bebidas}" var="bebi" >
                             <p:column>
-                                <h:outputText value="#{bebi.nome}, #{bebi.volume}" /><br/>
+                                <h:outputText value="#{bebi.nome} #{bebi.volume}" /><br/>
                             </p:column>
                         </p:dataList>
                     </p:column>
-                    <p:column>
+                    <p:column style="text-align: center">
                         <f:facet name="header">Cancelar/Entregar</f:facet>
-                        <p:commandLink  action="#{pedC.cancelar()}" value="Alterar" ajax="false"/> -
-                        <p:commandLink  value="Excluir" ajax="false" action="#{pedC.entregar()}"/>
+                        <p:commandButton  action="#{pedC.cancelar()}" value="Cancelar" ajax="false"/>
+                        <p:commandButton  value="Pronto" ajax="false" action="#{pedC.entregar()}"/>
                     </p:column>
 
                 </p:dataTable>

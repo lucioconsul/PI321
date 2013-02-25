@@ -134,6 +134,7 @@ public class BebidaControle {
 //#####################################################################################################################################
     private void limpar() {
         bebida = null;
+        estoq = null;
     }
 
 //#####################################################################################################################################
@@ -165,9 +166,9 @@ public class BebidaControle {
 //#####################################################################################################################################
     public String estoque() {
         FacesContext context = FacesContext.getCurrentInstance();
+        bebida = (Bebida) model.getRowData();
+        setBebida(bebida);
         try {
-            bebida = (Bebida) model.getRowData();
-            setBebida(bebida);
             EstoqueDAO eDAO = new EstoqueBebidaDAOImp();
             estoq = eDAO.pesquisaByBebida(bebida);
         } catch (Exception e) {
@@ -183,14 +184,23 @@ public class BebidaControle {
         int n = estoq.getQtd() + Integer.parseInt(atuali);
 
         estoq.setQtd(n);
+        estoq.setBebida(bebida);
         EstoqueDAO eDAO = new EstoqueBebidaDAOImp();
         try {
-            eDAO.altera(estoq);
+            if (estoq.getId() == null) {
+                eDAO.salva(estoq);
+                context.addMessage(null, new FacesMessage("Sapore", "Estoque atualizado com sucesso!"));
+            } else {
+                eDAO.altera(estoq);
+                context.addMessage(null, new FacesMessage("Sapore", "Estoque atualizado com sucesso!"));
+            }
+
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sapore", "Erro ao tentar atualizar estoque!"));
         }
 
         limpar();
-        return "bebida_estoque.faces";
+        setAtuali("");
+        return "";
     }
 }
