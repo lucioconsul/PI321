@@ -9,7 +9,7 @@
 
     <ui:define name="center">
 
-        <p:layoutUnit position="center" style="text-align: center" header="Funcionario">
+        <p:layoutUnit position="center" style="text-align: center" header="Cliente">
             <h:form id="form_produto">
                 <p:toolbar>
                     <p:toolbarGroup align="left" style="height: 25px">
@@ -53,10 +53,7 @@
                             <f:facet name="header">Telefone</f:facet>
                             <h:outputText value="#{cliente.telefone}" />
                     </p:column>
-                    <p:column>
-                            <f:facet name="header">Matricula</f:facet>
-                            <h:outputText value="#{cliente.celular}" />
-                    </p:column>
+                    
                                        <p:column>
                             <f:facet name="header">Alterar/Excluir</f:facet>
                             <p:commandLink  action="#{clieC.alterar()}" value="Alterar" ajax="false"/> -

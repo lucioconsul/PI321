@@ -78,7 +78,7 @@
 
                         <h:outputText  value="Obs.:" />
                         <h:inputText id="obs" value="#{pedC.endereco.observacoes}" />
-
+                        
                     </h:panelGrid>
                 </p:panel>
                 <p:separator style="max-width: 40%; min-width: 40%; height: 5px; margin-left:1px;"/><br/>
@@ -92,27 +92,27 @@
 
                     <h:panelGrid  columns="2" >
                         <h:panelGrid  columns="2" >
-                        
-                        <h:outputText value="Tamanho: " />  
-                        <p:selectOneMenu  id="tamanho" value="#{pedC.tamanho.id}" style="width: 200px"  >  
-                            <f:selectItems value="#{pedC.comboTamanho}" />  
-                        </p:selectOneMenu>
 
-                        <h:outputText value="Borda: " />  
-                        <p:selectOneMenu  id="borda" value="#{pedC.borda.id}" style="width: 200px" >  
-                            <f:selectItem itemLabel="Sem borda" itemValue="0"/>
-                            <f:selectItems value="#{pedC.comboBorda}" />  
-                        </p:selectOneMenu>
+                            <h:outputText value="Tamanho: " />  
+                            <p:selectOneMenu  id="tamanho" value="#{pedC.tamanho.id}" style="width: 200px"  >  
+                                <f:selectItems value="#{pedC.comboTamanho}" />  
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Borda: " />  
+                            <p:selectOneMenu  id="borda" value="#{pedC.borda.id}" style="width: 200px" >  
+                                <f:selectItem itemLabel="Sem borda" itemValue="0"/>
+                                <f:selectItems value="#{pedC.comboBorda}" />  
+                            </p:selectOneMenu>
                         </h:panelGrid>
-                        
+
                         <h:panelGrid  columns="2" style="margin-left: 20%">
-                        
-                        <h:outputText value=" "/>
+
+                            <h:outputText value=" "/>
                             <h:outputText value="Exceções:" style="float: left"/>
                             <h:outputText value=" "/>
                             <p:inputTextarea rows="3" cols="60" value="#{pedC.pizza.excecoes}" style="float: left"/>
                             <h:outputText value=" "/>
-                            </h:panelGrid>
+                        </h:panelGrid>
                     </h:panelGrid>
                     <br/>
 
@@ -143,8 +143,8 @@
                         <h:outputText value=" " />
                         <h:panelGrid  columns="2" >
                             <p:commandButton  onclick="dialogSabor.show();" value="Add Sabor" style="float: left;"/>
-                            
-                            <p:commandButton   value="Pizza Ok" action="#{pedC.adicionaPizza()}" update=":form:panel13" style="float: left" ajax="false"/>
+
+                            <p:commandButton   value="Pizza Ok" action="#{pedC.adicionaPizza()}" update=":panel13" process="@this" style="float: left" ajax="false"/>
                         </h:panelGrid>
                     </h:panelGrid>
                     <!--</p:panel>-->
@@ -220,11 +220,10 @@
                             </p:column>
 
                         </p:dataTable>
-                        
-                        <p:fieldset legend="Total" style="max-width: 40%; min-width: 40%;">
-                            <h:outputText value="#{pedC.pedido.precoFinal}" />
-                        </p:fieldset>
 
+                        <h:outputText value="Total: " style="float: left;"/>
+                        <h:outputText value="#{pedC.pedido.precoFinal}" style="float: left;"/>
+                        
                         <p:commandButton action="#{pedC.salvar()}" value="Salvar Pedido" ajax="false" style="float: left"/>
                     </h:panelGrid>
 
@@ -293,7 +292,7 @@
                                 #{beb.precoVenda}
                             </p:column>
                             <p:column headerText="OK" >
-                                <p:commandButton  action="#{pedC.escolherBebida()}" icon="ui-icon-pencil" update=":form:panel12" process="@this" oncomplete="dialogBebida.hide()"/> 
+                                <p:commandButton  action="#{pedC.escolherBebida()}" icon="ui-icon-pencil" update=":form:panel12,:form:panel13,:growl" process="@this" oncomplete="dialogBebida.hide()"/> 
                             </p:column>  
                         </p:dataTable>
                     </h:form>

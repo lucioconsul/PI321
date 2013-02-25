@@ -9,15 +9,15 @@
 
     <ui:define name="center">
 
-        <p:layoutUnit position="center" style="text-align: center" header="Funcionario">
-            <h:form id="form_produto">
+        <p:layoutUnit position="center" style="text-align: center" header="Funcao">
+            <h:form id="form_funcao">
                 <p:toolbar>
                     <p:toolbarGroup align="left" style="height: 25px">
                         <p:commandButton value="Pesquisar" image="ui-icon-search"
-                                         action="#{colabC.limpaPesquisa()}" ajax="false"/>
+                                         action="#{funcC.limpaPesquisa()}" ajax="false"/>
                             
                         <p:commandButton value="Novo" image="ui-icon-folder-open"
-                                         action="#{colabC.novoColaborador()}" 
+                                         action="#{funcC.novaBorda()}" 
                                          ajax="false"/>
                    </p:toolbarGroup>
                 </p:toolbar>
@@ -27,44 +27,37 @@
                     <p:fieldset toggleable="true" style="width: 400px;">
                         <h:panelGrid columns="3" >
                             <h:outputText value="Nome:" />
-                            <p:inputText id="nome" value="#{colabC.colab.nome}" >
+                            <p:inputText id="nome" value="#{funcC.funcao.nome}" >
                                 <p:focus for="nome"/>
                             </p:inputText>                           
                             
                             <p:commandButton value="Pesquisar" image="ui-icon-search"
-                                       action="#{colabC.pesquisaLikeNome()}"  
-                                       update="tabelaColab"/>
+                                       action="#{funcC.pesquisaLikeNome()}"  
+                                       update="tabelaFunc"/>
                         </h:panelGrid>
                     </p:fieldset>
                 
                 <p:separator style="width: 100%; height: 0px; margin-top: 10px;"/> 
                 
-                <p:dataTable id="tabelaColab" value="#{colabC.model}"
-                        var="colabor" paginator="true" rows="5" 
+                <p:dataTable id="tabelaFunc" value="#{funcC.model}"
+                        var="bord" paginator="true" rows="4" 
                                  emptyMessage="Nenhum valor encontrado">
                     <f:facet name="header">
                             <h:outputText value="Listando Colaborador(s)"/>
                     </f:facet>
                     <p:column>
                             <f:facet name="header">Nome</f:facet>
-                            <h:outputText value="#{colabor.nome}" />
+                            <h:outputText value="#{bord.nome}" />
                     </p:column>
                     <p:column>
-                            <f:facet name="header">Telefone</f:facet>
-                            <h:outputText value="#{colabor.telefone}" />
+                            <f:facet name="header">Descrição</f:facet>
+                            <h:outputText value="#{bord.descricao}" />
                     </p:column>
-                    <p:column>
-                            <f:facet name="header">Matricula</f:facet>
-                            <h:outputText value="#{colabor.matricula}" />
-                    </p:column>
-                    <p:column>
-                            <f:facet name="header">Função</f:facet>
-                            <h:outputText value="#{colabor.funcao.nome}" />
-                    </p:column>
+                    
                     <p:column>
                             <f:facet name="header">Alterar/Excluir</f:facet>
-                            <p:commandLink  action="#{colabC.alterar()}" value="Alterar" ajax="false"/> -
-                            <p:commandLink  value="Excluir" ajax="false" action="#{colabC.excluir()}"/>
+                            <p:commandLink  action="#{funcC.alterar()}" value="Alterar" ajax="false"/> -
+                            <p:commandLink  value="Excluir" ajax="false" action="#{funcC.excluir()}"/>
                     </p:column>
                     
                 </p:dataTable>

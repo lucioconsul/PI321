@@ -22,46 +22,66 @@
                     </p:toolbarGroup>
                 </p:toolbar>
 
-                <h:messages id="mensagem" showDetail="true"/>
-                <h:panelGrid  columns="6">
-                    <h:outputText  value="Nome:" />
-                    <h:inputText id="nome" value="#{clieC.cliente.nome}" required="true" requiredMessage="nome é obrigatório"/>
-                    <h:message for="nome" />
+                
+                <h:panelGrid  columns="2">
 
-                    <h:outputText  value="Telefone:" />
-                    <h:inputText id="telefone" value="#{clieC.cliente.telefone}" required="true" requiredMessage="telefone é obrigatório"/>
-                    <h:message for="telefone" />
+                    <h:panelGrid  columns="2">
+                        <h:outputText  value="Nome:" />
+                        <h:inputText id="nome" value="#{clieC.cliente.nome}" required="true" requiredMessage="nome é obrigatório"/>
 
-                    <h:outputText  value="Celular: " />
-                    <h:inputText id="celular" value="#{clieC.cliente.celular}" required="true" requiredMessage="telefone é obrigatório"/>
-                    <h:message for="celular" />
+                        <h:outputText  value="Telefone:" />
+                        <h:inputText id="telefone" value="#{clieC.cliente.telefone}" required="true" requiredMessage="telefone é obrigatório"/>
 
-                    <h:outputText  value="Nascimento: " />
-                    <p:calendar id="nascimento" value="#{clieC.cliente.nascimento}" required="true" requiredMessage="telefone é obrigatório"/>
-                    <h:message for="nascimento" />
+                        <h:outputText  value="Celular: " />
+                        <h:inputText id="celular" value="#{clieC.cliente.celular}" />
 
-                    <h:outputText  value="Rua: " />
-                    <h:inputText id="rua" value="#{clieC.end.rua}" required="true" requiredMessage="telefone é obrigatório"/>
-                    <h:message for="rua" />
+                        <h:outputText  value="Nascimento: " />
+                        <p:calendar id="nascimento" value="#{clieC.cliente.nascimento}" />
+                    </h:panelGrid> 
 
-                    <h:outputText  value="Bairro: " />
-                    <h:inputText id="bairro" value="#{clieC.end.bairro}" required="true" requiredMessage="telefone é obrigatório"/>
-                    <h:message for="bairro" />
+                    <h:outputText  value=" " />
 
-                    <h:outputText  value="Cidade: " />
-                    <h:inputText id="cidade" value="#{clieC.end.cidade}" required="true" requiredMessage="telefone é obrigatório"/>
-                    <h:message for="cidade" />
+                    <h:panelGrid  columns="2">
+                        <p:fieldset legend="endereco 1">
+                            <h:panelGrid  columns="2">
+                                <h:outputText  value="Rua: " />
+                                <h:inputText id="rua" value="#{clieC.end.rua}" required="true" requiredMessage="rua é obrigatório"/>
 
-                    <h:outputText  value="CEP: " />
-                    <h:inputText id="cep" value="#{clieC.end.cep}" required="true" requiredMessage="telefone é obrigatório"/>
-                    <h:message for="cep" />
+                                <h:outputText  value="Bairro: " />
+                                <h:inputText id="bairro" value="#{clieC.end.bairro}" required="true" requiredMessage="bairro é obrigatório"/>
 
-                    <h:outputText  value="Obs.: " />
-                    <h:inputTextarea id="obs" value="#{clieC.end.observacoes}" required="true" requiredMessage="telefone é obrigatório"/>
-                    <h:message for="obs" />
+                                <h:outputText  value="Cidade: " />
+                                <h:inputText id="cidade" value="#{clieC.end.cidade}" required="true" requiredMessage="cidade é obrigatório"/>
 
-                    <h:commandButton value="Salvar" action="#{clieC.salvar()}"/>
+                                <h:outputText  value="CEP: " />
+                                <h:inputText id="cep" value="#{clieC.end.cep}" />
+
+                                <h:outputText  value="Obs.: " />
+                                <h:inputTextarea id="obs" value="#{clieC.end.observacoes}" />
+                            </h:panelGrid>
+                        </p:fieldset>
+                        <p:fieldset legend="endereco 2">
+                            <h:panelGrid  columns="2">
+                                <h:outputText  value="Rua: " />
+                                <h:inputText id="rua2" value="#{clieC.end1.rua}" />
+
+                                <h:outputText  value="Bairro: " />
+                                <h:inputText id="bairro2" value="#{clieC.end1.bairro}" />
+
+                                <h:outputText  value="Cidade: " />
+                                <h:inputText id="cidade2" value="#{clieC.end1.cidade}" />
+
+                                <h:outputText  value="CEP: " />
+                                <h:inputText id="cep2" value="#{clieC.end1.cep}" />
+
+                                <h:outputText  value="Obs.: " />
+                                <h:inputTextarea id="obs2" value="#{clieC.end1.observacoes}" />
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </h:panelGrid>
+
                 </h:panelGrid>
+                <h:commandButton value="Salvar" action="#{clieC.salvar()}" style="float: left"/>
 
             </h:form>
 

@@ -4,12 +4,8 @@
  */
 package controle;
 
-import dao.BordaDAOImp;
-import dao.SaborDAOImp;
 import dao.SaborDAO;
 import dao.SaborDAOImp;
-import entidade.Borda;
-
 import entidade.Sabor;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -26,15 +22,14 @@ import javax.faces.model.ListDataModel;
 @ManagedBean(name = "sabC")
 @SessionScoped
 public class SaborControle {
-    
+
     private Sabor sabor;
     private SaborDAO sDAO;
     private DataModel model;
-    
+
 //#####################################################################################################################################
-    
     public Sabor getSabor() {
-        if(sabor == null){
+        if (sabor == null) {
             sabor = new Sabor();
         }
         return sabor;
@@ -51,75 +46,84 @@ public class SaborControle {
     public void setModel(DataModel model) {
         this.model = model;
     }
-    
+
 //#####################################################################################################################################
-    
-    public String salvar(){
+    public String salvar() {
         sDAO = new SaborDAOImp();
         FacesContext context = FacesContext.getCurrentInstance();
         if (sabor.getId() == null) {
-            sDAO.salva(sabor);
-        }else {
-            sDAO.altera(sabor);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sabor alterada com Sucesso!", ""));
+            try {
+                sDAO.salva(sabor);
+                context.addMessage(null, new FacesMessage("Sapore", "Sabor salvo com sucesso!"));
+            } catch (Exception e) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sapore", "Erro ao tentar salvar Sabor!"));
+            }
+
+        } else {
+            try {
+                sDAO.altera(sabor);
+                context.addMessage(null, new FacesMessage("Sapore", "Sabor alterado com sucesso!"));
+            } catch (Exception e) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sapore", "Erro ao tentar alterar Sabor!"));
+            }
+
         }
-        return "admin.faces";        
+        return "admin.faces";
     }
-    
+
 //#####################################################################################################################################
-    
-        public String alterar() {
-        sabor = (Sabor) model.getRowData();                
-        setSabor(sabor);        
-        
+    public String alterar() {
+        sabor = (Sabor) model.getRowData();
+        setSabor(sabor);
+
         return "cad_sabor";
-    }  
-        
+    }
+
 //#####################################################################################################################################
-        
     public String excluir() {
         FacesContext context = FacesContext.getCurrentInstance();
         String nome = sabor.getNome();
         try {
             sDAO = new SaborDAOImp();
-            sabor = (Sabor) model.getRowData();            
+            sabor = (Sabor) model.getRowData();
             sDAO.remove(sabor);
             model = new ListDataModel(sDAO.pesquisaLikeSabor(nome));
-            context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,"Sabor excluído com sucesso!", ""));
+            context.addMessage(null, new FacesMessage("Sapore", "Sabor excluído com sucesso!"));
         } catch (Exception e) {
-            context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR,"Não foi possivel exclusão!", ""));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possivel exclusão!", ""));
         }
         limpar();
         return "";
-    }        
-    
-//#####################################################################################################################################
-    
-    private void limpar() {
-        sabor = null;    
     }
-    
-//#####################################################################################################################################
-    
-public String limpaPesquisa() {
-        sabor = null;        
-        return "pesqSabor";
-    }    
 
 //#####################################################################################################################################
-    
+    private void limpar() {
+        sabor = null;
+    }
+
+//#####################################################################################################################################
+    public String limpaPesquisa() {
+        sabor = null;
+        return "pesqSabor";
+    }
+
+//#####################################################################################################################################
     public String novoSabor() {
         limpar();
         sabor = new Sabor();
         return "cadSabor";
-    } 
-    
-//#####################################################################################################################################
-    
-      public void pesquisaLikeNome() {
-        sDAO = new SaborDAOImp();
-        List<Sabor> sabores = sDAO.pesquisaLikeSabor(sabor.getNome());
-        model = new ListDataModel(sabores);
-    }       
-}
+    }
 
+//#####################################################################################################################################
+    public void pesquisaLikeNome() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        sDAO = new SaborDAOImp();
+        try {
+            List<Sabor> sabores = sDAO.pesquisaLikeSabor(sabor.getNome());
+            model = new ListDataModel(sabores);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sapore", "Ocorreu um erro ao tentar pesquisar os sabores!"));
+        }
+
+    }
+}

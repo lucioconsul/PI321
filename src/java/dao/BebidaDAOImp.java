@@ -53,6 +53,17 @@ public class BebidaDAOImp extends Base_DAO_Imp<Bebida, Long> implements BebidaDA
         return bebidas;
     }
 
+    @Override
+    public List<Bebida> pesquisaPorPedido(Long idPedido) {
+        session = (Session) Fabrica_Sessao.abreConexao().openSession();
+        Query query = session.createQuery("SELECT b FROM Pedido p LEFT JOIN p.bebidas AS b WHERE p.id = :valor ");
+        query.setLong("valor", idPedido);
+        List<Bebida> bebidas = query.list();
+        session.close();
+        return bebidas;
+        
+    }
+
 
   
 }

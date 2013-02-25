@@ -4,6 +4,8 @@
  */
 package dao;
 
+import entidade.Bebida;
+import entidade.Pedido;
 import entidade.Pizza;
 import entidade.Pessoa;
 import java.util.List;
@@ -33,6 +35,15 @@ public class PizzaDAOImp extends Base_DAO_Imp<Pizza, Long> implements PizzaDAO{
         return pizzas;
     }
 
+    @Override
+    public List<Pizza> listaByPedido(Long idPedido) {
+        session = (Session) Fabrica_Sessao.abreConexao().openSession();
+        Query query = session.createQuery("FROM Pizza pi WHERE pi.pedido = :valor ");
+        query.setLong("valor", idPedido);
+        List<Pizza> pizzas = query.list();
+        session.close();
+        return pizzas;
+    }
 
     
 }

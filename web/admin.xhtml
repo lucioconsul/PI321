@@ -16,8 +16,8 @@
         <p:growl id="growlAdmin" showDetail="true" sticky="true" />  
         <p:layout fullPage="true">
 
-            <p:layoutUnit position="north" size="150" >
-                <h:panelGrid columns="3" cellpadding="1" id="topo" style=" padding-top: 115px; width:100%;height: 100%  ">
+            <p:layoutUnit position="north" size="130" >
+                <h:panelGrid columns="3" cellpadding="1" id="topo" style=" padding-top: 81px; width:100%;height: 100%  ">
 
                     <h:outputText value="Olá #{usuC.usu.colaborador.nome}" style="float:left; background: none;padding-left:30px" />
                     <h:outputText value="Perfil: #{usuC.usu.perfil.nome}" style="width:100px;float:left; background: none; vertical-align: central" />
@@ -27,7 +27,7 @@
             </p:layoutUnit>
 
             <p:layoutUnit position="south" size="20" >
-                <h:outputText value="South unit content." />
+                <h:outputText value="" />
             </p:layoutUnit>
 
             <p:layoutUnit position="west" size="200" header="Menu" >
@@ -40,8 +40,8 @@
 
             <ui:insert name="center">
                 <p:layoutUnit position="center">
-                    <h:form id="admin">
-                        This fullPage layout consists of five different layoutUnits which are resizable and closable by default.
+                    <h:form id="admin" style="margin:auto; width: 100%; height: 100%; text-align: center">
+                   <p:graphicImage url="images/pg1.jpg" width="600px" height="400px" style="margin:auto;"/>
 
                     </h:form>
                 </p:layoutUnit>

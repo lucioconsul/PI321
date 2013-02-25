@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="./admin.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="center">
+
+        <p:layoutUnit position="center" style="text-align: center" header="Borda">
+            <h:form id="form_pesq_pedido">
+                <p:toolbar>
+                    <p:toolbarGroup align="left" style="height: 25px">
+                        <p:commandButton value="Pesquisar" image="ui-icon-search"
+                                         action="#{pedC.limpaPesquisa()}" ajax="false"/>
+
+                        <p:commandButton value="Novo" image="ui-icon-folder-open"
+                                         action="#{pedC.novoPedido()}" 
+                                         ajax="false"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+                <p:dataTable id="tabelaPedido" value="#{pedC.modelPedido}"
+                             var="ped" paginator="true" 
+                             emptyMessage="Nenhum valor encontrado">
+                    <f:facet name="header">
+                        <h:outputText value="Listando Pedido(s)"/>
+                    </f:facet>
+                    <p:column>
+                        <f:facet name="header">Número</f:facet>
+                        <h:outputText value="#{ped.id}" />
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Cliente</f:facet>
+                        <h:outputText value="#{ped.cliente.nome}" />
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Mesa</f:facet>
+                        <h:outputText value="#{ped.mesa}" />
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Pizzas</f:facet>
+                        <p:dataList id="tabelaPedidoPizzas" value="#{ped.pizzas}"
+                                    var="piz" style="float: left; margin-left: 0px;">
+                            <p:column >
+                                <h:panelGrid columns="2">
+                                    <h:outputText value ="Tamanho: "/>
+                                    <h:outputText value="#{piz.tamanho.nome}"/>
+                                    <h:outputText value ="Sabores: "/>
+                                    <h:outputText value="#{piz.sabor1.nome}" />
+                                    <h:outputText value =" "/>
+                                    <h:outputText value="#{piz.sabor2.nome}" />
+                                    <h:outputText value =" "/>
+                                    <h:outputText value="#{piz.sabor3.nome}" />
+                                    <h:outputText value ="Borda: "/>
+                                    <h:outputText value="Borda: #{piz.borda.nome}" />
+                                    <h:outputText value ="Exceções: "/>
+                                    <h:outputText value="Exceções: #{piz.excecoes}" />
+                                    </h:panelGrid>
+                                <p:separator/>
+                            </p:column>
+                        </p:dataList>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Bebidas</f:facet>
+                        <p:dataList id="tabelaPedidoBebidas" value="#{ped.bebidas}"
+                                    var="bebi" >
+                            <p:column>
+                                <h:outputText value="#{bebi.nome}, #{bebi.volume}" /><br/>
+                            </p:column>
+                        </p:dataList>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Cancelar/Entregar</f:facet>
+                        <p:commandLink  action="#{pedC.cancelar()}" value="Alterar" ajax="false"/> -
+                        <p:commandLink  value="Excluir" ajax="false" action="#{pedC.entregar()}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+
+            </h:form>   
+
+
+        </p:layoutUnit>
+
+
+
+    </ui:define>
+
+</ui:composition>

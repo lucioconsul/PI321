@@ -17,4 +17,6 @@ public interface BebidaDAO extends Base_DAO<Bebida, Long>{
     
     List<Bebida> pesquisaPorEstoque();
     
+    List<Bebida> pesquisaPorPedido(Long idPedido);
+    
 }

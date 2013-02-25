@@ -9,16 +9,14 @@ import dao.MenuDAOImp;
 import dao.UsuarioDAO;
 import dao.UsuarioDAOImp;
 import entidade.Menus;
-import entidade.Pessoa;
 import entidade.Usuario;
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import util.Cripto;
 
 /**
  *
@@ -68,10 +66,11 @@ public class UsuarioControle {
         udao = new UsuarioDAOImp();
         mdao = new MenuDAOImp();
         FacesContext context = FacesContext.getCurrentInstance();
-        
+
         //pega o usuario qu está logando
-        //criptografar senha e setar pra ele de volta
+        usu.setSenha(Cripto.criptoGraf(usu.getSenha()));
         usu = udao.pesquisaUsuario(usu.getLogin(), usu.getSenha());
+        
         //se login incorredo, dá aviso e volta pra index
         if (usu == null) {
             //context.addMessage(null, new FacesMessage("Sapore", "O pedido não foi salvo. Cadastro de cliente incompleto"));

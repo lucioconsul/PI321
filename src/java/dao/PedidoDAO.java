@@ -13,6 +13,8 @@ import java.util.List;
  * @author Aluno
  */
 public interface PedidoDAO extends Base_DAO<Pedido, Long>{
-    List<Pedido> pesquisaByDia(String dia);
+    List<Pedido> pesquisaByCliente(String telefone);
+    
+    List<Pedido> pesquisaPendentes();
     
 }

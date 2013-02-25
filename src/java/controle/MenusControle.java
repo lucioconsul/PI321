@@ -8,6 +8,7 @@ import entidade.Menus;
 import entidade.Usuario;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -83,7 +84,13 @@ public class MenusControle {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().
                 getExternalContext().getSession(false);
         //pego usuario logado
-        usu = (Usuario) session.getAttribute("autenticado");
+        try {
+            usu = (Usuario) session.getAttribute("autenticado");
+        } catch (Exception e) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Sapore", "Houve algum erro na autencicação do usuário!"));
+        }
+        
         //pego lista de menus do usuario e percorro
         List<Menus> listaMenu = usu.getPerfil().getMenus();
         for (Menus menu : listaMenu) {
@@ -150,7 +157,12 @@ public class MenusControle {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().
                 getExternalContext().getSession(false);
         //pego usuario logado
-        usu = (Usuario) session.getAttribute("autenticado");
+        try {
+            usu = (Usuario) session.getAttribute("autenticado");
+        } catch (Exception e) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Sapore", "Houve algum erro na autencicação do usuário!"));
+        }
         //pego lista de menus do usuario e percorro
         List<Menus> listaMenu = usu.getPerfil().getMenus();
         for (Menus menus1 : listaMenu) {
@@ -171,7 +183,12 @@ public class MenusControle {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().
                 getExternalContext().getSession(false);
         //pego usuario logado
-        usu = (Usuario) session.getAttribute("autenticado");
+        try {
+            usu = (Usuario) session.getAttribute("autenticado");
+        } catch (Exception e) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Sapore", "Houve algum erro na autencicação do usuário!"));
+        }
         //pego lista de menus do usuario e percorro
         List<Menus> listaMenu = usu.getPerfil().getMenus();
 

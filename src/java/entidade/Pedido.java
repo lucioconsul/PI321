@@ -44,6 +44,9 @@ public class Pedido implements Serializable {
     private Boolean delivery;
     
     @Column(nullable = false)
+    private String status;
+    
+    @Column(nullable = false)
     private String mesa;
     
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -57,15 +60,16 @@ public class Pedido implements Serializable {
     private float precoFinal;
     
     @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Colaborador atendente;
     
-    @OneToOne
-    private Colaborador entregador;
     
     @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Cliente cliente;
     
     @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Endereco endereco;
     
     @ManyToMany
@@ -77,6 +81,7 @@ public class Pedido implements Serializable {
     private List<Bebida> bebidas;
     
     @OneToMany(mappedBy = "pedido")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Pizza> pizzas;
 
 //#####################################################################################################################################    
@@ -152,14 +157,6 @@ public class Pedido implements Serializable {
         this.atendente = atendente;
     }
 
-    public Colaborador getEntregador() {
-        return entregador;
-    }
-
-    public void setEntregador(Colaborador entregador) {
-        this.entregador = entregador;
-    }
-
     public Endereco getEndereco() {
         return endereco;
     }
@@ -174,6 +171,14 @@ public class Pedido implements Serializable {
 
     public void setPrecoFinal(float precoFinal) {
         this.precoFinal = precoFinal;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 

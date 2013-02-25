@@ -34,6 +34,7 @@ public class Pizza implements Serializable {
     
     @ManyToOne
     @JoinColumn(name="idPedido")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Pedido pedido;
 
     @OneToOne

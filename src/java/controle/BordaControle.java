@@ -22,13 +22,12 @@ import javax.faces.model.ListDataModel;
 @ManagedBean(name = "bordC")
 @SessionScoped
 public class BordaControle {
-    
+
     private Borda borda;
     private BordaDAO bDAO;
     private DataModel model;
 
 //#####################################################################################################################################
-    
     public DataModel getModel() {
         return model;
     }
@@ -36,9 +35,9 @@ public class BordaControle {
     public void setModel(DataModel model) {
         this.model = model;
     }
-    
+
     public Borda getBorda() {
-        if(borda == null){
+        if (borda == null) {
             borda = new Borda();
         }
         return borda;
@@ -47,75 +46,87 @@ public class BordaControle {
     public void setBorda(Borda Borda) {
         this.borda = Borda;
     }
-    
+
 //#####################################################################################################################################
-    
-    public String salvar(){
+    public String salvar() {
         bDAO = new BordaDAOImp();
         FacesContext context = FacesContext.getCurrentInstance();
         if (borda.getId() == null) {
-            bDAO.salva(borda);
-        }else {
-            bDAO.altera(borda);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Borda alterada com Sucesso!", ""));
+            try {
+                bDAO.salva(borda);
+                context.addMessage(null, new FacesMessage("Sapore", "Borda salva com sucesso!"));
+            } catch (Exception e) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sapore", "Erro ao tentar salvar borda!"));
+            }
+
+        } else {
+            try {
+                bDAO.altera(borda);
+                context.addMessage(null, new FacesMessage("Sapore", "Borda alterada com sucesso!"));
+            } catch (Exception e) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sapore", "Erro ao tentar alterar borda!"));
+            }
+
         }
-        return "admin.faces";        
+        limpar();
+        return "borda_cad.faces";
     }
-    
+
 //#####################################################################################################################################
-    
-        public String alterar() {
-        borda = (Borda) model.getRowData();                
-        setBorda(borda);        
-        
+    public String alterar() {
+
+        borda = (Borda) model.getRowData();
+        setBorda(borda);
+
         return "borda_cad";
     }
-    
+
 //#####################################################################################################################################
-        
     public String excluir() {
         FacesContext context = FacesContext.getCurrentInstance();
         String nome = borda.getNome();
         try {
             bDAO = new BordaDAOImp();
-            borda = (Borda) model.getRowData();            
+            borda = (Borda) model.getRowData();
             bDAO.remove(borda);
             model = new ListDataModel(bDAO.pesquisaLikeBorda(nome));
-            context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,"Borda excluída com sucesso!", ""));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Borda excluída com sucesso!", ""));
         } catch (Exception e) {
-            context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR,"Não foi possivel exclusão!", ""));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possivel exclusão!", ""));
         }
         limpar();
         return "";
-    }    
-    
-//#####################################################################################################################################
-    
-    private void limpar() {
-        borda = null;    
     }
-    
-//#####################################################################################################################################
-    
-public String limpaPesquisa() {
-        borda = null;        
-        return "pesqBorda";
-    }    
 
 //#####################################################################################################################################
-    
-      public void pesquisaLikeNome() {
-        bDAO = new BordaDAOImp();
+    private void limpar() {
+        borda = null;
+    }
+
+//#####################################################################################################################################
+    public String limpaPesquisa() {
+        borda = null;
+        return "pesqBorda";
+    }
+
+//#####################################################################################################################################
+    public void pesquisaLikeNome() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        try {
+            bDAO = new BordaDAOImp();
         List<Borda> bordas = bDAO.pesquisaLikeBorda(borda.getNome());
         model = new ListDataModel(bordas);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sapore", "Erro ao tentar pesquisar borda!"));
+        }
+        
     }
-      
+
 //#####################################################################################################################################
-    
     public String novaBorda() {
         limpar();
         borda = new Borda();
         return "borda_cad";
-    }      
+    }
 }
-
