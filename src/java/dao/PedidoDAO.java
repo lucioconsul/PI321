@@ -17,4 +17,8 @@ public interface PedidoDAO extends Base_DAO<Pedido, Long>{
     
     List<Pedido> pesquisaPendentes();
     
+    void alteraStatus(String status, Long id);
+    
+    void alteraStatusAndroid(String status, Long id);
+    
 }

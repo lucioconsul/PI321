@@ -120,9 +120,9 @@ public class ColaboradorControle {
     }
 
     public Colaborador getColab() {
-        
+        if(colab==null){
             colab = new Colaborador();
-        
+        }
         return colab;
     }
 
@@ -161,6 +161,7 @@ public class ColaboradorControle {
 
         FacesContext context = FacesContext.getCurrentInstance();
 
+        setColab(colab);
         if (colab.getId() == null) {
 
             ArrayList<Endereco> enderecos = new ArrayList();
@@ -168,11 +169,11 @@ public class ColaboradorControle {
             colab.setEnderecos(enderecos);
 
             usu.setPerfil(perfil);
-            ArrayList<Usuario> usuarios = new ArrayList();
-            usuarios.add(usu);
-
             String senhaa = Cripto.criptoGraf(usu.getSenha());
             usu.setSenha(senhaa); //setar senha criptografada
+            ArrayList<Usuario> usuarios = new ArrayList();
+            usuarios.add(usu);
+            
             colab.setUsuarios(usuarios);
             colab.setEnderecos(enderecos);
             colab.setFuncao(func);

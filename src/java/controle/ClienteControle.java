@@ -17,6 +17,8 @@ import entidade.Endereco;
 import entidade.Pessoa;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -107,12 +109,14 @@ public class ClienteControle {
                 cliente.setEnderecos(enderecos);
 
                 end.setPessoa(cliente);
+                end1.setPessoa(cliente);
 
                 try {
                     cDAO.salva(cliente);
                     context.addMessage(null, new FacesMessage("Sapore", "Cliente Salvo Com Sucesso!"));
                 } catch (Exception e) {
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sapore", "Erro ao tentar salvar"));
+                    Logger.getLogger(ClienteControle.class.getName()).log(Level.SEVERE, null, e);
                 }
 
 

@@ -84,9 +84,7 @@ public class UsuarioControle {
             HttpSession session = (HttpSession) FacesContext.
                     getCurrentInstance().getExternalContext().getSession(false);
             session.setAttribute("autenticado", usu);
-            //removo login e senha do objeto
-            usu.setLogin("");
-            usu.setSenha("");
+            
         }
         return retorno;
     }

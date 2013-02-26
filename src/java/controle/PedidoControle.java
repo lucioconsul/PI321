@@ -43,6 +43,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -51,6 +53,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
+import org.primefaces.model.LazyDataModel;
 
 /**
  *
@@ -106,6 +109,11 @@ public class PedidoControle {
             context.addMessage(null, new FacesMessage("Sapore", "O pedido não foi salvo porque não contém pizzas"));
             return "";
         }
+
+        if (pedido == null) {
+            pedido = new Pedido();
+        }
+
         pedido.setPizzas(pizzas);
 
         //verifico se pegou algum cliente
@@ -144,7 +152,7 @@ public class PedidoControle {
             return "";
         }
         pedido.setEndereco(endereco);
-        pedido.setDelivery(Boolean.TRUE);
+        pedido.setDelivery(true);
         pedido.setDia(new Date());
         pedido.setHora(new Timestamp(System.currentTimeMillis()));
         pedido.setMesa("0");
@@ -156,11 +164,14 @@ public class PedidoControle {
             estDAO = new EstoqueBebidaDAOImp();
             for (Bebida bebida1 : bebidas) {
                 try {
+                    estoque = null;
+                    estoque = new EstoqueBebida();
                     estoque = estDAO.pesquisaByBebida(bebida1);
                     estoque.setQtd(estoque.getQtd() - 1);
                     estDAO.altera(estoque);
                 } catch (Exception e) {
                     context.addMessage(null, new FacesMessage("Sapore", "Ocorreu um erro na atualização do estoque de bebidas. Informar TI."));
+                    Logger.getLogger(PedidoControle.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
         }
@@ -182,6 +193,7 @@ public class PedidoControle {
                 context.addMessage(null, new FacesMessage("Sapore", "Pedido salvo com Sucesso!"));
             } catch (Exception e) {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sapore", "Erro ao tentar salvar o Pedido!"));
+                Logger.getLogger(PedidoControle.class.getName()).log(Level.SEVERE, null, e);
             }
 
         } else {
@@ -190,20 +202,22 @@ public class PedidoControle {
                 context.addMessage(null, new FacesMessage("Sapore", "Pedido alterado com Sucesso!"));
             } catch (Exception e) {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sapore", "Erro ao tentar alterar o Pedido!"));
+                Logger.getLogger(PedidoControle.class.getName()).log(Level.SEVERE, null, e);
             }
 
         }
 
         //salvo as pizzas
-        piDAO = new PizzaDAOImp();
-        for (Pizza pizza1 : pizzas) {
-            pizza1.setPedido(pedido);
-            try {
-                piDAO.salva(pizza1);
-            } catch (Exception e) {
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sapore", "Erro ao tentar salvar as pizzas para este pedido!"));
-            }
-        }
+        /*
+         piDAO = new PizzaDAOImp();
+         for (Pizza pizza1 : pizzas) {
+         pizza1.setPedido(pedido);
+         try {
+         piDAO.salva(pizza1);
+         } catch (Exception e) {
+         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sapore", "Erro ao tentar salvar as pizzas para este pedido!"));
+         }
+         }*/
 
         limpar();
         return "cadPedido.faces";
@@ -495,6 +509,7 @@ public class PedidoControle {
             context.addMessage(null, new FacesMessage("Sapore", "Digite o telefone do cliente."));
             return "";
         }
+        setCliente(cliente);
         telefone = "";
         return "";
     }
@@ -588,6 +603,9 @@ public class PedidoControle {
             }
             pedido.setHora(new Timestamp(System.currentTimeMillis()));
 
+            if (pizzas == null) {
+                pizzas = new ArrayList();
+            }
             pizzas.add(pizza);
 
 
@@ -685,11 +703,21 @@ public class PedidoControle {
         pedido.setStatus("cancelado");
         pDAO = new PedidoDAOImp();
         try {
-            pDAO.altera(pedido);
-            context.addMessage(null, new FacesMessage("Sapore", "Pedido cancelado com sucesso!"));
+            if (pedido.getMesa().equals("0")) {
+                pDAO.alteraStatus(pedido.getStatus(), pedido.getId());
+                context.addMessage(null, new FacesMessage("Sapore", "Pedido cancelado com sucesso!"));
+            }else{
+                pDAO.alteraStatusAndroid(pedido.getStatus(), pedido.getId());
+                context.addMessage(null, new FacesMessage("Sapore", "Pedido cancelado com sucesso!"));
+            }
+
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sapore", "Erro ao cancelar."));
+            Logger.getLogger(PedidoControle.class.getName()).log(Level.SEVERE, null, e);
         }
+        modelPedido = null;
+        modelPedido = new ListDataModel();
+        pesquisaPendentes();
         pesquisaPendentes();
         return "";
     }
@@ -701,11 +729,19 @@ public class PedidoControle {
         pedido.setStatus("entregue");
         pDAO = new PedidoDAOImp();
         try {
-            pDAO.altera(pedido);
-            context.addMessage(null, new FacesMessage("Sapore", "Pedido entregue com sucesso!"));
+            if (pedido.getMesa().equals("0")) {
+                pDAO.alteraStatus(pedido.getStatus(), pedido.getId());
+                context.addMessage(null, new FacesMessage("Sapore", "Pedido cancelado com sucesso!"));
+            }else{
+                pDAO.alteraStatusAndroid(pedido.getStatus(), pedido.getId());
+                context.addMessage(null, new FacesMessage("Sapore", "Pedido cancelado com sucesso!"));
+            }
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sapore", "Erro ao entregar pedido."));
         }
+        modelPedido = null;
+        modelPedido = new ListDataModel();
+        
         pesquisaPendentes();
         return "";
     }

@@ -4,6 +4,7 @@
  */
 package dao;
 
+import controle.PedidoControle;
 import entidade.Bebida;
 import entidade.Borda;
 import entidade.Pedido;
@@ -61,7 +62,7 @@ public class PedidoDAOImp extends Base_DAO_Imp<Pedido, Long> implements PedidoDA
     @Override
     public List<Pedido> pesquisaPendentes() {
         session = (Session) Fabrica_Sessao.abreConexao().openSession();
-        Query query = session.createQuery("SELECT DISTINCT p FROM Pedido p  LEFT JOIN p.bebidas LEFT JOIN p.pizzas WHERE p.status = 'aguardando' ");
+        Query query = session.createQuery("SELECT DISTINCT p FROM Pedido p  LEFT JOIN p.bebidas LEFT JOIN p.pizzas WHERE p.status = 'aguardando' ORDER BY p.id ");
         List<Pedido> peds = query.list();
         session.close();
 
@@ -71,7 +72,7 @@ public class PedidoDAOImp extends Base_DAO_Imp<Pedido, Long> implements PedidoDA
         ResultSet rs = null;
         Pedido pedido;
         try {
-            String consulta = "SELECT * FROM pedido_mesa a WHERE a.status = 'aguardando' ";
+            String consulta = "SELECT * FROM pedido_mesa a WHERE a.status = 'aguardando' ORDER BY a.id ";
             conn = Fabrica_De_Conexao.abre_Conexao();
             ps = conn.prepareStatement(consulta);
             rs = ps.executeQuery();
@@ -82,10 +83,10 @@ public class PedidoDAOImp extends Base_DAO_Imp<Pedido, Long> implements PedidoDA
                 pedido.setHora(new Timestamp(System.currentTimeMillis()));
                 pedido.setId(rs.getLong("a.id"));
                 pedido.setStatus(rs.getString("a.status"));
-                
+
                 pedido.setMesa(Integer.toString(rs.getInt("a.idMesa")));
                 pedido.setStatus(rs.getString("a.status"));
-                
+
                 ArrayList<Bebida> bebidas = new ArrayList();
                 Bebida bebida1 = new Bebida();
                 bebida1.setId(Long.parseLong(Integer.toString(rs.getInt("a.idBebida1"))));
@@ -93,19 +94,19 @@ public class PedidoDAOImp extends Base_DAO_Imp<Pedido, Long> implements PedidoDA
                 bebida2.setId(Long.parseLong(Integer.toString(rs.getInt("a.idBebida2"))));
                 bebidas.add(bebida1);
                 bebidas.add(bebida2);
-                pedido.setBebidas(bebidas); 
-                
+                pedido.setBebidas(bebidas);
+
                 Borda borda = new Borda();
                 borda.setId(Long.parseLong(Integer.toString(rs.getInt("a.idBorda"))));
-                
-                
+
+
                 Tamanho tamanho = new Tamanho();
                 tamanho.setId(Long.parseLong(Integer.toString(rs.getInt("a.idTamanho"))));
-                
+
                 Pizza pizza = new Pizza();
                 pizza.setBorda(borda);
                 pizza.setTamanho(tamanho);
-                
+
                 Sabor sabor1 = new Sabor();
                 sabor1.setNome(rs.getString("a.sabor1"));
                 Sabor sabor2 = new Sabor();
@@ -118,9 +119,9 @@ public class PedidoDAOImp extends Base_DAO_Imp<Pedido, Long> implements PedidoDA
                 pizza.setExcecoes(rs.getString("a.obs"));
                 ArrayList<Pizza> pizzas = new ArrayList();
                 pizzas.add(pizza);
-                
+
                 pedido.setPizzas(pizzas);
-                
+
                 peds.add(pedido);
             }
         } catch (Exception e) {
@@ -134,8 +135,59 @@ public class PedidoDAOImp extends Base_DAO_Imp<Pedido, Long> implements PedidoDA
             }
         }
 
-        
+
         return peds;
     }
-    
-     }
+
+    @Override
+    public void alteraStatus(String status, Long id) {
+        Connection conn = null;
+        PreparedStatement ps = null;// 
+
+        try {
+            String SQL = "UPDATE pedido SET status=? WHERE id = ?";
+            conn = Fabrica_De_Conexao.abre_Conexao();//abre a conecção
+            ps = conn.prepareStatement(SQL);//vai pegar a conecção e preparar ela para mandar pro sgbd
+            ps.setString(1, status);//
+            ps.setLong(2, id);
+
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            Logger.getLogger(PedidoDAOImp.class.getName()).log(Level.SEVERE, null, e);
+
+        } finally {
+            try {
+                Fabrica_De_Conexao.fechaConexao(conn, ps);
+            } catch (Exception ex) {
+                Logger.getLogger(PedidoDAOImp.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    @Override
+    public void alteraStatusAndroid(String status, Long id) {
+        Connection conn = null;
+        PreparedStatement ps = null;// 
+
+        try {
+            String SQL = "UPDATE pedido_mesa SET status=? WHERE id = ?";
+            conn = Fabrica_De_Conexao.abre_Conexao();//abre a conecção
+            ps = conn.prepareStatement(SQL);//vai pegar a conecção e preparar ela para mandar pro sgbd
+            ps.setString(1, status);//
+            ps.setLong(2, id);
+
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            Logger.getLogger(PedidoDAOImp.class.getName()).log(Level.SEVERE, null, e);
+
+        } finally {
+            try {
+                Fabrica_De_Conexao.fechaConexao(conn, ps);
+            } catch (Exception ex) {
+                Logger.getLogger(PedidoDAOImp.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+}

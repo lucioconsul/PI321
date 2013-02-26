@@ -7,22 +7,29 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core">
 
+    <meta http-equiv="refresh" content="5" />
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <ui:define name="center">
 
-        <p:layoutUnit position="center" header="Borda">
-            <h:form id="form_pesq_pedido">
-<!--                <p:toolbar>
-                    <p:toolbarGroup align="left" style="height: 25px">
-                        <p:commandButton value="Pesquisar" image="ui-icon-search"
-                                         action="#{pedC.limpaPesquisa()}" ajax="false"/>
 
-                        <p:commandButton value="Novo" image="ui-icon-folder-open"
-                                         action="#{pedC.novoPedido()}" 
-                                         ajax="false"/>
-                    </p:toolbarGroup>
-                </p:toolbar>-->
+        <p:layoutUnit position="center" header="Pedidos">
 
-                <p:dataTable id="tabelaPedido" value="#{pedC.modelPedido}"
+            <h:form id="form_pesq_pedido" >
+                <p:poll interval="5" listener="#{pedC.pesquisaPendentes()}" update="tabelaPedido" />
+                <!--                <p:toolbar>
+                                    <p:toolbarGroup align="left" style="height: 25px">
+                                        <p:commandButton value="Pesquisar" image="ui-icon-search"
+                                                         action="#{pedC.limpaPesquisa()}" ajax="false"/>
+                
+                                        <p:commandButton value="Novo" image="ui-icon-folder-open"
+                                                         action="#{pedC.novoPedido()}" 
+                                                         ajax="false"/>
+                                    </p:toolbarGroup>
+                                </p:toolbar>-->
+
+                <p:dataTable id="tabelaPedido" value="#{pedC.modelPedido}" 
                              var="ped" emptyMessage="Nenhum valor encontrado">
                     <f:facet name="header">
                         <h:outputText value="Listando Pedido(s)"/>
@@ -65,8 +72,8 @@
                     </p:column>
                     <p:column style="text-align: center">
                         <f:facet name="header">Cancelar/Entregar</f:facet>
-                        <p:commandButton  action="#{pedC.cancelar()}" value="Cancelar" ajax="false"/>
-                        <p:commandButton  value="Pronto" ajax="false" action="#{pedC.entregar()}"/>
+                        <p:commandButton  action="#{pedC.cancela()}" value="Cancelar" ajax="false" update=":tabelaPedido" process="@this"/>
+                        <p:commandButton  value="Pronto" ajax="false" action="#{pedC.entrega()}" update=":tabelaPedido" process="@this"/>
                     </p:column>
 
                 </p:dataTable>
@@ -80,5 +87,6 @@
 
 
     </ui:define>
+
 
 </ui:composition>

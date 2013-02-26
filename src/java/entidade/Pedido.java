@@ -40,7 +40,6 @@ public class Pedido implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @Column(nullable = false)
     private Boolean delivery;
     
     @Column(nullable = false)
